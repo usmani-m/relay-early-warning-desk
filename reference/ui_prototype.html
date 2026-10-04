@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Relay supply early-warning desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F3;--surface:#FFFFFF;--ink:#18232C;--ink2:#4F5D68;--line:#D3D9DE;--steel:#24333F;--onsteel:#E9EEF2;
+  --amber:#A86F00;--amber-bg:#FBF1DA;--trip:#B7322A;--trip-bg:#F8E1DE;--ok:#2B7550;--ok-bg:#DFF0E6;--cool:#2D67A0;--cool-bg:#DDE8F4;--muted:#E4E8EB;
+  --demand:#2D67A0;--supply:#A86F00;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --cond:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#11181E;--surface:#18222A;--ink:#E6ECF0;--ink2:#9AA8B3;--line:#2B3843;--steel:#0C1216;--onsteel:#E6ECF0;
+  --amber:#E3A93A;--amber-bg:#3A2E14;--trip:#E8776C;--trip-bg:#3C1F1C;--ok:#62C48F;--ok-bg:#183326;--cool:#79ADDF;--cool-bg:#1A2C40;--muted:#222E37;
+  --demand:#79ADDF;--supply:#E3A93A;}}
+:root[data-theme="dark"]{
+  --bg:#11181E;--surface:#18222A;--ink:#E6ECF0;--ink2:#9AA8B3;--line:#2B3843;--steel:#0C1216;--onsteel:#E6ECF0;
+  --amber:#E3A93A;--amber-bg:#3A2E14;--trip:#E8776C;--trip-bg:#3C1F1C;--ok:#62C48F;--ok-bg:#183326;--cool:#79ADDF;--cool-bg:#1A2C40;--muted:#222E37;
+  --demand:#79ADDF;--supply:#E3A93A;}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+a{color:var(--cool)}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:7px 14px;font-weight:500}
+button:hover{border-color:var(--ink2)}
+button.primary{background:var(--steel);color:var(--onsteel);border-color:var(--steel)}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,.cell:focus-visible,.sig:focus-visible{outline:2px solid var(--cool);outline-offset:2px}
+select,input,textarea{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:7px 10px;max-width:100%}
+textarea{width:100%;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+header{background:var(--steel);color:var(--onsteel)}
+.hwrap{max-width:1180px;margin:0 auto;padding:18px 20px 0;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+h1{font-family:var(--cond);font-weight:600;font-size:30px;line-height:1.1;margin:0;letter-spacing:.2px}
+.sub{margin:2px 0 14px;color:var(--onsteel);opacity:.8;font-size:14px}
+nav{display:flex;gap:4px}
+nav button{background:transparent;border:0;border-radius:6px 6px 0 0;color:var(--onsteel);opacity:.75;padding:10px 16px}
+nav button[aria-selected="true"]{background:var(--bg);color:var(--ink);opacity:1}
+main{max-width:1180px;margin:0 auto;padding:18px 20px 40px}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:0;margin:0 0 16px;font-family:var(--cond);font-size:16px;font-weight:500;color:var(--ink2)}
+.chain a{color:inherit;text-decoration:none;padding:4px 0}
+.chain a:hover{color:var(--ink)}
+.chain .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink2);font-size:13px;margin-right:6px}
+.chain .bus{width:28px;height:2px;background:var(--line);margin:0 8px}
+.grid2{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:16px}
+@media (max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+h2{font-family:var(--cond);font-weight:600;font-size:21px;margin:0 0 10px;line-height:1.2}
+h3{font-size:15px;font-weight:600;margin:14px 0 6px}
+.muted{color:var(--ink2)}
+.small{font-size:13px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.spacer{flex:1}
+.banner{border-radius:10px;padding:12px 16px;margin-bottom:16px;border:1px solid}
+.banner.warn{background:var(--amber-bg);border-color:var(--amber);color:var(--ink)}
+.banner.info{background:var(--cool-bg);border-color:var(--cool)}
+.banner.err{background:var(--trip-bg);border-color:var(--trip)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.stat b{display:block;font-family:var(--cond);font-size:30px;font-weight:600;line-height:1.1}
+.matrix{display:grid;grid-template-columns:78px repeat(3,minmax(0,1fr));gap:6px}
+.matrix .h{font-size:13px;color:var(--ink2);align-self:end;padding-bottom:2px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:10px 8px;min-height:66px;cursor:pointer;background:var(--muted);text-align:left}
+.cell .g{font-family:var(--cond);font-size:22px;font-weight:600;line-height:1}
+.cell .s{font-size:12px;margin-top:4px}
+.cell.shortage_risk{background:var(--trip-bg);border-color:var(--trip);color:var(--trip)}
+.cell.balanced{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.cell.excess_stock_risk{background:var(--cool-bg);border-color:var(--cool);color:var(--cool)}
+.cell.insufficient_data{color:var(--ink2)}
+.cell.sel{outline:2.5px solid var(--ink);outline-offset:1px}
+.cell.dim{opacity:.35}
+.lamp{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:1px;background:currentColor}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:12px;color:var(--ink2)}
+.legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+.legend .l1::before{background:var(--trip)}.legend .l2::before{background:var(--ok)}.legend .l3::before{background:var(--cool)}.legend .l4::before{background:var(--ink2)}
+.sig{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:8px;background:var(--surface);font-weight:400}
+.sig.on{border-color:var(--ink);box-shadow:inset 3px 0 0 var(--ink)}
+.sig .t{display:flex;gap:8px;align-items:baseline;justify-content:space-between}
+.sig .nm{font-weight:500}
+.sc{font-family:var(--cond);font-weight:600;font-size:18px;white-space:nowrap}
+.bar{position:relative;height:6px;background:var(--muted);border-radius:3px;margin:7px 0 6px}
+.bar::after{content:"";position:absolute;left:50%;top:-3px;width:1px;height:12px;background:var(--ink2)}
+.bar i{position:absolute;top:0;height:6px;border-radius:3px}
+.chip{display:inline-block;font-size:12px;padding:1px 8px;border-radius:20px;border:1px solid var(--line);margin:2px 4px 0 0;color:var(--ink2)}
+.chip.d{color:var(--demand);border-color:var(--demand)}
+.chip.s{color:var(--supply);border-color:var(--supply)}
+.chip.flag{color:var(--trip);border-color:var(--trip)}
+.chip.stale{color:var(--amber);border-color:var(--amber)}
+.ev li{margin-bottom:6px}
+.ev .for{color:var(--ok);font-weight:600}
+.ev .against{color:var(--trip);font-weight:600}
+.pest{display:grid;grid-template-columns:110px 1fr 24px;gap:6px 10px;align-items:center;font-size:13px}
+.pest .b{height:10px;border-radius:3px;background:var(--steel)}
+:root[data-theme="dark"] .pest .b{background:var(--ink2)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pest .b{background:var(--ink2)}}
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.scard{border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.scard .nm{font-family:var(--cond);font-size:19px;font-weight:600}
+.lk{font-size:12px;padding:1px 8px;border-radius:20px;margin-left:6px}
+.lk.high{background:var(--trip-bg);color:var(--trip)}.lk.medium{background:var(--amber-bg);color:var(--amber)}.lk.low{background:var(--muted);color:var(--ink2)}
+.tblwrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--ink2);font-size:13px}
+td.num{font-family:var(--cond);font-size:17px;font-weight:600;text-align:center}
+tr.picked td{background:var(--ok-bg)}
+.rec{border:2px solid var(--steel);border-radius:10px;padding:16px 18px;margin-bottom:12px;background:var(--surface)}
+:root[data-theme="dark"] .rec{border-color:var(--ink2)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rec{border-color:var(--ink2)}}
+.rec .act{font-size:18px;font-weight:600;margin:4px 0 10px;line-height:1.35}
+.kv{display:grid;grid-template-columns:150px 1fr;gap:6px 14px;font-size:14px}
+@media (max-width:560px){.kv{grid-template-columns:1fr}.kv dt{margin-top:6px}}
+.kv dt{color:var(--ink2)}
+.kv dd{margin:0}
+.decision{font-weight:600}
+.decision.approved{color:var(--ok)}.decision.rejected{color:var(--trip)}.decision.adjusted{color:var(--amber)}
+.err{color:var(--trip);font-size:13px;margin-top:4px}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.form label{display:flex;flex-direction:column;font-size:13px;color:var(--ink2);gap:3px}
+.src{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:640px){.src{grid-template-columns:minmax(0,1fr)}}
+.src h3{margin:0 0 8px;font-family:var(--cond);font-size:18px;font-weight:600}
+.ds{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:6px;background:var(--surface);font-weight:400;font-size:14px}
+.ds .box{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--ink2);flex:none;display:grid;place-items:center;font-size:12px;line-height:1}
+.ds.on.d{border-color:var(--demand);background:var(--cool-bg)}
+.ds.on.s{border-color:var(--supply);background:var(--amber-bg)}
+.ds.on .box{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.ds.off{color:var(--ink2)}
+.ds .cnt{margin-left:auto;font-size:12px;color:var(--ink2);white-space:nowrap}
+div.ds{cursor:default}
+.empty{text-align:center;padding:40px 20px}
+.empty h2{font-size:26px}
+.hidden{display:none!important}
+.prose{max-width:72ch}
+.status{font-size:14px;margin-top:8px}
+@media (prefers-reduced-motion:no-preference){.flash{animation:fl 1.2s ease-out 1}@keyframes fl{0%{background:var(--amber-bg)}100%{background:var(--surface)}}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <div>
+      <h1>Relay supply early-warning desk</h1>
+      <p class="sub">From Weak Signals to Smarter Decisions</p>
+    </div>
+    <nav role="tablist" aria-label="Sections">
+      <button role="tab" data-tab="dash" aria-selected="true">Dashboard</button>
+      <button role="tab" data-tab="signals" aria-selected="false">Signals</button>
+      <button role="tab" data-tab="run" aria-selected="false">Run analysis</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- DASHBOARD -->
+<section id="tab-dash" role="tabpanel"></section>
+
+<!-- SIGNALS -->
+<section id="tab-signals" role="tabpanel" class="hidden">
+  <div class="panel">
+    <h2>Analysis context</h2>
+    <div class="form">
+      <label>Today's date<input type="date" id="ctxToday"></label>
+      <label>Focus<select id="ctxFocus"><option value="all">All regions</option><option>EUROPE</option><option>AMER</option><option>APAC</option><option>MEA</option></select></label>
+      <label style="grid-column:1/-1">Team notes<input type="text" id="ctxNotes" placeholder="Focus on medium-voltage relays for data center substations"></label>
+    </div>
+  </div>
+  <div class="panel">
+    <h2>Data used in this prototype</h2>
+    <p class="small muted" style="margin-top:-4px">These are the data categories from ABB's solution vision. Pick up to 3 per side. Only signals in the selected categories are sent to the analysis.</p>
+    <div id="srcEdit"></div>
+    <div class="err" id="srcErr" role="alert"></div>
+  </div>
+  <div class="panel">
+    <div class="row"><h2 style="margin:0">Input signals</h2><span class="spacer"></span>
+      <button id="btnDemoSignals">Load demo signals</button>
+      <button id="btnExportSignals">Export signals</button>
+      <button id="btnClearSignals">Clear all</button>
+    </div>
+    <p class="small muted">Each signal is one data point with a source and date. The analysis only uses what's listed here.</p>
+    <div class="tblwrap"><table id="sigTable"></table></div>
+  </div>
+  <div class="panel">
+    <h2>Add a signal</h2>
+    <div class="form" id="sigForm">
+      <label>ID<input name="id" placeholder="S12"></label>
+      <label style="grid-column:span 2">Data category<select name="dataset" id="fDataset"></select></label>
+      <label>Region<select name="region"><option>EUROPE</option><option>AMER</option><option>APAC</option><option>MEA</option><option>GLOBAL</option></select></label>
+      <label>Segment<select name="segment"><option>Infrastructure</option><option>Utilities</option><option>Industry</option><option>All</option></select></label>
+      <label style="grid-column:span 2">Indicator<input name="indicator" placeholder="Data center grid connection requests"></label>
+      <label>Value<input name="value" placeholder="24 GW"></label>
+      <label>Previous value<input name="previous_value" placeholder="18 GW"></label>
+      <label>Unit<input name="unit" placeholder="GW"></label>
+      <label>Published<input type="date" name="published_date"></label>
+      <label>Source<input name="source" placeholder="Fingrid"></label>
+      <label>URL<input name="url" placeholder="https://"></label>
+      <label style="grid-column:1/-1">Note<input name="note" placeholder="Quarterly update, inquiries are non-binding"></label>
+    </div>
+    <div class="err" id="sigFormErr" role="alert"></div>
+    <div class="row" style="margin-top:10px"><button class="primary" id="btnAddSignal">Add signal</button></div>
+  </div>
+  <div class="panel">
+    <h2>Import signals as JSON</h2>
+    <p class="small muted">Paste a JSON list of signals in the input format. This replaces the current list.</p>
+    <textarea id="sigImport" rows="6" placeholder='[{"id":"S1","side":"demand", ...}]'></textarea>
+    <div class="err" id="sigImportErr" role="alert"></div>
+    <div class="row" style="margin-top:8px"><button id="btnImportSignals">Import signals</button></div>
+  </div>
+</section>
+
+<!-- RUN -->
+<section id="tab-run" role="tabpanel" class="hidden">
+  <div class="panel prose" id="runClaude">
+    <h2>Run here with built-in AI</h2>
+    <p class="small muted">Sends the system prompt, your context and the current signals in one request, then loads the JSON result into the dashboard. It can take a minute or two.</p>
+    <div class="row"><button class="primary" id="btnRunClaude">Run analysis</button><button id="btnStop" class="hidden">Stop</button></div>
+    <div class="status" id="runStatus" aria-live="polite"></div>
+  </div>
+  <div class="panel prose hidden" id="runGemini">
+    <h2>Run with the Gemini API</h2>
+    <p class="small muted">Works when this file runs on your own computer. The key stays in this browser tab only and is not saved to disk.</p>
+    <div class="form">
+      <label>Gemini API key<input type="password" id="gKey" autocomplete="off" placeholder="Paste your key from Google AI Studio"></label>
+      <label>Model<input type="text" id="gModel" value="gemini-2.5-flash"></label>
+    </div>
+    <p class="small muted">Check Google AI Studio for the current model names and change the model field if needed.</p>
+    <div class="row"><button class="primary" id="btnRunGemini">Run analysis</button><button id="btnStopG" class="hidden">Stop</button></div>
+    <div class="status" id="gStatus" aria-live="polite"></div>
+  </div>
+  <div class="panel prose">
+    <h2>Run with Gemini by copy and paste</h2>
+    <ol class="small">
+      <li>Copy the prompt package below. Put the part under "System instruction" into Gemini's system instruction, and the part under "User message" as the message.</li>
+      <li>Set the response type to JSON and the temperature to about 0.2.</li>
+      <li>Paste Gemini's JSON answer into the box and load it.</li>
+    </ol>
+    <div class="row"><button id="btnCopyPkg">Copy prompt package</button><button id="btnShowPkg">Show prompt package</button><span class="small muted" id="copyMsg" aria-live="polite"></span></div>
+    <textarea id="pkgBox" rows="10" class="hidden" readonly style="margin-top:10px"></textarea>
+    <h3>Gemini result</h3>
+    <textarea id="resultImport" rows="8" placeholder='{"as_of_date": "...", "signals": [...], ...}'></textarea>
+    <div class="err" id="resultImportErr" role="alert"></div>
+    <div class="row" style="margin-top:8px"><button class="primary" id="btnLoadResult">Load result</button><button id="btnDemoResult">Load demo result</button></div>
+  </div>
+</section>
+</main>
+
+<script type="text/plain" id="sysprompt"># SYSTEM PROMPT: AI AGENTS TURN WEAK SIGNALS INTO EARLY INSIGHT AND BETTER DECISIONS
+## ABB Distribution Solutions, protection relay business
+
+You are the **AI Agents Platform** described in ABB's "Vision for the solution". You follow its five sections exactly:
+
+1. Connected ecosystem data
+2. AI agents platform (six agents, orchestration and reasoning, knowledge graph, human in the loop, capabilities)
+3. Decision areas (seven)
+4. Optimisation objectives (four)
+5. Outcomes (six)
+
+ABB Distribution Solutions makes protection relays plus control, automation, monitoring, communication and software for generation, transmission, distribution and industrial and commercial networks. Its demand comes from electrification investment; its supply depends on electronics and the electronics supply chain. Both sides interact: growth creates demand, but also pressure on supply.
+
+You RECOMMEND. You never decide or execute. A human expert reviews, validates and applies strategic judgment to everything you produce.
+
+---
+
+## GROUND RULES (apply to every section)
+
+1. **Use only provided data.** Use only the signals in `<signals>` (and search results if a search tool is enabled). Never invent numbers, dates, projects, companies, customers or sources.
+2. **Cite everything.** Every factual claim cites a signal `id` (or a search source URL).
+3. **Missing is not neutral.** A data category without signals is `no_data`, never a score of 0.
+4. **ABB internal data is not available** unless it appears in `<signals>`: Customer forecasts & RFQs, Order intake & backlog, and ABB's own inventory. Never estimate them. Say what they would add.
+5. **No sales predictions.** Do not forecast sales, order volumes or market sizes. Assess signals, build scenarios, and recommend actions that hold up across scenarios. If a signal carries a `trend` object computed by the team, use it only as a low–high range to judge whether a change persists.
+6. **Balanced evidence.** Weigh growth-supporting and reversal-warning evidence equally. Never hide counter-evidence.
+7. **No customer names or customer-level decisions.** Speak in segments and regions.
+
+**Regions:** AMER, APAC, MEA (Middle East and Africa), EUROPE, plus GLOBAL for signals that apply everywhere.
+**Segments:** Infrastructure (data centers, EV charging, telecom), Utilities (generation, T&D, substations), Industry (manufacturing, process, commercial and industrial).
+**Time horizons:** Short (0–3 months), Medium (3–12 months), Long (1–3 years).
+
+**Scoring scale.** All scores use only `{-100, -75, -50, -25, 0, 25, 50, 75, 100}`.
+- Demand score: + means demand for ABB products is growing; − means slowing.
+- Supply score: + means supply is LOOSE (short lead times, falling prices, good availability); − means supply is TIGHT.
+- Every score also carries `confidence`: low | medium | high.
+
+---
+
+## SECTION 1: CONNECTED ECOSYSTEM DATA
+*Multiple sources. Different time horizons.*
+
+### Demand side data (electrification and market signals)
+- Market & policy development
+- Project pipelines & permitting
+- Grid plans & investments
+- Customer forecasts & RFQs (ABB internal)
+- Order intake & backlog (ABB internal)
+- Industry & macro economics
+- Commodity & energy prices
+- News & events (ESG, geopolitics)
+
+### Supply side data (electronics and supply chain signals)
+- Component demand & market data
+- Lead times & allocations
+- Pricing & cost indices
+- Supplier & capacity announcements
+- Inventory & distributor data
+- Product lifecycle & EOL notices
+- Logistics & risk indicators
+- Raw material & chemicals
+
+`<context>` lists the `active_datasets` for this run. Only those categories were collected. Report every category's status.
+
+### Data integration layer
+Before analysis, check each signal for:
+- **APIs & connectors:** record `source` and `url` as given.
+- **Data quality:** flag missing values, vague values, unclear units and illustrative or placeholder values.
+- **Standardisation:** map each signal to exactly one category, region, segment and side.
+- **Storage & lineage:** record the source, date and freshness. A fast indicator (prices, lead times, news, distributor data, logistics) older than 6 months, or a slow one (policy, grid plans, project pipelines, macro) older than 18 months, is `stale` and loses one confidence level.
+
+---
+
+## SECTION 2: AI AGENTS PLATFORM
+*From data to insight.* Run the six agents in this order. Each agent writes a short log of what it found, citing signal ids.
+
+### Market Intelligence Agent
+*Scans and monitors markets and projects.*
+Reviews all demand-side signals. For each, it states what changed and assigns a demand score, confidence, region, segment, and a PESTLE tag (Political | Economic | Social | Technological | Legal | Environmental) describing the driver.
+
+### Supply Chain Agent
+*Monitors components, suppliers and capacity.*
+Reviews all supply-side signals. For each, it states what changed and assigns a supply score (tight = negative), confidence, and the component families or suppliers affected, in general terms.
+
+### Signal Detection Agent
+*Finds anomalies, changes and turning points.*
+For every signal it decides:
+- `indicator_type`: leading | coincident | lagging
+- `lead_time_months`: estimated range by which it precedes ABB orders or supply changes
+- `nature`: structural (persists 2+ periods, 2+ independent sources, long-term driver) | cyclical (rates, investment or inventory cycles) | temporary_shock (single event or source, likely to revert)
+- `anomaly`: true if the value breaks clearly from its previous value or from other signals
+- `turning_point`: true only if direction reversed versus the previous period AND confidence is at least medium
+
+For every signal with |score| ≥ 50 it actively searches the inputs for counter-evidence and lists `supporting_ids` and `contradicting_ids`. If none exists, it writes "no counter-evidence found in provided data".
+
+### AI orchestration and reasoning
+Between the agents, the orchestrator:
+- **Correlates signals across ecosystems:** links demand changes to supply changes, e.g. a demand surge in one segment competing for the same components that are tightening.
+- **Separates noise from real change:** uses the Signal Detection Agent's classification. Temporary shocks never drive a firm commitment on their own.
+- **Assesses uncertainty and dependencies:** lists what the conclusions depend on and how confident they are.
+- **Builds scenarios and what-ifs:** hands the key region-segment pairs to the Scenario Builder Agent.
+- **Learns and improves over time:** reads `<feedback>`, which holds past recommendations and the human's decisions (approved, adjusted, rejected, with notes). If the human rejected or adjusted a similar recommendation before, say so and explain whether this situation is different. Never override a human decision; adapt the new proposal.
+
+**Aggregation (demand–supply balancing):**
+- `S_demand(region, segment)` = confidence-weighted average of demand scores (high 3, medium 2, low 1), rounded to the scale. GLOBAL demand signals count for every region; "All" segment signals count for every segment.
+- `S_supply(region)` = confidence-weighted average of supply signals for that region plus GLOBAL ones, rounded to the scale.
+- `gap = round_to_scale((S_demand − S_supply) / 2)`; round halves away from zero.
+  - gap ≥ +50 → `shortage_risk`
+  - −25 ≤ gap ≤ +25 → `balanced`
+  - gap ≤ −50 → `excess_stock_risk`
+  - Missing demand or supply → `insufficient_data`
+  - Example: demand +75, supply −75 gives gap +75, a shortage risk.
+
+### Knowledge graph
+Build a small graph connecting the entities found in the signals. Node types: Project, Product, Component, Supplier, Customer segment, Region, Technology, Policy. Every edge cites the signal ids it comes from. Add nothing that the signals don't support. Use "Customer segment", never named customers.
+
+### Scenario Builder Agent
+*Creates alternative future scenarios.*
+For the most important region-segment pairs (at most 3, prioritising |gap| ≥ 50), build exactly three scenarios:
+- `surge`: demand confirms and supply tightens further
+- `base`: current trends continue
+- `reversal`: key demand signals fail or supply loosens quickly
+Each scenario has observable triggers, a qualitative likelihood (low | medium | high, never percentages), and the implication for components, capacity and inventory.
+
+### Impact Assessment Agent
+*Estimates business impact and trade-offs.*
+For each scenario set, evaluate at least three candidate actions: `monitor` (no commitment, review at next update), `flexible_commitment` (secure supply or capacity with options to extend, reduce or cancel), and `firm_commitment` (lock a fixed volume now). Score each action in each scenario on the scale (+ good for ABB, − bad), weighing shortage cost (missed deliveries, expediting, lost customers) against excess cost (tied-up cash, obsolescence). Name the main trade-off in one sentence.
+
+### Recommendation Agent
+*Proposes actions and priorities.*
+- Choose the action with the best WORST-CASE score. On a tie, choose the higher likelihood-weighted score (low 1, medium 2, high 3).
+- Give each recommendation a priority (1 = act first), a decision area, the act-by date, cost if wrong, what would change it, and the next review date.
+- If no pair has |gap| ≥ 50, recommend `monitor` and name the three signals to watch.
+
+### Human in the loop
+*Expert review, validation and strategic judgment.*
+Every recommendation has `requires_human_approval: true`. List the specific points the human should validate, such as an assumption, a stale source, or a low-confidence signal the conclusion depends on.
+
+### Capabilities
+Your output must deliver each capability in the vision:
+- **Early warning & weak signals:** a list of alerts with level (watch | warning | critical), message and signal ids
+- **Scenario & what-if analysis:** the scenarios and action evaluation
+- **Demand–supply balancing:** the balance matrix
+- **Risk & opportunity assessment:** a list of risks and opportunities with rating, horizon and signal ids
+- **Time horizon view:** findings grouped into short, medium and long
+- **Explainability & transparency:** a plain-language rationale and cited signal ids on every item
+- **Alerts & action dashboards:** a structure the dashboard can render directly (the JSON below)
+
+---
+
+## SECTION 3: DECISION AREAS
+*Better decisions, better outcomes.*
+
+Answer every question below. For each answer give `data_sufficiency` (sufficient | partial | insufficient), confidence, horizon and cited signal ids. When the data is partial or insufficient, say exactly which data category would close the gap, and keep the answer to what the evidence supports.
+
+| Decision area | Questions |
+|---|---|
+| Demand & Sales | Where is demand accelerating? Which segments & customers to focus? How to price & position? |
+| Procurement | What & when to buy or commit? Which components to secure? How to manage suppliers & risk? |
+| Manufacturing | How to plan capacity & production? What is the optimal product mix? Where are bottlenecks? |
+| Inventory & Working Capital | How much inventory to hold? Where is excess or shortage risk? How to balance cost & availability? |
+| Customer & Order Allocation | Which orders to prioritise? How to balance price vs. relationships? How to protect strategic customers? |
+| Product & Engineering | Which components to qualify? Where to increase flexibility? Which products to develop? |
+| Investment & Strategy | Where to invest in capacity? How to strengthen resilience? Which technologies & regions? |
+
+Special rules:
+- **"Which customers to focus?"** Answer at segment level only.
+- **Pricing and order allocation** are commercial decisions. Describe the considerations and trade-offs, never set prices or rank customers. Order allocation also needs Order intake & backlog data, so it is `insufficient` unless that data is provided.
+- **"How much inventory to hold?"** Give a direction and range in months of coverage based on lead times, labelled as an assumption, never a unit quantity.
+
+---
+
+## SECTION 4: OPTIMISATION OBJECTIVES
+*Balance multiple objectives across time horizons.*
+
+- **Profitability:** maximise margin, reduce total cost, improve cash flow
+- **Customer value:** reliable deliveries, strong relationships, higher lifetime value
+- **Growth:** capture market growth, expand share, future readiness
+- **Resilience:** secure supply, manage risk, ensure continuity
+
+Score every recommendation against all four on the scale, then apply the weights (overridden by `<policy>` if given):
+
+| Objective | Base case | Supply disruption (any S_supply ≤ −50) |
+|---|---|---|
+| Profitability | 30% | 20% |
+| Customer value | 25% | 35% |
+| Growth | 25% | 15% |
+| Resilience | 20% | 30% |
+
+Report which weight set you used and why, the weighted score rounded to the scale, and the main tension between objectives in one sentence.
+
+---
+
+## SECTION 5: OUTCOMES
+*From insight to measurable impact.*
+
+For each outcome, describe the expected direction of impact from the recommendations. Any number must be labelled as an assumption with its basis. Never produce NPS, margin %, revenue or OTIF figures.
+- Better timing of actions
+- Lower cost & less waste
+- Higher availability & reliability
+- Stronger customer retention
+- Higher margins & cash flow
+- Sustainable long-term value
+
+---
+
+## INPUT FORMAT
+The user message contains:
+- `<context>`: today's date, focus, active_datasets, notes
+- `<signals>`: JSON list; each item has `id, dataset, source, url, published_date, region, segment, side, indicator, value, unit, previous_value, note`, and optionally `trend: {horizon_months, low, mid, high, method}`
+- `<feedback>` (optional): past recommendations and the human's decisions
+- `<policy>` (optional): overrides for weights or thresholds
+
+---
+
+## OUTPUT FORMAT
+Return ONLY valid JSON with this structure. No markdown, no text outside the JSON. Keep every list item short and specific.
+
+```json
+{
+  "as_of_date": "",
+  "executive_briefing": "3-5 plain sentences a planner can read in 30 seconds",
+
+  "ecosystem_data": {
+    "demand_side": [ { "dataset": "", "status": "active|no_data|not_collected", "signal_ids": [], "note": "" } ],
+    "supply_side": [ { "dataset": "", "status": "active|no_data|not_collected", "signal_ids": [], "note": "" } ],
+    "integration_layer": {
+      "data_quality_issues": [ { "signal_id": "", "issue": "" } ],
+      "lineage": [ { "signal_id": "", "source": "", "url": "", "published_date": "", "stale": false } ]
+    }
+  },
+
+  "signals": [
+    {
+      "id": "", "dataset": "", "agent": "market_intelligence|supply_chain",
+      "region": "", "segment": "", "side": "demand|supply", "pestle": "",
+      "what_changed": "", "score": 0, "confidence": "low|medium|high",
+      "indicator_type": "", "lead_time_months": "", "nature": "",
+      "anomaly": false, "turning_point": false, "stale": false, "trend_note": "",
+      "supporting_ids": [], "contradicting_ids": [], "rationale": ""
+    }
+  ],
+
+  "agent_log": [
+    { "agent": "market_intelligence|supply_chain|signal_detection|orchestration|scenario_builder|impact_assessment|recommendation",
+      "findings": [ { "text": "", "signal_ids": [] } ] }
+  ],
+
+  "orchestration": {
+    "cross_ecosystem_correlations": [ { "finding": "", "demand_ids": [], "supply_ids": [] } ],
+    "noise_vs_real_change": [ { "signal_id": "", "verdict": "real_change|noise|unclear", "why": "" } ],
+    "uncertainties_and_dependencies": [ "" ],
+    "learning_from_feedback": [ "" ]
+  },
+
+  "knowledge_graph": {
+    "nodes": [ { "id": "", "type": "Project|Product|Component|Supplier|Customer segment|Region|Technology|Policy", "label": "" } ],
+    "edges": [ { "from": "", "to": "", "relation": "", "signal_ids": [] } ]
+  },
+
+  "pestle_coverage": {
+    "counts": { "Political": 0, "Economic": 0, "Social": 0, "Technological": 0, "Legal": 0, "Environmental": 0 },
+    "missing": [], "strongest_driver": ""
+  },
+
+  "balance_matrix": [
+    { "region": "", "segment": "", "s_demand": 0, "s_supply": 0, "gap": 0,
+      "status": "shortage_risk|balanced|excess_stock_risk|insufficient_data" }
+  ],
+
+  "capabilities": {
+    "early_warnings": [ { "level": "watch|warning|critical", "message": "", "signal_ids": [] } ],
+    "risks_and_opportunities": [ { "type": "risk|opportunity", "description": "", "rating": "low|medium|high", "horizon": "short|medium|long", "signal_ids": [] } ],
+    "time_horizon_view": { "short": [ "" ], "medium": [ "" ], "long": [ "" ] }
+  },
+
+  "scenarios": [
+    { "region": "", "segment": "", "name": "surge|base|reversal",
+      "triggers": [], "likelihood": "low|medium|high", "component_implication": "" }
+  ],
+
+  "action_evaluation": [
+    { "region": "", "segment": "", "action": "monitor|flexible_commitment|firm_commitment|other",
+      "description": "", "score_surge": 0, "score_base": 0, "score_reversal": 0,
+      "worst_case": 0, "selected": false, "trade_off": "" }
+  ],
+
+  "recommendations": [
+    { "priority": 1, "decision_area": "", "region": "", "segment": "", "action": "", "components": [],
+      "horizon": "short|medium|long", "act_by": "", "why_robust": "", "cost_if_wrong": "",
+      "would_change_if": [], "next_review": "", "requires_human_approval": true,
+      "human_should_validate": [],
+      "weights_used": "base|disruption",
+      "objective_scores": { "profitability": 0, "customer_value": 0, "growth": 0, "resilience": 0 },
+      "weighted_score": 0, "balance_explanation": "" }
+  ],
+
+  "decision_areas": [
+    { "area": "Demand & Sales|Procurement|Manufacturing|Inventory & Working Capital|Customer & Order Allocation|Product & Engineering|Investment & Strategy",
+      "questions": [
+        { "question": "", "answer": "", "data_sufficiency": "sufficient|partial|insufficient",
+          "missing_data": [], "confidence": "low|medium|high", "horizon": "short|medium|long", "signal_ids": [] }
+      ] }
+  ],
+
+  "optimisation_objectives": {
+    "weights_used": "base|disruption",
+    "why": "",
+    "main_tension": ""
+  },
+
+  "expected_outcomes": [
+    { "outcome": "Better timing of actions|Lower cost & less waste|Higher availability & reliability|Stronger customer retention|Higher margins & cash flow|Sustainable long-term value",
+      "direction": "", "assumption": "" }
+  ],
+
+  "data_gaps": [],
+  "human_review_summary": ""
+}
+```
+
+## FINAL CHECKS BEFORE ANSWERING
+- All 16 data categories appear in `ecosystem_data` with a status.
+- All six agents appear in `agent_log`.
+- All 7 decision areas and all 21 questions are answered, with data sufficiency stated.
+- All 4 objectives are scored on every recommendation; all 6 outcomes are listed.
+- Every score is from the allowed set; tight supply is negative.
+- Every number traces to a signal id, a formula in this prompt, or is labelled as an assumption.
+- Every strong signal has a counter-evidence review.
+- Every recommendation was chosen by the worst-case rule and requires human approval.
+- No sales or volume predictions, no prices, no customer names.</script>
+<script type="application/json" id="demoSignals">[{"id": "S1", "dataset": "Grid plans & investments", "source": "Fingrid (Hydrogen Summit presentation)", "url": "https://di9mr54a05a64.cloudfront.net/api-tamperefairs.expoplatform.com/files/Hydrogen/2025/H2Summit2025_Fingid_Jussi%20N%C3%A4rhi_22.1.2025.pdf", "published_date": "2025-01-22", "region": "EUROPE", "segment": "All", "side": "demand", "indicator": "TSO grid connection inquiries (Finland)", "value": "~400 GW production, ~60 GW consumption (non-binding)", "unit": "GW", "previous_value": "", "note": "TSO says ~75% of projected demand growth has no investment decision or connection agreement yet"}, {"id": "S2", "dataset": "Market & policy development", "source": "Fingrid", "url": "https://www.fingrid.fi/en/grid/grid-connection-agreement-phases/grid-code-specifications/draft-for-comments-kjv2026-grid-code-specifications-for-demand-connections/", "published_date": "2026-06-12", "region": "EUROPE", "segment": "All", "side": "demand", "indicator": "New grid code for large demand connections", "value": "Requirements for facilities over 30 MW incl. real-time measurement and disturbance recorders at connection point", "unit": "", "previous_value": "Older code without these requirements", "note": "Target entry into force March 2027"}, {"id": "S3", "dataset": "Project pipelines & permitting", "source": "Google", "url": "https://www.googlecloudpresscorner.com/2026-09-09-Google-Deepens-Commitment-to-Finland-with-Two-Year-EUR13-Billion-investment-in-AI-Infrastructure", "published_date": "2026-09-09", "region": "EUROPE", "segment": "Infrastructure", "side": "demand", "indicator": "Hyperscaler data center investment", "value": "At least EUR 13 bn over 2027-2028 in four sites", "unit": "EUR", "previous_value": "", "note": "Largest single Google investment in Europe"}, {"id": "S4", "dataset": "Project pipelines & permitting", "source": "Cerebras Systems", "url": "https://investors.cerebras.ai/news-releases/news-release-details/cerebras-and-compute-nordic-finland-announce-new-165-mw-ai-data", "published_date": "2026-09-01", "region": "EUROPE", "segment": "Infrastructure", "side": "demand", "indicator": "New AI data center project", "value": "165 MW, phased 50 -> 80 -> 165 MW", "unit": "MW", "previous_value": "", "note": "Phased build-out"}, {"id": "S5", "dataset": "Project pipelines & permitting", "source": "forumNordic (summarising IEA 2026 review)", "url": "https://forumnordic.com/business/finlands-hydrogen-dilemma-the-molecule-is-ready-the-market-is-not/", "published_date": "2026-06-30", "region": "EUROPE", "segment": "Industry", "side": "demand", "indicator": "Global 2030 hydrogen project pipeline", "value": "Down around a quarter year on year", "unit": "%", "previous_value": "", "note": "High costs, uncertain demand, lack of infrastructure"}, {"id": "S6", "dataset": "Grid plans & investments", "source": "Castren & Snellman", "url": "https://www.castren.fi/fingrid-extends-restrictions-on-new-energy-storage-facility-connections-in-southern-finland-until-2029/", "published_date": "2025-10-01", "region": "EUROPE", "segment": "Infrastructure", "side": "demand", "indicator": "Grid connection capacity restrictions", "value": "Over 30 GW storage requests; restrictions extended to 2029", "unit": "GW", "previous_value": "", "note": "Month approximate; scarce connection capacity"}, {"id": "S7", "dataset": "Lead times & allocations", "source": "Distributor lead time report (ILLUSTRATIVE)", "url": "", "published_date": "2026-09-15", "region": "GLOBAL", "segment": "All", "side": "supply", "indicator": "Microcontroller lead times", "value": "ILLUSTRATIVE: 30 weeks", "unit": "weeks", "previous_value": "ILLUSTRATIVE: 20 weeks", "note": "ILLUSTRATIVE VALUE - replace with real data"}, {"id": "S8", "dataset": "Pricing & cost indices", "source": "Semiconductor price index (ILLUSTRATIVE)", "url": "", "published_date": "2026-09-30", "region": "GLOBAL", "segment": "All", "side": "supply", "indicator": "Contract price index for power-management ICs", "value": "ILLUSTRATIVE: up 3 months in a row", "unit": "index", "previous_value": "ILLUSTRATIVE: flat", "note": "ILLUSTRATIVE VALUE - replace with real data"}, {"id": "S9", "dataset": "Raw material & chemicals", "source": "News (ILLUSTRATIVE)", "url": "", "published_date": "2026-09-20", "region": "GLOBAL", "segment": "All", "side": "supply", "indicator": "Export controls on chip raw materials", "value": "ILLUSTRATIVE: new licence requirements announced", "unit": "", "previous_value": "", "note": "ILLUSTRATIVE VALUE - replace with a real, dated news item"}]</script>
+<script type="application/json" id="demoResult">{"_demo": true, "as_of_date": "2026-10-04", "executive_briefing": "Data center investment is turning into firm commitments, while hydrogen projects are shrinking. Combined with tightening component supply (illustrative in this demo), Europe infrastructure and utilities show a shortage risk. The recommended move is flexible framework agreements for key relay electronics now, reviewed in January.", "signals": [{"id": "S1", "region": "EUROPE", "segment": "All", "side": "demand", "pestle": "Economic", "what_changed": "A very large, mostly non-binding pipeline of grid connection inquiries.", "score": 50, "confidence": "low", "indicator_type": "leading", "lead_time_months": "24-48", "nature": "structural", "turning_point": false, "stale": true, "trend_note": "", "supporting_ids": ["S3", "S4"], "contradicting_ids": ["S5", "S6"], "rationale": "Strong interest, but inquiries are non-binding and the figure is over 18 months old, so confidence is lowered.", "dataset": "Grid plans & investments"}, {"id": "S2", "region": "EUROPE", "segment": "All", "side": "demand", "pestle": "Legal", "what_changed": "New rules mean every large new connection needs more measurement, recording and protection capability.", "score": 50, "confidence": "high", "indicator_type": "leading", "lead_time_months": "6-18", "nature": "structural", "turning_point": false, "stale": false, "trend_note": "", "supporting_ids": ["S3", "S4"], "contradicting_ids": [], "rationale": "Raises protection and monitoring content per connection in every segment.", "dataset": "Market & policy development"}, {"id": "S3", "region": "EUROPE", "segment": "Infrastructure", "side": "demand", "pestle": "Economic", "what_changed": "A hyperscaler committed at least EUR 13 bn to new data centers for 2027-2028.", "score": 75, "confidence": "high", "indicator_type": "leading", "lead_time_months": "12-24", "nature": "structural", "turning_point": false, "stale": false, "trend_note": "", "supporting_ids": ["S4", "S1"], "contradicting_ids": ["S6"], "rationale": "A firm, dated investment commitment is much stronger than a connection inquiry.", "dataset": "Project pipelines & permitting"}, {"id": "S4", "region": "EUROPE", "segment": "Infrastructure", "side": "demand", "pestle": "Technological", "what_changed": "A new 165 MW AI data center was announced with a phased build-out.", "score": 50, "confidence": "high", "indicator_type": "leading", "lead_time_months": "12-24", "nature": "structural", "turning_point": false, "stale": false, "trend_note": "", "supporting_ids": ["S3"], "contradicting_ids": ["S6"], "rationale": "Phasing means substation and protection needs arrive in steps.", "dataset": "Project pipelines & permitting"}, {"id": "S5", "region": "EUROPE", "segment": "Industry", "side": "demand", "pestle": "Economic", "what_changed": "The global 2030 hydrogen pipeline shrank by about a quarter in a year.", "score": -50, "confidence": "high", "indicator_type": "leading", "lead_time_months": "12-36", "nature": "cyclical", "turning_point": true, "stale": false, "trend_note": "", "supporting_ids": [], "contradicting_ids": ["S1"], "rationale": "Direction has turned from growth to contraction; electrolyser-related grid demand is likely to slip.", "dataset": "Project pipelines & permitting"}, {"id": "S6", "region": "EUROPE", "segment": "Infrastructure", "side": "demand", "pestle": "Legal", "what_changed": "Grid connection capacity is restricted in parts of the network until 2029.", "score": -25, "confidence": "medium", "indicator_type": "leading", "lead_time_months": "12-36", "nature": "structural", "turning_point": false, "stale": false, "trend_note": "", "supporting_ids": [], "contradicting_ids": ["S3"], "rationale": "Scarce grid capacity can delay or relocate projects.", "dataset": "Grid plans & investments"}, {"id": "S7", "region": "GLOBAL", "segment": "All", "side": "supply", "pestle": "Economic", "what_changed": "ILLUSTRATIVE: microcontroller lead times stretched from 20 to 30 weeks.", "score": -50, "confidence": "medium", "indicator_type": "leading", "lead_time_months": "3-9", "nature": "cyclical", "turning_point": true, "stale": false, "trend_note": "", "supporting_ids": ["S8"], "contradicting_ids": [], "rationale": "ILLUSTRATIVE: longer lead times are a direct sign of tightening supply.", "dataset": "Lead times & allocations"}, {"id": "S8", "region": "GLOBAL", "segment": "All", "side": "supply", "pestle": "Economic", "what_changed": "ILLUSTRATIVE: contract prices for power-management ICs rose three months in a row.", "score": -25, "confidence": "medium", "indicator_type": "coincident", "lead_time_months": "0-6", "nature": "cyclical", "turning_point": false, "stale": false, "trend_note": "", "supporting_ids": ["S7"], "contradicting_ids": [], "rationale": "ILLUSTRATIVE: rising prices usually accompany tightening supply.", "dataset": "Pricing & cost indices"}, {"id": "S9", "region": "GLOBAL", "segment": "All", "side": "supply", "pestle": "Political", "what_changed": "ILLUSTRATIVE: new export licence requirements on chip raw materials.", "score": -50, "confidence": "medium", "indicator_type": "leading", "lead_time_months": "3-12", "nature": "temporary_shock", "turning_point": false, "stale": false, "trend_note": "", "supporting_ids": ["S7"], "contradicting_ids": [], "rationale": "ILLUSTRATIVE: single policy event; impact depends on enforcement.", "dataset": "Raw material & chemicals"}], "pestle_coverage": {"counts": {"Political": 1, "Economic": 5, "Social": 0, "Technological": 1, "Legal": 2, "Environmental": 0}, "missing": ["Social", "Environmental"], "strongest_driver": "Economic: hyperscaler investment in new data centers"}, "balance_matrix": [{"region": "EUROPE", "segment": "Infrastructure", "s_demand": 50, "s_supply": -50, "gap": 50, "status": "shortage_risk"}, {"region": "EUROPE", "segment": "Utilities", "s_demand": 50, "s_supply": -50, "gap": 50, "status": "shortage_risk"}, {"region": "EUROPE", "segment": "Industry", "s_demand": -25, "s_supply": -50, "gap": 25, "status": "balanced"}, {"region": "AMER", "segment": "Infrastructure", "s_demand": null, "s_supply": -50, "gap": null, "status": "insufficient_data"}, {"region": "AMER", "segment": "Utilities", "s_demand": null, "s_supply": -50, "gap": null, "status": "insufficient_data"}, {"region": "AMER", "segment": "Industry", "s_demand": null, "s_supply": -50, "gap": null, "status": "insufficient_data"}, {"region": "APAC", "segment": "Infrastructure", "s_demand": null, "s_supply": -50, "gap": null, "status": "insufficient_data"}, {"region": "APAC", "segment": "Utilities", "s_demand": null, "s_supply": -50, "gap": null, "status": "insufficient_data"}, {"region": "APAC", "segment": "Industry", "s_demand": null, "s_supply": -50, "gap": null, "status": "insufficient_data"}, {"region": "MEA", "segment": "Infrastructure", "s_demand": null, "s_supply": -50, "gap": null, "status": "insufficient_data"}, {"region": "MEA", "segment": "Utilities", "s_demand": null, "s_supply": -50, "gap": null, "status": "insufficient_data"}, {"region": "MEA", "segment": "Industry", "s_demand": null, "s_supply": -50, "gap": null, "status": "insufficient_data"}], "scenarios": [{"region": "EUROPE", "segment": "Infrastructure", "name": "surge", "triggers": ["More hyperscaler announcements in the region", "Connection agreements signed for announced sites", "Lead times keep stretching"], "likelihood": "medium", "component_implication": "Relay demand for data center substations rises from 2027 while component lead times stretch."}, {"region": "EUROPE", "segment": "Infrastructure", "name": "base", "triggers": ["Announced projects proceed on their phased schedules", "Supply pressure stays roughly where it is"], "likelihood": "high", "component_implication": "Steady growth in relay demand with moderately tight supply of key electronics."}, {"region": "EUROPE", "segment": "Infrastructure", "name": "reversal", "triggers": ["Hyperscaler capex guidance cut", "Projects delayed by grid capacity limits", "Lead times and component prices fall two months in a row"], "likelihood": "low", "component_implication": "Projects slip and component supply loosens; extra stock would sit idle."}, {"region": "EUROPE", "segment": "Utilities", "name": "surge", "triggers": ["Grid code confirmed on schedule", "Many large connections reach agreement in 2027"], "likelihood": "medium", "component_implication": "More relays with disturbance recording and real-time communication needed per connection."}, {"region": "EUROPE", "segment": "Utilities", "name": "base", "triggers": ["Grid code enters force around March 2027", "Connections continue at current pace"], "likelihood": "high", "component_implication": "Gradual shift toward relay variants with recording and communication features."}, {"region": "EUROPE", "segment": "Utilities", "name": "reversal", "triggers": ["Grid code delayed", "Large connection projects withdrawn"], "likelihood": "low", "component_implication": "Feature shift happens later; current component mix stays adequate."}], "action_evaluation": [{"region": "EUROPE", "segment": "Infrastructure", "action": "monitor", "description": "No commitment now; review after the next data update.", "score_surge": -75, "score_base": -25, "score_reversal": 25, "worst_case": -75, "selected": false}, {"region": "EUROPE", "segment": "Infrastructure", "action": "flexible_commitment", "description": "Framework agreements with volume options for key relay electronics.", "score_surge": 25, "score_base": 50, "score_reversal": 0, "worst_case": 0, "selected": true}, {"region": "EUROPE", "segment": "Infrastructure", "action": "firm_commitment", "description": "Buy and stock a fixed 12-month volume now.", "score_surge": 75, "score_base": 25, "score_reversal": -75, "worst_case": -75, "selected": false}, {"region": "EUROPE", "segment": "Utilities", "action": "monitor", "description": "No commitment now; review after the grid code is confirmed.", "score_surge": -50, "score_base": -25, "score_reversal": 0, "worst_case": -50, "selected": false}, {"region": "EUROPE", "segment": "Utilities", "action": "flexible_commitment", "description": "Add recording and communication components to framework agreements with options.", "score_surge": 25, "score_base": 25, "score_reversal": 0, "worst_case": 0, "selected": true}, {"region": "EUROPE", "segment": "Utilities", "action": "firm_commitment", "description": "Stock a fixed volume of components for new relay variants now.", "score_surge": 50, "score_base": 0, "score_reversal": -50, "worst_case": -50, "selected": false}], "recommendations": [{"region": "EUROPE", "segment": "Infrastructure", "action": "Set up framework agreements with volume options covering 6-9 months of key relay electronics, keeping part of the volume cancellable.", "components": ["Microcontrollers", "Power-management ICs", "Communication modules"], "horizon": "medium", "act_by": "2026-11-30", "why_robust": "It is the only option that avoids a bad outcome in every scenario: enough supply if demand surges, little stranded stock if projects slip.", "cost_if_wrong": "If projects slip, some optional volume is cancelled or carried as extra stock for a few months; if demand surges harder, the options can be extended.", "would_change_if": ["Hyperscaler capex guidance is cut", "Microcontroller lead times shorten two months in a row", "Announced sites lose their connection agreements"], "next_review": "2027-01-15", "requires_human_approval": true, "weights_used": "disruption", "objective_scores": {"profitability": 0, "customer_value": 50, "growth": 50, "resilience": 75}, "weighted_score": 50, "balance_explanation": "Supply is tight, so resilience and customer value weigh more than short-term cost.", "priority": 1, "decision_area": "Procurement"}, {"region": "EUROPE", "segment": "Utilities", "action": "Add measurement, recording and communication components for relays meeting new large-load requirements to existing framework agreements, with options rather than fixed volumes.", "components": ["Measurement front-end ICs", "Memory for disturbance recording", "Communication modules"], "horizon": "medium", "act_by": "2027-01-31", "why_robust": "Prepares for the new requirements without betting on exact timing of the grid code.", "cost_if_wrong": "If the code is delayed, options lapse with little cost; if it arrives early, supply is already arranged.", "would_change_if": ["Grid code confirmation is postponed", "Large connection projects are withdrawn"], "next_review": "2027-03-15", "requires_human_approval": true, "weights_used": "disruption", "objective_scores": {"profitability": 0, "customer_value": 50, "growth": 25, "resilience": 50}, "weighted_score": 25, "balance_explanation": "Moderate benefit across objectives with low downside.", "priority": 2, "decision_area": "Procurement"}], "manufacturing_implications": "Review relay production capacity for 2027 if connection agreements for the announced data center sites are confirmed; no capacity change yet.", "expected_outcomes": [{"outcome": "Better timing", "direction": "Procurement acts roughly 6-12 months before demand shows up in orders", "assumption": "Based on the 12-24 month lead time of the investment signals"}, {"outcome": "Higher availability", "direction": "Fewer shortages of key electronics if demand surges", "assumption": "Assumes suppliers honour framework volumes"}, {"outcome": "Lower cost and less waste", "direction": "Less spot buying in a surge and less stranded stock in a reversal", "assumption": "Cancellable volume share agreed with suppliers"}], "data_gaps": ["Order intake & backlog and Customer forecasts & RFQs (ABB internal) would confirm or reject these demand signals in production", "Latest grid connection inquiry figures by segment (current figure is over 18 months old)", "Real values for the three illustrative supply signals; Inventory & distributor data and Logistics & risk indicators are not collected in this prototype", "No signals for AMER, APAC or MEA demand"], "flags_for_other_teams": ["Product and engineering: the new grid code may increase demand for relays with built-in disturbance recording and real-time communication."], "decision_areas": [{"area": "Demand & Sales", "questions": [{"question": "Where is demand accelerating?", "answer": "Europe infrastructure (data centers) is accelerating; Europe industry linked to hydrogen is slowing.", "data_sufficiency": "sufficient", "missing_data": [], "confidence": "high", "horizon": "medium", "signal_ids": ["S3", "S4", "S5"]}, {"question": "Which segments & customers to focus?", "answer": "Data center and large-load grid connections in Europe; customer-level focus needs RFQ data.", "data_sufficiency": "partial", "missing_data": ["Customer forecasts & RFQs"], "confidence": "medium", "horizon": "medium", "signal_ids": ["S3", "S4", "S2"]}, {"question": "How to price & position?", "answer": "Position relays with built-in recording and communication for new large-load rules; pricing is a commercial decision.", "data_sufficiency": "partial", "missing_data": ["Order intake & backlog", "Pricing & cost indices (real values)"], "confidence": "low", "horizon": "medium", "signal_ids": ["S2", "S8"]}]}, {"area": "Procurement", "questions": [{"question": "What & when to buy or commit?", "answer": "Commit flexibly to key relay electronics before end of November.", "data_sufficiency": "sufficient", "missing_data": [], "confidence": "medium", "horizon": "medium", "signal_ids": ["S7", "S8", "S3"]}, {"question": "Which components to secure?", "answer": "Microcontrollers, power-management ICs and communication modules.", "data_sufficiency": "partial", "missing_data": ["Product lifecycle & EOL notices"], "confidence": "medium", "horizon": "medium", "signal_ids": ["S7", "S8"]}, {"question": "How to manage suppliers & risk?", "answer": "Prefer framework agreements with options; check exposure to export-controlled materials.", "data_sufficiency": "partial", "missing_data": ["Supplier & capacity announcements"], "confidence": "medium", "horizon": "medium", "signal_ids": ["S9"]}]}, {"area": "Manufacturing", "questions": [{"question": "How to plan capacity & production?", "answer": "No capacity change yet; review for 2027 once connection agreements are confirmed.", "data_sufficiency": "partial", "missing_data": ["Order intake & backlog"], "confidence": "medium", "horizon": "long", "signal_ids": ["S1", "S3"]}, {"question": "What is the optimal product mix?", "answer": "Shift toward variants meeting new large-load requirements.", "data_sufficiency": "partial", "missing_data": ["Order intake & backlog"], "confidence": "low", "horizon": "long", "signal_ids": ["S2"]}, {"question": "Where are bottlenecks?", "answer": "Likely component availability rather than assembly capacity.", "data_sufficiency": "partial", "missing_data": ["Inventory & distributor data"], "confidence": "low", "horizon": "medium", "signal_ids": ["S7"]}]}, {"area": "Inventory & Working Capital", "questions": [{"question": "How much inventory to hold?", "answer": "Raise coverage for critical electronics toward roughly 6-9 months (assumption based on lead times).", "data_sufficiency": "partial", "missing_data": ["ABB own inventory"], "confidence": "medium", "horizon": "medium", "signal_ids": ["S7"]}, {"question": "Where is excess or shortage risk?", "answer": "Shortage risk in Europe infrastructure and utilities; no excess risk seen.", "data_sufficiency": "sufficient", "missing_data": [], "confidence": "medium", "horizon": "medium", "signal_ids": ["S3", "S7"]}, {"question": "How to balance cost & availability?", "answer": "Use cancellable volumes so cash is not locked in if projects slip.", "data_sufficiency": "sufficient", "missing_data": [], "confidence": "medium", "horizon": "medium", "signal_ids": ["S6"]}]}, {"area": "Customer & Order Allocation", "questions": [{"question": "Which orders to prioritise?", "answer": "Cannot be answered without order data.", "data_sufficiency": "insufficient", "missing_data": ["Order intake & backlog"], "confidence": "low", "horizon": "short", "signal_ids": []}, {"question": "How to balance price vs. relationships?", "answer": "Commercial decision; protect delivery reliability for critical-infrastructure segments.", "data_sufficiency": "insufficient", "missing_data": ["Customer forecasts & RFQs"], "confidence": "low", "horizon": "short", "signal_ids": []}, {"question": "How to protect strategic customers?", "answer": "Secure supply early so allocation is less likely to be needed.", "data_sufficiency": "partial", "missing_data": ["Order intake & backlog"], "confidence": "low", "horizon": "medium", "signal_ids": ["S7"]}]}, {"area": "Product & Engineering", "questions": [{"question": "Which components to qualify?", "answer": "Second sources for microcontrollers and power-management ICs.", "data_sufficiency": "partial", "missing_data": ["Product lifecycle & EOL notices"], "confidence": "medium", "horizon": "medium", "signal_ids": ["S7", "S9"]}, {"question": "Where to increase flexibility?", "answer": "Designs that accept alternative communication and processing parts.", "data_sufficiency": "partial", "missing_data": ["Component demand & market data"], "confidence": "low", "horizon": "long", "signal_ids": ["S7"]}, {"question": "Which products to develop?", "answer": "Relays with built-in disturbance recording and real-time communication for large loads.", "data_sufficiency": "sufficient", "missing_data": [], "confidence": "medium", "horizon": "long", "signal_ids": ["S2"]}]}, {"area": "Investment & Strategy", "questions": [{"question": "Where to invest in capacity?", "answer": "Too early to decide; watch whether announced data center sites get connection agreements.", "data_sufficiency": "partial", "missing_data": ["Order intake & backlog"], "confidence": "low", "horizon": "long", "signal_ids": ["S1", "S3"]}, {"question": "How to strengthen resilience?", "answer": "Dual sourcing and flexible framework agreements for critical electronics.", "data_sufficiency": "sufficient", "missing_data": [], "confidence": "medium", "horizon": "long", "signal_ids": ["S7", "S9"]}, {"question": "Which technologies & regions?", "answer": "Data center grid connections in Europe; other regions not yet analysed.", "data_sufficiency": "partial", "missing_data": ["Project pipelines & permitting (other regions)"], "confidence": "low", "horizon": "long", "signal_ids": ["S3", "S4"]}]}], "agent_log": [{"agent": "market_intelligence", "findings": [{"text": "Data center investment in Europe is turning into firm commitments.", "signal_ids": ["S3", "S4"]}, {"text": "Hydrogen project pipeline is shrinking.", "signal_ids": ["S5"]}]}, {"agent": "supply_chain", "findings": [{"text": "Lead times and prices for key relay electronics are rising (illustrative).", "signal_ids": ["S7", "S8"]}]}, {"agent": "signal_detection", "findings": [{"text": "Turning points: hydrogen pipeline and microcontroller lead times.", "signal_ids": ["S5", "S7"]}, {"text": "Connection inquiry figure is stale.", "signal_ids": ["S1"]}]}, {"agent": "orchestration", "findings": [{"text": "Data center demand competes for the same electronics that are tightening.", "signal_ids": ["S3", "S7"]}]}, {"agent": "scenario_builder", "findings": [{"text": "Built surge, base and reversal scenarios for Europe infrastructure and utilities.", "signal_ids": ["S3", "S2"]}]}, {"agent": "impact_assessment", "findings": [{"text": "Firm commitment fails badly in a reversal; monitoring fails badly in a surge.", "signal_ids": ["S3", "S6"]}]}, {"agent": "recommendation", "findings": [{"text": "Flexible commitment has the best worst case in both areas.", "signal_ids": ["S3", "S7"]}]}], "capabilities": {"early_warnings": [{"level": "warning", "message": "Shortage risk building in Europe infrastructure and utilities.", "signal_ids": ["S3", "S7"]}, {"level": "watch", "message": "Hydrogen-related demand turning down.", "signal_ids": ["S5"]}], "risks_and_opportunities": [], "time_horizon_view": {"short": [], "medium": [], "long": []}}, "orchestration": {"cross_ecosystem_correlations": [], "noise_vs_real_change": [], "uncertainties_and_dependencies": [], "learning_from_feedback": []}}</script>
+
+<script>
+(function(){
+const ALLOWED=[-100,-75,-50,-25,0,25,50,75,100];
+const REGIONS=['EUROPE','AMER','APAC','MEA'];
+const SEGMENTS=['Infrastructure','Utilities','Industry'];
+const RLABEL={EUROPE:'Europe',AMER:'AMER',APAC:'APAC',MEA:'MEA',GLOBAL:'Global'};
+const STATUS={shortage_risk:'Shortage risk',balanced:'Balanced',excess_stock_risk:'Excess-stock risk',insufficient_data:'Not enough data'};
+const PESTLE=['Political','Economic','Social','Technological','Legal','Environmental'];
+const DATASETS={demand:['Market & policy development','Project pipelines & permitting','Grid plans & investments','Customer forecasts & RFQs','Order intake & backlog','Industry & macro economics','Commodity & energy prices','News & events (ESG, geopolitics)'],
+  supply:['Component demand & market data','Lead times & allocations','Pricing & cost indices','Supplier & capacity announcements','Inventory & distributor data','Product lifecycle & EOL notices','Logistics & risk indicators','Raw material & chemicals']};
+const INTERNAL=['Customer forecasts & RFQs','Order intake & backlog'];
+const DEFAULT_ACTIVE=['Project pipelines & permitting','Grid plans & investments','Market & policy development','Lead times & allocations','Pricing & cost indices','Raw material & chemicals'];
+const sideOf=d=>DATASETS.demand.includes(d)?'demand':DATASETS.supply.includes(d)?'supply':null;
+const $=s=>document.querySelector(s);
+const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>(n==null||n==='')?'n/a':(n>0?'+':'')+n;
+const store={
+  get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+const SYS=$('#sysprompt').textContent.trim();
+const DEMO_SIGNALS=JSON.parse($('#demoSignals').textContent);
+const DEMO_RESULT=JSON.parse($('#demoResult').textContent);
+
+const S={
+  signals:store.get('ew2.signals',null)||DEMO_SIGNALS.slice(),
+  result:store.get('ew2.result',null),
+  decisions:store.get('ew2.decisions',{}),
+  ctx:store.get('ew2.ctx',null)||{today:new Date().toISOString().slice(0,10),focus:'EUROPE',notes:'Focus on medium-voltage protection relays for large new grid connections.'},
+  active:store.get('ew2.active',null)||DEFAULT_ACTIVE.slice(),
+  sel:null,selSig:null,filters:{region:'ALL',segment:'ALL',horizon:'ALL'}
+};
+let sampleFn=null,dl=null,ctl=null;
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+function showTab(t){
+  document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t?'true':'false'));
+  ['dash','signals','run'].forEach(x=>$('#tab-'+x).classList.toggle('hidden',x!==t));
+  if(t==='dash')renderDash();
+  if(t==='signals')renderSignals();
+  if(t==='run')renderRun();
+  window.scrollTo(0,0);
+}
+
+/* ---------- validation ---------- */
+function validate(r){
+  const w=[];
+  if(!r||typeof r!=='object')return['The result is not a JSON object.'];
+  ['signals','balance_matrix','scenarios','recommendations'].forEach(k=>{if(!Array.isArray(r[k]))w.push('Missing list: '+k+'.')});
+  const chk=(v,where)=>{if(v!==null&&v!==undefined&&!ALLOWED.includes(v))w.push(where+' has '+v+', which is not on the allowed scale.')};
+  (r.signals||[]).forEach(s=>{chk(s.score,'Signal '+s.id);
+    if(s.side==='supply'&&s.score>0&&/tight|longer|shortage|restrict|allocation|rising price|increase in lead/i.test((s.what_changed||'')+' '+(s.rationale||'')))
+      w.push('Signal '+s.id+' describes tightening supply but scores it positive. Tight supply should be negative.');
+    if(s.dataset&&!sideOf(s.dataset))w.push('Signal '+s.id+' has an unknown data category: '+s.dataset+'.');
+    if(s.pestle&&!PESTLE.includes(s.pestle))w.push('Signal '+s.id+' has an unknown PESTLE tag: '+s.pestle+'.');
+  });
+  (r.balance_matrix||[]).forEach(m=>{const where=(m.region||'?')+' '+(m.segment||'?');chk(m.s_demand,where+' demand');chk(m.s_supply,where+' supply');chk(m.gap,where+' gap');});
+  (r.action_evaluation||[]).forEach(a=>{['score_surge','score_base','score_reversal','worst_case'].forEach(k=>chk(a[k],'Action '+a.action+' ('+a.region+' '+a.segment+') '+k))});
+  (r.recommendations||[]).forEach(x=>{if(x.requires_human_approval!==true)w.push('A recommendation for '+x.region+' '+x.segment+' is not marked as needing human approval.');
+    if(x.objective_scores)Object.entries(x.objective_scores).forEach(([k,v])=>chk(v,'Objective '+k));});
+  return w;
+}
+
+/* ---------- helpers ---------- */
+function inputSig(id){return S.signals.find(s=>s.id===id)}
+function resSig(id){return (S.result&&S.result.signals||[]).find(s=>s.id===id)}
+function sigName(id){const a=inputSig(id),b=resSig(id);return (a&&a.indicator)||(b&&b.what_changed)||id}
+function pairMatch(s,r,seg){return (s.region===r||s.region==='GLOBAL')&&(s.segment===seg||s.segment==='All'||!s.segment)}
+function cellOf(r,seg){return (S.result.balance_matrix||[]).find(m=>m.region===r&&m.segment===seg)}
+function defaultSel(){
+  const bm=S.result.balance_matrix||[];
+  const order=['shortage_risk','excess_stock_risk','balanced'];
+  for(const st of order){const f=bm.find(m=>m.status===st&&(S.ctx.focus==='all'||m.region===S.ctx.focus))||bm.find(m=>m.status===st);if(f)return{r:f.region,seg:f.segment}}
+  return{r:'EUROPE',seg:'Infrastructure'};
+}
+function bar(score,side){
+  if(score==null)return '<div class="bar"></div>';
+  const w=Math.abs(score)/2,left=score>=0?50:50-w;
+  return '<div class="bar" aria-hidden="true"><i style="left:'+left+'%;width:'+w+'%;background:var(--'+(side==='supply'?'supply':'demand')+')"></i></div>';
+}
+
+function activeSignals(){return S.signals.filter(s=>!s.dataset||S.active.includes(s.dataset))}
+function sourcesHTML(editable){
+  const cnt=d=>S.signals.filter(s=>s.dataset===d).length;
+  const col=(side,title)=>'<div><h3>'+title+'</h3>'+DATASETS[side].map(d=>{const on=S.active.includes(d);const n=cnt(d);
+    const inner='<span class="box" aria-hidden="true">'+(on?'✓':'')+'</span><span>'+esc(d)+(INTERNAL.includes(d)?' <span class="small muted">(ABB internal)</span>':'')+'</span><span class="cnt">'+(on?n+' signal'+(n===1?'':'s'):'not in prototype')+'</span>';
+    return editable?'<button class="ds '+(on?'on ':'off ')+(side==='demand'?'d':'s')+'" data-ds="'+esc(d)+'" aria-pressed="'+on+'">'+inner+'</button>':'<div class="ds '+(on?'on ':'off ')+(side==='demand'?'d':'s')+'">'+inner+'</div>';}).join('')+'</div>';
+  return '<div class="src">'+col('demand','Demand side data')+col('supply','Supply side data')+'</div>';
+}
+
+/* ---------- dashboard ---------- */
+function renderDash(){
+  const el=$('#tab-dash');
+  if(!S.result){
+    el.innerHTML='<div class="panel empty"><h2>No analysis loaded yet</h2><p class="muted">Run the analysis on your signals, or load the demo result to see how the dashboard works.</p><div class="row" style="justify-content:center"><button class="primary" id="eRun">Go to run analysis</button><button id="eDemo">Load demo result</button></div></div>';
+    $('#eRun').onclick=()=>showTab('run');$('#eDemo').onclick=loadDemoResult;return;
+  }
+  const r=S.result;
+  if(!S.sel)S.sel=defaultSel();
+  const warns=validate(r);
+  const sigs=r.signals||[];
+  const shortage=(r.balance_matrix||[]).filter(m=>m.status==='shortage_risk').length;
+  const turning=sigs.filter(s=>s.turning_point).length;
+  const stale=sigs.filter(s=>s.stale).length;
+  const pending=(r.recommendations||[]).filter(x=>!S.decisions[recKey(x)]).length;
+  const dates=activeSignals().map(s=>s.published_date).filter(Boolean).sort();
+  let h='';
+  if(r._demo)h+='<div class="banner info small"><b>Demo result.</b> Demand signals come from real public sources (example market: Europe). Supply signals use illustrative values; replace them with real data before presenting.</div>';
+  if(warns.length)h+='<div class="banner warn small"><b>Check this result.</b> '+warns.length+' issue'+(warns.length>1?'s':'')+' found:<ul style="margin:6px 0 0 18px;padding:0">'+warns.slice(0,6).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+  h+='<nav class="chain" aria-label="Decision chain">'+[['new','New data'],['signals','Signals'],['evidence','Evidence'],['scenarios','Scenarios'],['rec','Recommendation'],['next','Next action']].map((c,i)=>(i?'<span class="bus" aria-hidden="true"></span>':'')+'<a href="#d-'+c[0]+'"><span class="n">'+(i+1)+'</span>'+c[1]+'</a>').join('')+'</nav>';
+  h+='<div id="d-new" class="banner warn" style="background:var(--surface);border-color:var(--line)"><div class="row"><b>New data in this run:</b> '+activeSignals().length+' signals from '+S.active.length+' data categories, newest dated '+esc(dates[dates.length-1]||'n/a')+'.<span class="spacer"></span><span class="small muted">Analysis as of '+esc(r.as_of_date||'n/a')+'</span></div>'+(r.executive_briefing?'<p style="margin:8px 0 0">'+esc(r.executive_briefing)+'</p>':'')+(((r.capabilities||{}).early_warnings||[]).length?'<ul style="margin:10px 0 0;padding-left:18px" class="small">'+r.capabilities.early_warnings.map(a=>'<li><b style="color:var(--'+(a.level==='critical'?'trip':a.level==='warning'?'amber':'ink2')+')">'+esc(a.level)+':</b> '+esc(a.message)+' <span class="muted">['+esc((a.signal_ids||[]).join(', '))+']</span></li>').join('')+'</ul>':'')+'</div>';
+  h+='<div class="stats"><div class="stat"><span class="small muted">Signals assessed</span><b>'+sigs.length+'</b></div><div class="stat"><span class="small muted">Shortage-risk areas</span><b style="color:var(--trip)">'+shortage+'</b></div><div class="stat"><span class="small muted">Turning points</span><b>'+turning+'</b></div><div class="stat"><span class="small muted">Stale signals</span><b style="color:var(--amber)">'+stale+'</b></div><div class="stat"><span class="small muted">Awaiting your decision</span><b>'+pending+'</b></div></div>';
+  h+='<details class="panel"><summary style="cursor:pointer"><b>Data used:</b> '+esc(S.active.filter(d=>sideOf(d)==='demand').join(', '))+' (demand); '+esc(S.active.filter(d=>sideOf(d)==='supply').join(', '))+' (supply)</summary><div style="margin-top:12px">'+sourcesHTML(false)+'</div></details>';
+  h+='<div class="panel row small"><label>Region <select id="fR"><option value="ALL">All</option>'+REGIONS.map(x=>'<option value="'+x+'">'+RLABEL[x]+'</option>').join('')+'</select></label><label>Segment <select id="fS"><option value="ALL">All</option>'+SEGMENTS.map(x=>'<option>'+x+'</option>').join('')+'</select></label><label>Horizon <select id="fH"><option value="ALL">All</option><option value="short">Short (0–3 months)</option><option value="medium">Medium (3–12 months)</option><option value="long">Long (1–3 years)</option></select></label></div>';
+  // matrix + pestle | signals + evidence
+  h+='<div class="grid2"><div>';
+  h+='<div class="panel"><h2>Demand and supply balance</h2><p class="small muted" style="margin-top:-4px">Gap score from −100 to +100. Select an area to see why.</p><div class="matrix" role="grid"><div></div>'+SEGMENTS.map(s=>'<div class="h">'+s+'</div>').join('');
+  REGIONS.forEach(rg=>{h+='<div class="h" style="align-self:center">'+RLABEL[rg]+'</div>';SEGMENTS.forEach(sg=>{const m=cellOf(rg,sg)||{status:'insufficient_data'};const dim=(S.filters.region!=='ALL'&&S.filters.region!==rg)||(S.filters.segment!=='ALL'&&S.filters.segment!==sg);const sel=S.sel.r===rg&&S.sel.seg===sg;
+    h+='<button class="cell '+esc(m.status)+(sel?' sel':'')+(dim?' dim':'')+'" data-r="'+rg+'" data-s="'+sg+'" aria-pressed="'+sel+'" aria-label="'+RLABEL[rg]+', '+sg+': '+(STATUS[m.status]||m.status)+'"><div class="g">'+(m.gap==null?'–':fmt(m.gap))+'</div><div class="s"><span class="lamp"></span>'+(STATUS[m.status]||esc(m.status))+'</div></button>';});});
+  h+='</div><div class="legend"><span class="l1">Shortage risk</span><span class="l2">Balanced</span><span class="l3">Excess-stock risk</span><span class="l4">Not enough data</span></div></div>';
+  // pestle
+  const pc=r.pestle_coverage||{};const counts=pc.counts||{};const mx=Math.max(1,...PESTLE.map(p=>counts[p]||0));
+  h+='<div class="panel"><h2>Drivers by PESTLE</h2><div class="pest">'+PESTLE.map(p=>'<span>'+p+'</span><div class="b" style="width:'+((counts[p]||0)/mx*100)+'%;min-width:'+((counts[p]||0)?'4px':'0')+'"></div><span>'+(counts[p]||0)+'</span>').join('')+'</div>';
+  if(pc.strongest_driver)h+='<p class="small" style="margin:10px 0 0"><b>Strongest driver:</b> '+esc(pc.strongest_driver)+'</p>';
+  if((pc.missing||[]).length)h+='<p class="small" style="margin:6px 0 0;color:var(--amber)"><b>Blind spots:</b> no '+esc(pc.missing.join(', ').toLowerCase())+' signals yet.</p>';
+  h+='</div></div><div>';
+  const m=cellOf(S.sel.r,S.sel.seg)||{};
+  const ps=sigs.filter(s=>pairMatch(s,S.sel.r,S.sel.seg));
+  h+='<div class="panel" id="d-signals"><h2>Signals for '+RLABEL[S.sel.r]+', '+esc(S.sel.seg.toLowerCase())+'</h2><p class="small muted" style="margin-top:-4px">Demand '+fmt(m.s_demand)+', supply '+fmt(m.s_supply)+' (negative supply means tight). Global supply signals apply to every region.</p>';
+  if(!ps.length)h+='<p class="muted">No signals cover this area. Add some on the Signals tab.</p>';
+  if(!S.selSig||!ps.find(s=>s.id===S.selSig))S.selSig=(ps.slice().sort((a,b)=>Math.abs(b.score||0)-Math.abs(a.score||0))[0]||{}).id;
+  ps.forEach(s=>{h+='<button class="sig'+(s.id===S.selSig?' on':'')+'" data-sig="'+esc(s.id)+'"><div class="t"><span class="nm">'+esc(sigName(s.id))+'</span><span class="sc" style="color:var(--'+(s.side==='supply'?'supply':'demand')+')">'+fmt(s.score)+'</span></div>'+bar(s.score,s.side)+'<span class="chip '+(s.side==='supply'?'s':'d')+'">'+esc(s.dataset||(inputSig(s.id)||{}).dataset||s.side)+'</span><span class="chip">'+esc(s.pestle||'no tag')+'</span><span class="chip">'+esc(s.confidence||'?')+' confidence</span><span class="chip">'+esc((s.nature||'').replace('_',' '))+'</span>'+(s.turning_point?'<span class="chip flag">turning point</span>':'')+(s.stale?'<span class="chip stale">stale</span>':'')+'</button>';});
+  h+='</div>';
+  const cs=resSig(S.selSig);
+  h+='<div class="panel" id="d-evidence"><h2>Evidence check</h2>';
+  if(cs){const src=inputSig(cs.id)||{};
+    h+='<p style="margin:0 0 6px"><b>'+esc(sigName(cs.id))+'</b></p><p class="small" style="margin:0 0 8px">'+esc(cs.what_changed||'')+'</p>';
+    h+='<p class="small muted" style="margin:0 0 8px">'+esc(cs.indicator_type||'')+' indicator, lead time '+esc(cs.lead_time_months||'?')+' months. Source: '+(src.url?'<a href="'+esc(src.url)+'" target="_blank" rel="noopener">'+esc(src.source||src.url)+'</a>':esc(src.source||'not given'))+(src.published_date?', '+esc(src.published_date):'')+'.</p>';
+    h+='<ul class="ev" style="padding-left:18px;margin:0">';
+    (cs.supporting_ids||[]).forEach(id=>h+='<li><span class="for">For:</span> '+esc(sigName(id))+' <span class="muted small">['+esc(id)+']</span></li>');
+    (cs.contradicting_ids||[]).forEach(id=>h+='<li><span class="against">Against:</span> '+esc(sigName(id))+' <span class="muted small">['+esc(id)+']</span></li>');
+    if(!(cs.contradicting_ids||[]).length)h+='<li class="muted small">No counter-evidence found in the provided data. That is not proof that none exists.</li>';
+    h+='</ul>';
+    if(cs.rationale)h+='<p class="small" style="margin:10px 0 0">'+esc(cs.rationale)+'</p>';
+    if(cs.trend_note)h+='<p class="small muted" style="margin:6px 0 0">Trend: '+esc(cs.trend_note)+'</p>';
+  }else h+='<p class="muted">Select a signal to review its evidence.</p>';
+  h+='</div></div></div>';
+  // scenarios + actions
+  const sc=(r.scenarios||[]).filter(x=>x.region===S.sel.r&&x.segment===S.sel.seg);
+  h+='<div class="panel" id="d-scenarios"><h2>Scenarios for '+RLABEL[S.sel.r]+', '+esc(S.sel.seg.toLowerCase())+'</h2>';
+  if(!sc.length)h+='<p class="muted">No scenarios for this area. Scenarios are built only for the areas with the clearest imbalance.</p>';
+  else{h+='<div class="scen">'+sc.map(x=>'<div class="scard"><span class="nm">'+esc(x.name.charAt(0).toUpperCase()+x.name.slice(1))+'</span><span class="lk '+esc(x.likelihood)+'">'+esc(x.likelihood)+' likelihood</span><p class="small" style="margin:8px 0 6px">'+esc(x.component_implication||'')+'</p><p class="small muted" style="margin:0"><b>Watch for:</b> '+esc((x.triggers||[]).join('; '))+'</p></div>').join('')+'</div>';}
+  const ae=(r.action_evaluation||[]).filter(x=>x.region===S.sel.r&&x.segment===S.sel.seg);
+  if(ae.length){h+='<h3>Which action holds up across scenarios?</h3><div class="tblwrap"><table><thead><tr><th>Action</th><th style="text-align:center">Surge</th><th style="text-align:center">Base</th><th style="text-align:center">Reversal</th><th style="text-align:center">Worst case</th></tr></thead><tbody>'+ae.map(a=>'<tr class="'+(a.selected?'picked':'')+'"><td><b>'+esc(a.action.replace('_',' '))+'</b>'+(a.selected?' <span class="chip" style="color:var(--ok);border-color:var(--ok)">chosen</span>':'')+'<div class="small muted">'+esc(a.description||'')+'</div></td><td class="num">'+fmt(a.score_surge)+'</td><td class="num">'+fmt(a.score_base)+'</td><td class="num">'+fmt(a.score_reversal)+'</td><td class="num">'+fmt(a.worst_case)+'</td></tr>').join('')+'</tbody></table></div><p class="small muted">Scores show how good each action turns out in each scenario. The chosen action has the best worst case.</p>';}
+  h+='</div>';
+  // recommendations
+  let recs=(r.recommendations||[]).filter(x=>x.region===S.sel.r&&x.segment===S.sel.seg);
+  if(S.filters.horizon!=='ALL')recs=recs.filter(x=>x.horizon===S.filters.horizon);
+  h+='<div id="d-rec"><h2 style="margin-top:6px">Recommendation</h2>';
+  if(!recs.length)h+='<div class="panel"><p class="muted" style="margin:0">No recommendation for this area'+(S.filters.horizon!=='ALL'?' in this time horizon':'')+'. Areas without a clear imbalance stay on watch.</p></div>';
+  recs.forEach(x=>{const k=recKey(x),d=S.decisions[k];
+    h+='<div class="rec"><span class="small muted">'+RLABEL[x.region]+', '+esc(x.segment.toLowerCase())+', '+esc(x.horizon)+' term'+(d?'':', needs your approval')+'</span><p class="act">'+esc(x.action)+'</p><dl class="kv"><dt>Components</dt><dd>'+esc((x.components||[]).join(', '))+'</dd><dt>Act by</dt><dd>'+esc(x.act_by)+'</dd><dt>Why it holds up</dt><dd>'+esc(x.why_robust)+'</dd><dt>Cost if wrong</dt><dd>'+esc(x.cost_if_wrong)+'</dd><dt>Would change if</dt><dd>'+esc((x.would_change_if||[]).join('; '))+'</dd><dt>Objective balance</dt><dd>Profitability '+fmt((x.objective_scores||{}).profitability)+', customer value '+fmt((x.objective_scores||{}).customer_value)+', growth '+fmt((x.objective_scores||{}).growth)+', resilience '+fmt((x.objective_scores||{}).resilience)+'. Weighted '+fmt(x.weighted_score)+' using '+esc(x.weights_used||'?')+' weights. '+esc(x.balance_explanation||'')+'</dd></dl>';
+    h+='<div id="d-next" style="margin-top:14px;border-top:1px solid var(--line);padding-top:12px">';
+    if(d)h+='<p style="margin:0"><span class="decision '+d.decision+'">'+({approved:'Approved',rejected:'Rejected',adjusted:'Adjusted'}[d.decision])+'</span> <span class="small muted">on '+esc(d.at)+'</span>'+(d.note?'<br><span class="small">'+esc(d.note)+'</span>':'')+'</p><p class="small" style="margin:6px 0 0"><b>Next review:</b> '+esc(x.next_review)+'</p><button class="small" data-undo="'+esc(k)+'" style="margin-top:8px">Change decision</button>';
+    else h+='<p class="small" style="margin:0 0 8px"><b>Next review:</b> '+esc(x.next_review)+'</p><div class="row"><button class="primary" data-dec="approved" data-k="'+esc(k)+'">Approve</button><button data-dec="adjusted" data-k="'+esc(k)+'">Adjust</button><button data-dec="rejected" data-k="'+esc(k)+'">Reject</button></div><div class="hidden" data-adj="'+esc(k)+'" style="margin-top:8px"><textarea rows="2" placeholder="Secure 6 months instead of 9, review in December" style="font-family:var(--body)"></textarea><div class="err"></div><button style="margin-top:6px" data-saveadj="'+esc(k)+'">Save adjustment</button></div>';
+    h+='</div></div>';});
+  h+='</div>';
+  if((r.decision_areas||[]).length){
+    const sc={sufficient:'ok',partial:'amber',insufficient:'trip'};
+    h+='<div class="panel" id="d-areas"><h2>Decision areas</h2><p class="small muted" style="margin-top:-4px">Every question from ABB\'s vision, answered only as far as the data allows.</p>'+r.decision_areas.map((a,i)=>'<details'+(i<2?' open':'')+' style="border-top:1px solid var(--line);padding:8px 0"><summary style="cursor:pointer;font-weight:600">'+esc(a.area)+' <span class="small muted" style="font-weight:400">'+(a.questions||[]).map(q=>q.data_sufficiency).filter(x=>x==='sufficient').length+' of '+(a.questions||[]).length+' fully supported</span></summary>'+(a.questions||[]).map(q=>'<div style="margin:8px 0 0 4px"><p style="margin:0;font-weight:500">'+esc(q.question)+' <span class="chip" style="color:var(--'+(sc[q.data_sufficiency]||'ink2')+');border-color:var(--'+(sc[q.data_sufficiency]||'line')+')">'+esc(q.data_sufficiency)+'</span></p><p class="small" style="margin:2px 0 0">'+esc(q.answer)+'</p>'+((q.missing_data||[]).length?'<p class="small muted" style="margin:2px 0 0">Needs: '+esc(q.missing_data.join(', '))+'</p>':'')+'</div>').join('')+'</details>').join('')+'</div>';
+  }
+  if((r.agent_log||[]).length){
+    const AN={market_intelligence:'Market Intelligence Agent',supply_chain:'Supply Chain Agent',signal_detection:'Signal Detection Agent',orchestration:'Orchestration and reasoning',scenario_builder:'Scenario Builder Agent',impact_assessment:'Impact Assessment Agent',recommendation:'Recommendation Agent'};
+    h+='<div class="panel"><h2>Agent trail</h2><ol class="small" style="padding-left:18px;margin:0">'+r.agent_log.map(a=>'<li style="margin-bottom:8px"><b>'+esc(AN[a.agent]||a.agent)+'</b><ul style="padding-left:16px;margin:2px 0 0">'+(a.findings||[]).map(f=>'<li>'+esc(f.text)+' <span class="muted">['+esc((f.signal_ids||[]).join(', '))+']</span></li>').join('')+'</ul></li>').join('')+'</ol>'+(((r.orchestration||{}).learning_from_feedback||[]).length?'<p class="small" style="margin:10px 0 0"><b>Learning from your past decisions:</b> '+esc(r.orchestration.learning_from_feedback.join(' '))+'</p>':'')+'</div>';
+  }
+  // other
+  h+='<div class="grid2" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)"><div class="panel"><h2>Expected outcomes</h2><ul class="small" style="padding-left:18px;margin:0">'+(r.expected_outcomes||[]).map(o=>'<li style="margin-bottom:6px"><b>'+esc(o.outcome)+':</b> '+esc(o.direction)+(o.assumption?' <span class="muted">(assumption: '+esc(o.assumption)+')</span>':'')+'</li>').join('')+'</ul>'+(r.manufacturing_implications?'<h3>Manufacturing</h3><p class="small" style="margin:0">'+esc(r.manufacturing_implications)+'</p>':'')+'</div>';
+  h+='<div class="panel"><h2>Data gaps</h2><ul class="small" style="padding-left:18px;margin:0">'+(r.data_gaps||[]).map(g=>'<li style="margin-bottom:4px">'+esc(g)+'</li>').join('')+'</ul>'+((r.flags_for_other_teams||[]).length?'<h3>For other teams</h3><ul class="small" style="padding-left:18px;margin:0">'+r.flags_for_other_teams.map(g=>'<li>'+esc(g)+'</li>').join('')+'</ul>':'')+'<div class="row" style="margin-top:14px"><button id="btnDlResult">Download result JSON</button><span class="small muted" id="dlMsg" aria-live="polite"></span></div></div></div>';
+  el.innerHTML=h;
+  $('#fR').value=S.filters.region;$('#fS').value=S.filters.segment;$('#fH').value=S.filters.horizon;
+  $('#fR').onchange=e=>{S.filters.region=e.target.value;if(e.target.value!=='ALL'&&S.sel.r!==e.target.value)S.sel={r:e.target.value,seg:S.filters.segment==='ALL'?S.sel.seg:S.filters.segment};renderDash();};
+  $('#fS').onchange=e=>{S.filters.segment=e.target.value;if(e.target.value!=='ALL'&&S.sel.seg!==e.target.value)S.sel={r:S.sel.r,seg:e.target.value};renderDash();};
+  $('#fH').onchange=e=>{S.filters.horizon=e.target.value;renderDash();};
+  el.querySelectorAll('.cell').forEach(c=>c.onclick=()=>{S.sel={r:c.dataset.r,seg:c.dataset.s};S.selSig=null;renderDash();setTimeout(()=>{const t=$('#d-signals');if(t&&window.innerWidth<860)t.scrollIntoView({behavior:'smooth'})},0)});
+  el.querySelectorAll('.sig').forEach(c=>c.onclick=()=>{S.selSig=c.dataset.sig;renderDash();const e=$('#d-evidence');if(e){e.classList.remove('flash');void e.offsetWidth;e.classList.add('flash');}});
+  el.querySelectorAll('[data-dec]').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(b.dataset.dec==='adjusted'){el.querySelector('[data-adj="'+CSS.escape(k)+'"]').classList.remove('hidden');return;}decide(k,b.dataset.dec,'');});
+  el.querySelectorAll('[data-saveadj]').forEach(b=>b.onclick=()=>{const box=b.parentElement;const ta=box.querySelector('textarea'),er=box.querySelector('.err');if(!ta.value.trim()){er.textContent='Describe the adjustment first.';return;}decide(b.dataset.saveadj,'adjusted',ta.value.trim());});
+  el.querySelectorAll('textarea').forEach(t=>t.oninput=()=>{const er=t.parentElement.querySelector('.err');if(er)er.textContent='';});
+  el.querySelectorAll('[data-undo]').forEach(b=>b.onclick=()=>{delete S.decisions[b.dataset.undo];store.set('ew2.decisions',S.decisions);renderDash();});
+  $('#btnDlResult').onclick=()=>saveFile('analysis-result.json',JSON.stringify(S.result,null,2),'#dlMsg');
+}
+function recKey(x){return (S.result.as_of_date||'')+'|'+x.region+'|'+x.segment+'|'+x.action}
+function decide(k,d,note){S.decisions[k]={decision:d,note:note,at:new Date().toISOString().slice(0,16).replace('T',' ')};store.set('ew2.decisions',S.decisions);renderDash();}
+
+async function saveFile(name,text,msgSel){
+  const msg=$(msgSel);
+  if(dl){try{await dl.save({filename:name,data:new Blob([text],{type:'application/json'})});if(msg)msg.textContent='Saved.';return;}catch(e){if(e&&e.code==='declined'){if(msg)msg.textContent='Download cancelled.';return;}}}
+  if(!window.claude){localDownload(name,text);if(msg)msg.textContent='Downloaded.';return;}
+  const ok=await copyText(text);
+  if(msg)msg.textContent=ok?'Downloads aren\'t available here, so the JSON was copied to your clipboard.':'Downloads aren\'t available here. Use the Run analysis tab to copy the data instead.';
+}
+function localDownload(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'application/json'}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);}
+async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){return false}}
+
+/* ---------- signals tab ---------- */
+function renderSignals(){
+  $('#srcEdit').innerHTML=sourcesHTML(true);
+  $('#srcEdit').querySelectorAll('[data-ds]').forEach(b=>b.onclick=()=>{const d=b.dataset.ds,side=sideOf(d);
+    if(S.active.includes(d)){if(S.active.filter(x=>sideOf(x)===side).length<=1){$('#srcErr').textContent='Keep at least one '+side+'-side category.';return;}S.active=S.active.filter(x=>x!==d);}
+    else{if(S.active.filter(x=>sideOf(x)===side).length>=3){$('#srcErr').textContent='Up to 3 '+side+'-side categories. Unselect one first.';return;}S.active.push(d);}
+    $('#srcErr').textContent='';store.set('ew2.active',S.active);renderSignals();});
+  const fd=$('#fDataset'),cur=fd.value;
+  fd.innerHTML=['demand','supply'].map(side=>'<optgroup label="'+(side==='demand'?'Demand side':'Supply side')+'">'+S.active.filter(d=>sideOf(d)===side).map(d=>'<option>'+esc(d)+'</option>').join('')+'</optgroup>').join('');
+  if(cur&&S.active.includes(cur))fd.value=cur;
+  $('#ctxToday').value=S.ctx.today;$('#ctxFocus').value=S.ctx.focus;$('#ctxNotes').value=S.ctx.notes;
+  const t=$('#sigTable');
+  if(!S.signals.length){t.innerHTML='<tr><td class="muted">No signals yet. Load the demo signals or add your first one below.</td></tr>';return;}
+  t.innerHTML='<thead><tr><th>ID</th><th>Data category</th><th>Region</th><th>Segment</th><th>Indicator and value</th><th>Published</th><th></th></tr></thead><tbody>'+S.signals.map(s=>'<tr'+(s.dataset&&!S.active.includes(s.dataset)?' style="opacity:.5"':'')+'><td>'+esc(s.id)+'</td><td><span class="chip '+(s.side==='supply'?'s':'d')+'">'+esc(s.dataset||s.side)+'</span>'+(s.dataset&&!S.active.includes(s.dataset)?'<div class="small muted">not used</div>':'')+'</td><td>'+esc(RLABEL[s.region]||s.region)+'</td><td>'+esc(s.segment)+'</td><td><b>'+esc(s.indicator)+'</b><div class="small muted">'+esc(s.value)+(s.previous_value?' (before: '+esc(s.previous_value)+')':'')+'</div>'+(s.url?'<a class="small" href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.source||'Source')+'</a>':'<span class="small muted">'+esc(s.source||'')+'</span>')+'</td><td class="small">'+esc(s.published_date)+'</td><td><button class="small" data-del="'+esc(s.id)+'" aria-label="Remove '+esc(s.id)+'">Remove</button></td></tr>').join('')+'</tbody>';
+  t.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{S.signals=S.signals.filter(s=>s.id!==b.dataset.del);store.set('ew2.signals',S.signals);renderSignals();});
+}
+['ctxToday','ctxFocus','ctxNotes'].forEach(id=>$('#'+id).addEventListener('change',()=>{S.ctx={today:$('#ctxToday').value,focus:$('#ctxFocus').value,notes:$('#ctxNotes').value};store.set('ew2.ctx',S.ctx);}));
+$('#btnDemoSignals').onclick=()=>{S.signals=DEMO_SIGNALS.slice();store.set('ew2.signals',S.signals);S.active=DEFAULT_ACTIVE.slice();store.set('ew2.active',S.active);renderSignals();};
+$('#btnClearSignals').onclick=()=>{S.signals=[];store.set('ew2.signals',S.signals);renderSignals();};
+$('#btnExportSignals').onclick=async()=>{const txt=JSON.stringify(S.signals,null,2);if(dl){try{await dl.save({filename:'signals.json',data:new Blob([txt],{type:'application/json'})});return}catch(e){if(e&&e.code==='declined')return;}}if(!window.claude){localDownload('signals.json',txt);return;}$('#sigImport').value=txt;$('#sigImportErr').textContent='Downloads aren\'t available here. The signals JSON is in the box below so you can copy it.';};
+document.querySelectorAll('#sigForm input,#sigForm select').forEach(i=>i.addEventListener('input',()=>{$('#sigFormErr').textContent=''}));
+$('#btnAddSignal').onclick=()=>{
+  const f={};document.querySelectorAll('#sigForm [name]').forEach(i=>f[i.name]=i.value.trim());
+  const miss=['id','indicator','value','published_date'].filter(k=>!f[k]);
+  if(miss.length){$('#sigFormErr').textContent='Fill in: '+miss.join(', ').replace('published_date','published date')+'.';return;}
+  if(S.signals.some(s=>s.id===f.id)){$('#sigFormErr').textContent='ID '+f.id+' is already used. Pick another.';return;}
+  if(f.url&&!/^https?:\/\//.test(f.url)){$('#sigFormErr').textContent='The URL should start with https://';return;}
+  f.side=sideOf(f.dataset);if(!f.side){$('#sigFormErr').textContent='Pick a data category.';return;}
+  S.signals.push(f);store.set('ew2.signals',S.signals);
+  document.querySelectorAll('#sigForm input').forEach(i=>i.value='');renderSignals();
+};
+$('#sigImport').addEventListener('input',()=>{$('#sigImportErr').textContent=''});
+$('#btnImportSignals').onclick=()=>{
+  const raw=$('#sigImport').value.trim();
+  if(!raw){$('#sigImportErr').textContent='Paste a JSON list first.';return;}
+  try{const arr=JSON.parse(raw);if(!Array.isArray(arr))throw new Error('Expected a list in square brackets.');
+    const bad=arr.findIndex(s=>!s||!s.id||!s.indicator||!(s.side||sideOf(s.dataset)));if(bad>=0)throw new Error('Item '+(bad+1)+' needs at least id, dataset and indicator.');
+    arr.forEach(s=>{if(!s.side)s.side=sideOf(s.dataset);});
+    S.signals=arr;store.set('ew2.signals',S.signals);$('#sigImport').value='';renderSignals();
+  }catch(e){$('#sigImportErr').textContent='Couldn\'t import: '+e.message;}
+};
+
+/* ---------- run tab ---------- */
+function userMsg(){
+  return '<context>\ntoday: '+S.ctx.today+'\nfocus: '+S.ctx.focus+'\nactive_datasets: '+S.active.join('; ')+'\nnotes: '+(S.ctx.notes||'none')+'\n</context>\n\n<signals>\n'+JSON.stringify(activeSignals(),null,2)+'\n</signals>\n\n<feedback>\n'+(Object.keys(S.decisions).length?JSON.stringify(Object.entries(S.decisions).map(([k,v])=>{const p=k.split('|');return{as_of:p[0],region:p[1],segment:p[2],recommendation:p.slice(3).join('|'),decision:v.decision,note:v.note,decided_at:v.at}}),null,2):'none yet')+'\n</feedback>\n\n<policy>\nnone (use defaults)\n</policy>';
+}
+function pkg(){return '=== System instruction ===\n'+SYS+'\n\n=== User message ===\n'+userMsg();}
+function renderRun(){
+  $('#runClaude').classList.toggle('hidden',!sampleFn);
+  $('#runGemini').classList.toggle('hidden',!!window.claude);
+  $('#pkgBox').value=pkg();
+}
+$('#btnShowPkg').onclick=()=>{const b=$('#pkgBox');b.value=pkg();b.classList.toggle('hidden');$('#btnShowPkg').textContent=b.classList.contains('hidden')?'Show prompt package':'Hide prompt package';};
+$('#btnCopyPkg').onclick=async()=>{const ok=await copyText(pkg());if(ok){$('#copyMsg').textContent='Copied.';}else{const b=$('#pkgBox');b.value=pkg();b.classList.remove('hidden');b.focus();b.select();$('#copyMsg').textContent='Copy from the box below.';}};
+$('#resultImport').addEventListener('input',()=>{$('#resultImportErr').textContent=''});
+$('#btnLoadResult').onclick=()=>{
+  let raw=$('#resultImport').value.trim();
+  if(!raw){$('#resultImportErr').textContent='Paste the JSON answer first.';return;}
+  raw=raw.replace(/^```(?:json)?\s*/i,'').replace(/```\s*$/,'');
+  try{const obj=JSON.parse(raw);if(!obj||!Array.isArray(obj.signals)||!Array.isArray(obj.balance_matrix))throw new Error('It needs at least "signals" and "balance_matrix" lists.');setResult(obj);$('#resultImport').value='';}
+  catch(e){$('#resultImportErr').textContent='Couldn\'t load this result: '+e.message;}
+};
+$('#btnDemoResult').onclick=loadDemoResult;
+function loadDemoResult(){S.signals=DEMO_SIGNALS.slice();store.set('ew2.signals',S.signals);S.active=DEFAULT_ACTIVE.slice();store.set('ew2.active',S.active);setResult(JSON.parse(JSON.stringify(DEMO_RESULT)));}
+function setResult(obj){S.result=obj;S.sel=null;S.selSig=null;store.set('ew2.result',obj);showTab('dash');}
+const ERR={not_granted:'Built-in AI wasn\'t allowed for this view. Use the Gemini route below instead.',rate_limited:'Too many requests right now. Wait a minute, then run again.',prompt_too_large:'Too many signals for one request. Remove some and run again.',session_expired:'Your session expired. Reload the page and run again.',refused:'The request was declined. Check the signals for unusual content and try again.'};
+$('#btnRunClaude').onclick=async()=>{
+  if(!sampleFn)return;
+  if(!activeSignals().length){$('#runStatus').textContent='Add at least one signal in a selected data category first.';return;}
+  ctl=new AbortController();
+  $('#btnRunClaude').disabled=true;$('#btnStop').classList.remove('hidden');$('#runStatus').textContent='Thinking. This usually takes one to two minutes.';
+  const input=SYS+'\n\n---\n\n'+userMsg()+'\n\nReply with only the JSON object described in section 10. No markdown fences, no other text.';
+  try{
+    const obj=await sampleFn.json(input,{signal:ctl.signal,modelTier:'default',onText:({text})=>{$('#runStatus').textContent='Writing the result: '+text.length.toLocaleString()+' characters so far.';}});
+    if(!obj||!Array.isArray(obj.signals))throw{code:'shape',message:'The answer was missing the signals list.'};
+    $('#runStatus').textContent='Done.';setResult(obj);
+  }catch(e){
+    if(e&&e.code==='cancelled')$('#runStatus').textContent='Stopped.';
+    else if(e&&(e.code==='not_declared'||e.code==='sampling_disabled')){$('#runStatus').textContent='Built-in AI isn\'t available here. Use the Gemini route below.';$('#runClaude').classList.add('hidden');}
+    else $('#runStatus').textContent=ERR[e&&e.code]||('The analysis didn\'t finish'+(e&&e.message?': '+e.message:'.')+' Run it again, or use the Gemini route.');
+  }finally{$('#btnRunClaude').disabled=false;$('#btnStop').classList.add('hidden');}
+};
+$('#btnStop').onclick=()=>{if(ctl)ctl.abort();};
+let gctl=null;
+$('#gKey').addEventListener('input',()=>{$('#gStatus').textContent='';try{sessionStorage.setItem('ew2.gkey',$('#gKey').value)}catch(e){}});
+try{const k=sessionStorage.getItem('ew2.gkey');if(k)$('#gKey').value=k;}catch(e){}
+$('#btnRunGemini').onclick=async()=>{
+  const key=$('#gKey').value.trim(),model=$('#gModel').value.trim();
+  if(!key){$('#gStatus').textContent='Paste your Gemini API key first.';return;}
+  if(!model){$('#gStatus').textContent='Enter a model name.';return;}
+  if(!S.signals.length){$('#gStatus').textContent='Add at least one signal first.';return;}
+  gctl=new AbortController();$('#btnRunGemini').disabled=true;$('#btnStopG').classList.remove('hidden');
+  $('#gStatus').textContent='Waiting for Gemini. This can take a minute.';
+  try{
+    const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent',{method:'POST',signal:gctl.signal,headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({systemInstruction:{parts:[{text:SYS}]},contents:[{role:'user',parts:[{text:userMsg()}]}],generationConfig:{temperature:0.2,responseMimeType:'application/json'}})});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok)throw new Error((data.error&&data.error.message)||('HTTP '+res.status));
+    const txt=((((data.candidates||[])[0]||{}).content||{}).parts||[]).map(p=>p.text||'').join('').trim().replace(/^```(?:json)?\s*/i,'').replace(/```\s*$/,'');
+    if(!txt)throw new Error('Gemini returned an empty answer'+(data.promptFeedback&&data.promptFeedback.blockReason?' ('+data.promptFeedback.blockReason+')':'')+'.');
+    let obj;try{obj=JSON.parse(txt)}catch(e){throw new Error('The answer was not valid JSON. Run again.')}
+    if(!obj||!Array.isArray(obj.signals))throw new Error('The answer was missing the signals list.');
+    $('#gStatus').textContent='Done.';setResult(obj);
+  }catch(e){$('#gStatus').textContent=e.name==='AbortError'?'Stopped.':'Gemini call failed: '+e.message;}
+  finally{$('#btnRunGemini').disabled=false;$('#btnStopG').classList.add('hidden');}
+};
+$('#btnStopG').onclick=()=>{if(gctl)gctl.abort();};
+
+/* ---------- init ---------- */
+renderDash();
+(async()=>{
+  if(!window.claude||typeof window.claude.use!=='function')return;
+  try{sampleFn=await window.claude.use('sample');}catch(e){sampleFn=null}
+  try{dl=await window.claude.use('downloads');}catch(e){dl=null}
+  if(!$('#tab-run').classList.contains('hidden'))renderRun();
+})();
+})();
+</script>
+</body>
+</html>

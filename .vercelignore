@@ -1,0 +1,11 @@
+# Never upload secrets or local build artefacts to Vercel. Set GEMINI_* in the Vercel project settings instead.
+.env
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+frontend/node_modules/
+frontend/dist/
+data/runs/
+tests/

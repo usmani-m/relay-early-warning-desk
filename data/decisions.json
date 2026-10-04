@@ -1,0 +1,18 @@
+[
+  {
+    "as_of": "2026-10-04",
+    "region": "EUROPE",
+    "segment": "Utilities",
+    "recommendation": "monitor",
+    "decision": "approved",
+    "note": ""
+  },
+  {
+    "as_of": "2026-10-04",
+    "region": "EUROPE",
+    "segment": "Utilities",
+    "recommendation": "flexible_commitment",
+    "decision": "approved",
+    "note": ""
+  }
+]

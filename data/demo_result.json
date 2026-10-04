@@ -1,0 +1,995 @@
+{
+  "as_of_date": "2026-10-04",
+  "executive_briefing": "Data center investment is turning into firm commitments, while hydrogen projects are shrinking. Combined with tightening component supply (illustrative in this demo), Europe infrastructure and utilities show a shortage risk. The recommended move is flexible framework agreements for key relay electronics now, reviewed in January.",
+  "signals": [
+    {
+      "id": "S1",
+      "region": "EUROPE",
+      "segment": "All",
+      "side": "demand",
+      "pestle": "Economic",
+      "what_changed": "A very large, mostly non-binding pipeline of grid connection inquiries.",
+      "score": 50,
+      "confidence": "low",
+      "indicator_type": "leading",
+      "lead_time_months": "24-48",
+      "nature": "structural",
+      "turning_point": false,
+      "stale": true,
+      "trend_note": "",
+      "supporting_ids": [
+        "S3",
+        "S4"
+      ],
+      "contradicting_ids": [
+        "S5",
+        "S6"
+      ],
+      "rationale": "Strong interest, but inquiries are non-binding and the figure is over 18 months old, so confidence is lowered.",
+      "dataset": "Grid plans & investments"
+    },
+    {
+      "id": "S2",
+      "region": "EUROPE",
+      "segment": "All",
+      "side": "demand",
+      "pestle": "Legal",
+      "what_changed": "New rules mean every large new connection needs more measurement, recording and protection capability.",
+      "score": 50,
+      "confidence": "high",
+      "indicator_type": "leading",
+      "lead_time_months": "6-18",
+      "nature": "structural",
+      "turning_point": false,
+      "stale": false,
+      "trend_note": "",
+      "supporting_ids": [
+        "S3",
+        "S4"
+      ],
+      "contradicting_ids": [],
+      "rationale": "Raises protection and monitoring content per connection in every segment.",
+      "dataset": "Market & policy development"
+    },
+    {
+      "id": "S3",
+      "region": "EUROPE",
+      "segment": "Infrastructure",
+      "side": "demand",
+      "pestle": "Economic",
+      "what_changed": "A hyperscaler committed at least EUR 13 bn to new data centers for 2027-2028.",
+      "score": 75,
+      "confidence": "high",
+      "indicator_type": "leading",
+      "lead_time_months": "12-24",
+      "nature": "structural",
+      "turning_point": false,
+      "stale": false,
+      "trend_note": "",
+      "supporting_ids": [
+        "S4",
+        "S1"
+      ],
+      "contradicting_ids": [
+        "S6"
+      ],
+      "rationale": "A firm, dated investment commitment is much stronger than a connection inquiry.",
+      "dataset": "Project pipelines & permitting"
+    },
+    {
+      "id": "S4",
+      "region": "EUROPE",
+      "segment": "Infrastructure",
+      "side": "demand",
+      "pestle": "Technological",
+      "what_changed": "A new 165 MW AI data center was announced with a phased build-out.",
+      "score": 50,
+      "confidence": "high",
+      "indicator_type": "leading",
+      "lead_time_months": "12-24",
+      "nature": "structural",
+      "turning_point": false,
+      "stale": false,
+      "trend_note": "",
+      "supporting_ids": [
+        "S3"
+      ],
+      "contradicting_ids": [
+        "S6"
+      ],
+      "rationale": "Phasing means substation and protection needs arrive in steps.",
+      "dataset": "Project pipelines & permitting"
+    },
+    {
+      "id": "S5",
+      "region": "EUROPE",
+      "segment": "Industry",
+      "side": "demand",
+      "pestle": "Economic",
+      "what_changed": "The global 2030 hydrogen pipeline shrank by about a quarter in a year.",
+      "score": -50,
+      "confidence": "high",
+      "indicator_type": "leading",
+      "lead_time_months": "12-36",
+      "nature": "cyclical",
+      "turning_point": true,
+      "stale": false,
+      "trend_note": "",
+      "supporting_ids": [],
+      "contradicting_ids": [
+        "S1"
+      ],
+      "rationale": "Direction has turned from growth to contraction; electrolyser-related grid demand is likely to slip.",
+      "dataset": "Project pipelines & permitting"
+    },
+    {
+      "id": "S6",
+      "region": "EUROPE",
+      "segment": "Infrastructure",
+      "side": "demand",
+      "pestle": "Legal",
+      "what_changed": "Grid connection capacity is restricted in parts of the network until 2029.",
+      "score": -25,
+      "confidence": "medium",
+      "indicator_type": "leading",
+      "lead_time_months": "12-36",
+      "nature": "structural",
+      "turning_point": false,
+      "stale": false,
+      "trend_note": "",
+      "supporting_ids": [],
+      "contradicting_ids": [
+        "S3"
+      ],
+      "rationale": "Scarce grid capacity can delay or relocate projects.",
+      "dataset": "Grid plans & investments"
+    },
+    {
+      "id": "S7",
+      "region": "GLOBAL",
+      "segment": "All",
+      "side": "supply",
+      "pestle": "Economic",
+      "what_changed": "ILLUSTRATIVE: microcontroller lead times stretched from 20 to 30 weeks.",
+      "score": -50,
+      "confidence": "medium",
+      "indicator_type": "leading",
+      "lead_time_months": "3-9",
+      "nature": "cyclical",
+      "turning_point": true,
+      "stale": false,
+      "trend_note": "",
+      "supporting_ids": [
+        "S8"
+      ],
+      "contradicting_ids": [],
+      "rationale": "ILLUSTRATIVE: longer lead times are a direct sign of tightening supply.",
+      "dataset": "Lead times & allocations"
+    },
+    {
+      "id": "S8",
+      "region": "GLOBAL",
+      "segment": "All",
+      "side": "supply",
+      "pestle": "Economic",
+      "what_changed": "ILLUSTRATIVE: contract prices for power-management ICs rose three months in a row.",
+      "score": -25,
+      "confidence": "medium",
+      "indicator_type": "coincident",
+      "lead_time_months": "0-6",
+      "nature": "cyclical",
+      "turning_point": false,
+      "stale": false,
+      "trend_note": "",
+      "supporting_ids": [
+        "S7"
+      ],
+      "contradicting_ids": [],
+      "rationale": "ILLUSTRATIVE: rising prices usually accompany tightening supply.",
+      "dataset": "Pricing & cost indices"
+    },
+    {
+      "id": "S9",
+      "region": "GLOBAL",
+      "segment": "All",
+      "side": "supply",
+      "pestle": "Political",
+      "what_changed": "ILLUSTRATIVE: new export licence requirements on chip raw materials.",
+      "score": -50,
+      "confidence": "medium",
+      "indicator_type": "leading",
+      "lead_time_months": "3-12",
+      "nature": "temporary_shock",
+      "turning_point": false,
+      "stale": false,
+      "trend_note": "",
+      "supporting_ids": [
+        "S7"
+      ],
+      "contradicting_ids": [],
+      "rationale": "ILLUSTRATIVE: single policy event; impact depends on enforcement.",
+      "dataset": "Raw material & chemicals"
+    }
+  ],
+  "pestle_coverage": {
+    "counts": {
+      "Political": 1,
+      "Economic": 5,
+      "Social": 0,
+      "Technological": 1,
+      "Legal": 2,
+      "Environmental": 0
+    },
+    "missing": [
+      "Social",
+      "Environmental"
+    ],
+    "strongest_driver": "Economic: hyperscaler investment in new data centers"
+  },
+  "balance_matrix": [
+    {
+      "region": "EUROPE",
+      "segment": "Infrastructure",
+      "s_demand": 50,
+      "s_supply": -50,
+      "gap": 50,
+      "status": "shortage_risk"
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Utilities",
+      "s_demand": 50,
+      "s_supply": -50,
+      "gap": 50,
+      "status": "shortage_risk"
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Industry",
+      "s_demand": -25,
+      "s_supply": -50,
+      "gap": 25,
+      "status": "balanced"
+    },
+    {
+      "region": "AMER",
+      "segment": "Infrastructure",
+      "s_demand": null,
+      "s_supply": -50,
+      "gap": null,
+      "status": "insufficient_data"
+    },
+    {
+      "region": "AMER",
+      "segment": "Utilities",
+      "s_demand": null,
+      "s_supply": -50,
+      "gap": null,
+      "status": "insufficient_data"
+    },
+    {
+      "region": "AMER",
+      "segment": "Industry",
+      "s_demand": null,
+      "s_supply": -50,
+      "gap": null,
+      "status": "insufficient_data"
+    },
+    {
+      "region": "APAC",
+      "segment": "Infrastructure",
+      "s_demand": null,
+      "s_supply": -50,
+      "gap": null,
+      "status": "insufficient_data"
+    },
+    {
+      "region": "APAC",
+      "segment": "Utilities",
+      "s_demand": null,
+      "s_supply": -50,
+      "gap": null,
+      "status": "insufficient_data"
+    },
+    {
+      "region": "APAC",
+      "segment": "Industry",
+      "s_demand": null,
+      "s_supply": -50,
+      "gap": null,
+      "status": "insufficient_data"
+    },
+    {
+      "region": "MEA",
+      "segment": "Infrastructure",
+      "s_demand": null,
+      "s_supply": -50,
+      "gap": null,
+      "status": "insufficient_data"
+    },
+    {
+      "region": "MEA",
+      "segment": "Utilities",
+      "s_demand": null,
+      "s_supply": -50,
+      "gap": null,
+      "status": "insufficient_data"
+    },
+    {
+      "region": "MEA",
+      "segment": "Industry",
+      "s_demand": null,
+      "s_supply": -50,
+      "gap": null,
+      "status": "insufficient_data"
+    }
+  ],
+  "scenarios": [
+    {
+      "region": "EUROPE",
+      "segment": "Infrastructure",
+      "name": "surge",
+      "triggers": [
+        "More hyperscaler announcements in the region",
+        "Connection agreements signed for announced sites",
+        "Lead times keep stretching"
+      ],
+      "likelihood": "medium",
+      "component_implication": "Relay demand for data center substations rises from 2027 while component lead times stretch."
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Infrastructure",
+      "name": "base",
+      "triggers": [
+        "Announced projects proceed on their phased schedules",
+        "Supply pressure stays roughly where it is"
+      ],
+      "likelihood": "high",
+      "component_implication": "Steady growth in relay demand with moderately tight supply of key electronics."
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Infrastructure",
+      "name": "reversal",
+      "triggers": [
+        "Hyperscaler capex guidance cut",
+        "Projects delayed by grid capacity limits",
+        "Lead times and component prices fall two months in a row"
+      ],
+      "likelihood": "low",
+      "component_implication": "Projects slip and component supply loosens; extra stock would sit idle."
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Utilities",
+      "name": "surge",
+      "triggers": [
+        "Grid code confirmed on schedule",
+        "Many large connections reach agreement in 2027"
+      ],
+      "likelihood": "medium",
+      "component_implication": "More relays with disturbance recording and real-time communication needed per connection."
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Utilities",
+      "name": "base",
+      "triggers": [
+        "Grid code enters force around March 2027",
+        "Connections continue at current pace"
+      ],
+      "likelihood": "high",
+      "component_implication": "Gradual shift toward relay variants with recording and communication features."
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Utilities",
+      "name": "reversal",
+      "triggers": [
+        "Grid code delayed",
+        "Large connection projects withdrawn"
+      ],
+      "likelihood": "low",
+      "component_implication": "Feature shift happens later; current component mix stays adequate."
+    }
+  ],
+  "action_evaluation": [
+    {
+      "region": "EUROPE",
+      "segment": "Infrastructure",
+      "action": "monitor",
+      "description": "No commitment now; review after the next data update.",
+      "score_surge": -75,
+      "score_base": -25,
+      "score_reversal": 25,
+      "worst_case": -75,
+      "selected": false
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Infrastructure",
+      "action": "flexible_commitment",
+      "description": "Framework agreements with volume options for key relay electronics.",
+      "score_surge": 25,
+      "score_base": 50,
+      "score_reversal": 0,
+      "worst_case": 0,
+      "selected": true
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Infrastructure",
+      "action": "firm_commitment",
+      "description": "Buy and stock a fixed 12-month volume now.",
+      "score_surge": 75,
+      "score_base": 25,
+      "score_reversal": -75,
+      "worst_case": -75,
+      "selected": false
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Utilities",
+      "action": "monitor",
+      "description": "No commitment now; review after the grid code is confirmed.",
+      "score_surge": -50,
+      "score_base": -25,
+      "score_reversal": 0,
+      "worst_case": -50,
+      "selected": false
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Utilities",
+      "action": "flexible_commitment",
+      "description": "Add recording and communication components to framework agreements with options.",
+      "score_surge": 25,
+      "score_base": 25,
+      "score_reversal": 0,
+      "worst_case": 0,
+      "selected": true
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Utilities",
+      "action": "firm_commitment",
+      "description": "Stock a fixed volume of components for new relay variants now.",
+      "score_surge": 50,
+      "score_base": 0,
+      "score_reversal": -50,
+      "worst_case": -50,
+      "selected": false
+    }
+  ],
+  "recommendations": [
+    {
+      "region": "EUROPE",
+      "segment": "Infrastructure",
+      "action": "Set up framework agreements with volume options covering 6-9 months of key relay electronics, keeping part of the volume cancellable.",
+      "components": [
+        "Microcontrollers",
+        "Power-management ICs",
+        "Communication modules"
+      ],
+      "horizon": "medium",
+      "act_by": "2026-11-30",
+      "why_robust": "It is the only option that avoids a bad outcome in every scenario: enough supply if demand surges, little stranded stock if projects slip.",
+      "cost_if_wrong": "If projects slip, some optional volume is cancelled or carried as extra stock for a few months; if demand surges harder, the options can be extended.",
+      "would_change_if": [
+        "Hyperscaler capex guidance is cut",
+        "Microcontroller lead times shorten two months in a row",
+        "Announced sites lose their connection agreements"
+      ],
+      "next_review": "2027-01-15",
+      "requires_human_approval": true,
+      "weights_used": "disruption",
+      "objective_scores": {
+        "profitability": 0,
+        "customer_value": 50,
+        "growth": 50,
+        "resilience": 75
+      },
+      "weighted_score": 50,
+      "balance_explanation": "Supply is tight, so resilience and customer value weigh more than short-term cost.",
+      "priority": 1,
+      "decision_area": "Procurement"
+    },
+    {
+      "region": "EUROPE",
+      "segment": "Utilities",
+      "action": "Add measurement, recording and communication components for relays meeting new large-load requirements to existing framework agreements, with options rather than fixed volumes.",
+      "components": [
+        "Measurement front-end ICs",
+        "Memory for disturbance recording",
+        "Communication modules"
+      ],
+      "horizon": "medium",
+      "act_by": "2027-01-31",
+      "why_robust": "Prepares for the new requirements without betting on exact timing of the grid code.",
+      "cost_if_wrong": "If the code is delayed, options lapse with little cost; if it arrives early, supply is already arranged.",
+      "would_change_if": [
+        "Grid code confirmation is postponed",
+        "Large connection projects are withdrawn"
+      ],
+      "next_review": "2027-03-15",
+      "requires_human_approval": true,
+      "weights_used": "disruption",
+      "objective_scores": {
+        "profitability": 0,
+        "customer_value": 50,
+        "growth": 25,
+        "resilience": 50
+      },
+      "weighted_score": 25,
+      "balance_explanation": "Moderate benefit across objectives with low downside.",
+      "priority": 2,
+      "decision_area": "Procurement"
+    }
+  ],
+  "manufacturing_implications": "Review relay production capacity for 2027 if connection agreements for the announced data center sites are confirmed; no capacity change yet.",
+  "expected_outcomes": [
+    {
+      "outcome": "Better timing",
+      "direction": "Procurement acts roughly 6-12 months before demand shows up in orders",
+      "assumption": "Based on the 12-24 month lead time of the investment signals"
+    },
+    {
+      "outcome": "Higher availability",
+      "direction": "Fewer shortages of key electronics if demand surges",
+      "assumption": "Assumes suppliers honour framework volumes"
+    },
+    {
+      "outcome": "Lower cost and less waste",
+      "direction": "Less spot buying in a surge and less stranded stock in a reversal",
+      "assumption": "Cancellable volume share agreed with suppliers"
+    }
+  ],
+  "data_gaps": [
+    "Order intake & backlog and Customer forecasts & RFQs (ABB internal) would confirm or reject these demand signals in production",
+    "Latest grid connection inquiry figures by segment (current figure is over 18 months old)",
+    "Real values for the three illustrative supply signals; Inventory & distributor data and Logistics & risk indicators are not collected in this prototype",
+    "No signals for AMER, APAC or MEA demand"
+  ],
+  "flags_for_other_teams": [
+    "Product and engineering: the new grid code may increase demand for relays with built-in disturbance recording and real-time communication."
+  ],
+  "decision_areas": [
+    {
+      "area": "Demand & Sales",
+      "questions": [
+        {
+          "question": "Where is demand accelerating?",
+          "answer": "Europe infrastructure (data centers) is accelerating; Europe industry linked to hydrogen is slowing.",
+          "data_sufficiency": "sufficient",
+          "missing_data": [],
+          "confidence": "high",
+          "horizon": "medium",
+          "signal_ids": [
+            "S3",
+            "S4",
+            "S5"
+          ]
+        },
+        {
+          "question": "Which segments & customers to focus?",
+          "answer": "Data center and large-load grid connections in Europe; customer-level focus needs RFQ data.",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "Customer forecasts & RFQs"
+          ],
+          "confidence": "medium",
+          "horizon": "medium",
+          "signal_ids": [
+            "S3",
+            "S4",
+            "S2"
+          ]
+        },
+        {
+          "question": "How to price & position?",
+          "answer": "Position relays with built-in recording and communication for new large-load rules; pricing is a commercial decision.",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "Order intake & backlog",
+            "Pricing & cost indices (real values)"
+          ],
+          "confidence": "low",
+          "horizon": "medium",
+          "signal_ids": [
+            "S2",
+            "S8"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "Procurement",
+      "questions": [
+        {
+          "question": "What & when to buy or commit?",
+          "answer": "Commit flexibly to key relay electronics before end of November.",
+          "data_sufficiency": "sufficient",
+          "missing_data": [],
+          "confidence": "medium",
+          "horizon": "medium",
+          "signal_ids": [
+            "S7",
+            "S8",
+            "S3"
+          ]
+        },
+        {
+          "question": "Which components to secure?",
+          "answer": "Microcontrollers, power-management ICs and communication modules.",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "Product lifecycle & EOL notices"
+          ],
+          "confidence": "medium",
+          "horizon": "medium",
+          "signal_ids": [
+            "S7",
+            "S8"
+          ]
+        },
+        {
+          "question": "How to manage suppliers & risk?",
+          "answer": "Prefer framework agreements with options; check exposure to export-controlled materials.",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "Supplier & capacity announcements"
+          ],
+          "confidence": "medium",
+          "horizon": "medium",
+          "signal_ids": [
+            "S9"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "Manufacturing",
+      "questions": [
+        {
+          "question": "How to plan capacity & production?",
+          "answer": "No capacity change yet; review for 2027 once connection agreements are confirmed.",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "Order intake & backlog"
+          ],
+          "confidence": "medium",
+          "horizon": "long",
+          "signal_ids": [
+            "S1",
+            "S3"
+          ]
+        },
+        {
+          "question": "What is the optimal product mix?",
+          "answer": "Shift toward variants meeting new large-load requirements.",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "Order intake & backlog"
+          ],
+          "confidence": "low",
+          "horizon": "long",
+          "signal_ids": [
+            "S2"
+          ]
+        },
+        {
+          "question": "Where are bottlenecks?",
+          "answer": "Likely component availability rather than assembly capacity.",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "Inventory & distributor data"
+          ],
+          "confidence": "low",
+          "horizon": "medium",
+          "signal_ids": [
+            "S7"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "Inventory & Working Capital",
+      "questions": [
+        {
+          "question": "How much inventory to hold?",
+          "answer": "Raise coverage for critical electronics toward roughly 6-9 months (assumption based on lead times).",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "ABB own inventory"
+          ],
+          "confidence": "medium",
+          "horizon": "medium",
+          "signal_ids": [
+            "S7"
+          ]
+        },
+        {
+          "question": "Where is excess or shortage risk?",
+          "answer": "Shortage risk in Europe infrastructure and utilities; no excess risk seen.",
+          "data_sufficiency": "sufficient",
+          "missing_data": [],
+          "confidence": "medium",
+          "horizon": "medium",
+          "signal_ids": [
+            "S3",
+            "S7"
+          ]
+        },
+        {
+          "question": "How to balance cost & availability?",
+          "answer": "Use cancellable volumes so cash is not locked in if projects slip.",
+          "data_sufficiency": "sufficient",
+          "missing_data": [],
+          "confidence": "medium",
+          "horizon": "medium",
+          "signal_ids": [
+            "S6"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "Customer & Order Allocation",
+      "questions": [
+        {
+          "question": "Which orders to prioritise?",
+          "answer": "Cannot be answered without order data.",
+          "data_sufficiency": "insufficient",
+          "missing_data": [
+            "Order intake & backlog"
+          ],
+          "confidence": "low",
+          "horizon": "short",
+          "signal_ids": []
+        },
+        {
+          "question": "How to balance price vs. relationships?",
+          "answer": "Commercial decision; protect delivery reliability for critical-infrastructure segments.",
+          "data_sufficiency": "insufficient",
+          "missing_data": [
+            "Customer forecasts & RFQs"
+          ],
+          "confidence": "low",
+          "horizon": "short",
+          "signal_ids": []
+        },
+        {
+          "question": "How to protect strategic customers?",
+          "answer": "Secure supply early so allocation is less likely to be needed.",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "Order intake & backlog"
+          ],
+          "confidence": "low",
+          "horizon": "medium",
+          "signal_ids": [
+            "S7"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "Product & Engineering",
+      "questions": [
+        {
+          "question": "Which components to qualify?",
+          "answer": "Second sources for microcontrollers and power-management ICs.",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "Product lifecycle & EOL notices"
+          ],
+          "confidence": "medium",
+          "horizon": "medium",
+          "signal_ids": [
+            "S7",
+            "S9"
+          ]
+        },
+        {
+          "question": "Where to increase flexibility?",
+          "answer": "Designs that accept alternative communication and processing parts.",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "Component demand & market data"
+          ],
+          "confidence": "low",
+          "horizon": "long",
+          "signal_ids": [
+            "S7"
+          ]
+        },
+        {
+          "question": "Which products to develop?",
+          "answer": "Relays with built-in disturbance recording and real-time communication for large loads.",
+          "data_sufficiency": "sufficient",
+          "missing_data": [],
+          "confidence": "medium",
+          "horizon": "long",
+          "signal_ids": [
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "area": "Investment & Strategy",
+      "questions": [
+        {
+          "question": "Where to invest in capacity?",
+          "answer": "Too early to decide; watch whether announced data center sites get connection agreements.",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "Order intake & backlog"
+          ],
+          "confidence": "low",
+          "horizon": "long",
+          "signal_ids": [
+            "S1",
+            "S3"
+          ]
+        },
+        {
+          "question": "How to strengthen resilience?",
+          "answer": "Dual sourcing and flexible framework agreements for critical electronics.",
+          "data_sufficiency": "sufficient",
+          "missing_data": [],
+          "confidence": "medium",
+          "horizon": "long",
+          "signal_ids": [
+            "S7",
+            "S9"
+          ]
+        },
+        {
+          "question": "Which technologies & regions?",
+          "answer": "Data center grid connections in Europe; other regions not yet analysed.",
+          "data_sufficiency": "partial",
+          "missing_data": [
+            "Project pipelines & permitting (other regions)"
+          ],
+          "confidence": "low",
+          "horizon": "long",
+          "signal_ids": [
+            "S3",
+            "S4"
+          ]
+        }
+      ]
+    }
+  ],
+  "agent_log": [
+    {
+      "agent": "market_intelligence",
+      "findings": [
+        {
+          "text": "Data center investment in Europe is turning into firm commitments.",
+          "signal_ids": [
+            "S3",
+            "S4"
+          ]
+        },
+        {
+          "text": "Hydrogen project pipeline is shrinking.",
+          "signal_ids": [
+            "S5"
+          ]
+        }
+      ]
+    },
+    {
+      "agent": "supply_chain",
+      "findings": [
+        {
+          "text": "Lead times and prices for key relay electronics are rising (illustrative).",
+          "signal_ids": [
+            "S7",
+            "S8"
+          ]
+        }
+      ]
+    },
+    {
+      "agent": "signal_detection",
+      "findings": [
+        {
+          "text": "Turning points: hydrogen pipeline and microcontroller lead times.",
+          "signal_ids": [
+            "S5",
+            "S7"
+          ]
+        },
+        {
+          "text": "Connection inquiry figure is stale.",
+          "signal_ids": [
+            "S1"
+          ]
+        }
+      ]
+    },
+    {
+      "agent": "orchestration",
+      "findings": [
+        {
+          "text": "Data center demand competes for the same electronics that are tightening.",
+          "signal_ids": [
+            "S3",
+            "S7"
+          ]
+        }
+      ]
+    },
+    {
+      "agent": "scenario_builder",
+      "findings": [
+        {
+          "text": "Built surge, base and reversal scenarios for Europe infrastructure and utilities.",
+          "signal_ids": [
+            "S3",
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "agent": "impact_assessment",
+      "findings": [
+        {
+          "text": "Firm commitment fails badly in a reversal; monitoring fails badly in a surge.",
+          "signal_ids": [
+            "S3",
+            "S6"
+          ]
+        }
+      ]
+    },
+    {
+      "agent": "recommendation",
+      "findings": [
+        {
+          "text": "Flexible commitment has the best worst case in both areas.",
+          "signal_ids": [
+            "S3",
+            "S7"
+          ]
+        }
+      ]
+    }
+  ],
+  "capabilities": {
+    "early_warnings": [
+      {
+        "level": "warning",
+        "message": "Shortage risk building in Europe infrastructure and utilities.",
+        "signal_ids": [
+          "S3",
+          "S7"
+        ]
+      },
+      {
+        "level": "watch",
+        "message": "Hydrogen-related demand turning down.",
+        "signal_ids": [
+          "S5"
+        ]
+      }
+    ],
+    "risks_and_opportunities": [],
+    "time_horizon_view": {
+      "short": [],
+      "medium": [],
+      "long": []
+    }
+  },
+  "orchestration": {
+    "cross_ecosystem_correlations": [],
+    "noise_vs_real_change": [],
+    "uncertainties_and_dependencies": [],
+    "learning_from_feedback": []
+  }
+}

@@ -1,0 +1,2479 @@
+{
+  "saved_at": "2026-10-04T02:49:36",
+  "model": "gemini-3.6-flash",
+  "source": "gemini",
+  "warnings": [
+    "Tried 4 model(s) in 226 s: gemini-flash-latest busy x2; gemini-3.8-flash busy x2; gemini-3.7-flash busy x2; gemini-3.6-flash busy, ok."
+  ],
+  "result": {
+    "as_of_date": "2026-10-04",
+    "executive_briefing": "Demand in Europe is accelerating across Infrastructure and Utilities segments, driven by hyperscaler data center investments (Google EUR 13bn, Cerebras 165 MW) and new grid code mandates taking effect in 2027. However, component supply is constrained by extended semiconductor lead times (30 weeks) and raw material export controls, compounded by high supply chain dependency on APAC. A critical shortage risk (+2 gap) is flagged for EUROPE Infrastructure, EUROPE Utilities, and AMER Infrastructure. Note that global supply baselines and APAC/AMER input cards rely on illustrative data and example dependency factors, requiring human validation before committing capital.",
+    "ecosystem_data": {
+      "demand_side": [
+        {
+          "dataset": "Market & policy development",
+          "status": "active",
+          "card_ids": [
+            "D|EUROPE|Infrastructure|Market & policy development",
+            "D|EUROPE|Utilities|Market & policy development",
+            "D|EUROPE|Industry|Market & policy development"
+          ],
+          "note": "Active policy signals from Fingrid draft grid specifications."
+        },
+        {
+          "dataset": "Project pipelines & permitting",
+          "status": "active",
+          "card_ids": [
+            "D|EUROPE|Infrastructure|Project pipelines & permitting",
+            "D|EUROPE|Industry|Project pipelines & permitting",
+            "D|AMER|Infrastructure|Project pipelines & permitting"
+          ],
+          "note": "Active pipeline tracking hyperscaler investments in Europe and illustrative data in AMER."
+        },
+        {
+          "dataset": "Grid plans & investments",
+          "status": "active",
+          "card_ids": [
+            "D|EUROPE|Infrastructure|Grid plans & investments",
+            "D|EUROPE|Utilities|Grid plans & investments",
+            "D|EUROPE|Industry|Grid plans & investments"
+          ],
+          "note": "Active grid inquiry data from Fingrid; includes stale source elements."
+        },
+        {
+          "dataset": "Customer forecasts & RFQs",
+          "status": "not_collected",
+          "card_ids": [],
+          "note": "Internal ABB data not collected this run; would provide firm demand confirmation and RFQ visibility."
+        },
+        {
+          "dataset": "Order intake & backlog",
+          "status": "not_collected",
+          "card_ids": [],
+          "note": "Internal ABB data not collected this run; would provide order backlog depth and execution timing."
+        },
+        {
+          "dataset": "Industry & macro economics",
+          "status": "not_collected",
+          "card_ids": [],
+          "note": "Dataset not selected in active context for this run."
+        },
+        {
+          "dataset": "Commodity & energy prices",
+          "status": "not_collected",
+          "card_ids": [],
+          "note": "Dataset not selected in active context for this run."
+        },
+        {
+          "dataset": "News & events (ESG, geopolitics)",
+          "status": "not_collected",
+          "card_ids": [],
+          "note": "Dataset not selected in active context for this run."
+        }
+      ],
+      "supply_side": [
+        {
+          "dataset": "Component demand & market data",
+          "status": "not_collected",
+          "card_ids": [],
+          "note": "Dataset not selected in active context for this run."
+        },
+        {
+          "dataset": "Lead times & allocations",
+          "status": "active",
+          "card_ids": [
+            "S|APAC|Lead times & allocations",
+            "S|GLOBAL|Lead times & allocations"
+          ],
+          "note": "Active tracking of component lead times; uses illustrative distributor reports."
+        },
+        {
+          "dataset": "Pricing & cost indices",
+          "status": "active",
+          "card_ids": [
+            "S|APAC|Pricing & cost indices",
+            "S|GLOBAL|Pricing & cost indices"
+          ],
+          "note": "Active price index data; uses illustrative semiconductor pricing."
+        },
+        {
+          "dataset": "Supplier & capacity announcements",
+          "status": "not_collected",
+          "card_ids": [],
+          "note": "Dataset not selected in active context for this run."
+        },
+        {
+          "dataset": "Inventory & distributor data",
+          "status": "not_collected",
+          "card_ids": [],
+          "note": "Dataset not selected in active context for this run."
+        },
+        {
+          "dataset": "Product lifecycle & EOL notices",
+          "status": "not_collected",
+          "card_ids": [],
+          "note": "Dataset not selected in active context for this run."
+        },
+        {
+          "dataset": "Logistics & risk indicators",
+          "status": "not_collected",
+          "card_ids": [],
+          "note": "Dataset not selected in active context for this run."
+        },
+        {
+          "dataset": "Raw material & chemicals",
+          "status": "active",
+          "card_ids": [
+            "S|APAC|Raw material & chemicals",
+            "S|GLOBAL|Raw material & chemicals"
+          ],
+          "note": "Active raw material monitoring; includes illustrative chip material export control data."
+        }
+      ],
+      "integration_layer": {
+        "data_quality_issues": [
+          {
+            "card_id": "D|EUROPE|Infrastructure|Grid plans & investments",
+            "issue": "conflicting_sources",
+            "detail": "Combines Fingrid S1 (400 GW massive inquiry growth) with Fingrid S6 (connection capacity restrictions extended to 2029)."
+          },
+          {
+            "card_id": "D|EUROPE|Utilities|Grid plans & investments",
+            "issue": "stale",
+            "detail": "Source S1 is dated 2025-01-22 (>18 months old relative to today 2026-10-04)."
+          },
+          {
+            "card_id": "D|EUROPE|Industry|Grid plans & investments",
+            "issue": "stale",
+            "detail": "Source S1 is dated 2025-01-22 (>18 months old relative to today 2026-10-04)."
+          },
+          {
+            "card_id": "D|AMER|Infrastructure|Project pipelines & permitting",
+            "issue": "illustrative",
+            "detail": "Flagged as illustrative example value with no original source URL."
+          },
+          {
+            "card_id": "S|APAC|Lead times & allocations",
+            "issue": "illustrative",
+            "detail": "Flagged as illustrative example value with no original source URL."
+          },
+          {
+            "card_id": "S|APAC|Pricing & cost indices",
+            "issue": "illustrative",
+            "detail": "Flagged as illustrative example value with no original source URL."
+          },
+          {
+            "card_id": "S|APAC|Raw material & chemicals",
+            "issue": "illustrative",
+            "detail": "Flagged as illustrative example value with no original source URL."
+          },
+          {
+            "card_id": "S|GLOBAL|Lead times & allocations",
+            "issue": "illustrative",
+            "detail": "Illustrative distributor report value."
+          },
+          {
+            "card_id": "S|GLOBAL|Pricing & cost indices",
+            "issue": "illustrative",
+            "detail": "Illustrative semiconductor price index value."
+          },
+          {
+            "card_id": "S|GLOBAL|Raw material & chemicals",
+            "issue": "illustrative",
+            "detail": "Illustrative news item on export controls."
+          }
+        ],
+        "lineage": [
+          {
+            "card_id": "D|EUROPE|Infrastructure|Grid plans & investments",
+            "source_url": "https://www.castren.fi/fingrid-extends-restrictions-on-new-energy-storage-facility-connections-in-southern-finland-until-2029/",
+            "date": "2025-10-01",
+            "stale": false,
+            "is_illustrative": false
+          },
+          {
+            "card_id": "D|EUROPE|Infrastructure|Market & policy development",
+            "source_url": "https://www.fingrid.fi/en/grid/grid-connection-agreement-phases/grid-code-specifications/draft-for-comments-kjv2026-grid-code-specifications-for-demand-connections/",
+            "date": "2026-06-12",
+            "stale": false,
+            "is_illustrative": false
+          },
+          {
+            "card_id": "D|EUROPE|Infrastructure|Project pipelines & permitting",
+            "source_url": "https://www.googlecloudpresscorner.com/2026-09-09-Google-Deepens-Commitment-to-Finland-with-Two-Year-EUR13-Billion-investment-in-AI-Infrastructure",
+            "date": "2026-09-09",
+            "stale": false,
+            "is_illustrative": false
+          },
+          {
+            "card_id": "D|EUROPE|Utilities|Grid plans & investments",
+            "source_url": "https://di9mr54a05a64.cloudfront.net/api-tamperefairs.expoplatform.com/files/Hydrogen/2025/H2Summit2025_Fingid_Jussi%20N%C3%A4rhi_22.1.2025.pdf",
+            "date": "2025-01-22",
+            "stale": true,
+            "is_illustrative": false
+          },
+          {
+            "card_id": "D|EUROPE|Utilities|Market & policy development",
+            "source_url": "https://www.fingrid.fi/en/grid/grid-connection-agreement-phases/grid-code-specifications/draft-for-comments-kjv2026-grid-code-specifications-for-demand-connections/",
+            "date": "2026-06-12",
+            "stale": false,
+            "is_illustrative": false
+          },
+          {
+            "card_id": "D|EUROPE|Industry|Grid plans & investments",
+            "source_url": "https://di9mr54a05a64.cloudfront.net/api-tamperefairs.expoplatform.com/files/Hydrogen/2025/H2Summit2025_Fingid_Jussi%20N%C3%A4rhi_22.1.2025.pdf",
+            "date": "2025-01-22",
+            "stale": true,
+            "is_illustrative": false
+          },
+          {
+            "card_id": "D|EUROPE|Industry|Market & policy development",
+            "source_url": "https://www.fingrid.fi/en/grid/grid-connection-agreement-phases/grid-code-specifications/draft-for-comments-kjv2026-grid-code-specifications-for-demand-connections/",
+            "date": "2026-06-12",
+            "stale": false,
+            "is_illustrative": false
+          },
+          {
+            "card_id": "D|EUROPE|Industry|Project pipelines & permitting",
+            "source_url": "https://forumnordic.com/business/finlands-hydrogen-dilemma-the-molecule-is-ready-the-market-is-not/",
+            "date": "2026-06-30",
+            "stale": false,
+            "is_illustrative": false
+          },
+          {
+            "card_id": "D|AMER|Infrastructure|Project pipelines & permitting",
+            "source_url": "",
+            "date": "",
+            "stale": false,
+            "is_illustrative": true
+          },
+          {
+            "card_id": "S|APAC|Lead times & allocations",
+            "source_url": "",
+            "date": "",
+            "stale": false,
+            "is_illustrative": true
+          },
+          {
+            "card_id": "S|APAC|Pricing & cost indices",
+            "source_url": "",
+            "date": "",
+            "stale": false,
+            "is_illustrative": true
+          },
+          {
+            "card_id": "S|APAC|Raw material & chemicals",
+            "source_url": "",
+            "date": "",
+            "stale": false,
+            "is_illustrative": true
+          },
+          {
+            "card_id": "S|GLOBAL|Lead times & allocations",
+            "source_url": "",
+            "date": "2026-09-15",
+            "stale": false,
+            "is_illustrative": true
+          },
+          {
+            "card_id": "S|GLOBAL|Pricing & cost indices",
+            "source_url": "",
+            "date": "2026-09-30",
+            "stale": false,
+            "is_illustrative": true
+          },
+          {
+            "card_id": "S|GLOBAL|Raw material & chemicals",
+            "source_url": "",
+            "date": "2026-09-20",
+            "stale": false,
+            "is_illustrative": true
+          }
+        ]
+      }
+    },
+    "input_assessment": [
+      {
+        "id": "D|EUROPE|Infrastructure|Grid plans & investments",
+        "dataset": "Grid plans & investments",
+        "agent": "market_intelligence",
+        "region": "EUROPE",
+        "segment": "Infrastructure",
+        "pestle": "Technological",
+        "what_changed": "Storage connection requests reached over 30 GW, prompting Fingrid to extend connection restrictions until 2029.",
+        "level": 0,
+        "confidence": "medium",
+        "indicator_type": "coincident",
+        "lead_time_months": "6-12 months",
+        "nature": "structural",
+        "anomaly": false,
+        "turning_point": false,
+        "stale": false,
+        "is_illustrative": false,
+        "combines_conflicting_sources": true,
+        "conflict_note": "S1 shows 400 GW production/60 GW consumption inquiries, whereas S6 notes 30+ GW storage restrictions extended to 2029 due to scarce capacity.",
+        "supporting_ids": [
+          "D|EUROPE|Infrastructure|Project pipelines & permitting"
+        ],
+        "contradicting_ids": [],
+        "rationale": "High connection inquiry volumes are balanced by grid congestion restrictions, resulting in a neutral overall score."
+      },
+      {
+        "id": "D|EUROPE|Infrastructure|Market & policy development",
+        "dataset": "Market & policy development",
+        "agent": "market_intelligence",
+        "region": "EUROPE",
+        "segment": "Infrastructure",
+        "pestle": "Legal",
+        "what_changed": "New Fingrid grid code mandates real-time measurement and disturbance recorders for >30 MW demand connections from March 2027.",
+        "level": 2,
+        "confidence": "high",
+        "indicator_type": "leading",
+        "lead_time_months": "6-12 months",
+        "nature": "structural",
+        "anomaly": false,
+        "turning_point": false,
+        "stale": false,
+        "is_illustrative": false,
+        "combines_conflicting_sources": false,
+        "conflict_note": "",
+        "supporting_ids": [
+          "D|EUROPE|Infrastructure|Project pipelines & permitting"
+        ],
+        "contradicting_ids": [],
+        "rationale": "Regulatory requirements force infrastructure upgrades and mandate protection and control hardware installation."
+      },
+      {
+        "id": "D|EUROPE|Infrastructure|Project pipelines & permitting",
+        "dataset": "Project pipelines & permitting",
+        "agent": "market_intelligence",
+        "region": "EUROPE",
+        "segment": "Infrastructure",
+        "pestle": "Economic",
+        "what_changed": "Google announced a EUR 13bn AI data center commitment; Cerebras announced a 165 MW AI data center project.",
+        "level": 2,
+        "confidence": "high",
+        "indicator_type": "leading",
+        "lead_time_months": "12-24 months",
+        "nature": "structural",
+        "anomaly": false,
+        "turning_point": false,
+        "stale": false,
+        "is_illustrative": false,
+        "combines_conflicting_sources": false,
+        "conflict_note": "",
+        "supporting_ids": [
+          "D|EUROPE|Infrastructure|Market & policy development"
+        ],
+        "contradicting_ids": [],
+        "rationale": "Major hyperscaler capital expenditures drive heavy demand for protection relays in data center substations."
+      },
+      {
+        "id": "D|EUROPE|Utilities|Grid plans & investments",
+        "dataset": "Grid plans & investments",
+        "agent": "market_intelligence",
+        "region": "EUROPE",
+        "segment": "Utilities",
+        "pestle": "Economic",
+        "what_changed": "Fingrid reports ~400 GW production and ~60 GW consumption inquiries in Finland.",
+        "level": 2,
+        "confidence": "low",
+        "indicator_type": "leading",
+        "lead_time_months": "12-36 months",
+        "nature": "cyclical",
+        "anomaly": false,
+        "turning_point": false,
+        "stale": true,
+        "is_illustrative": false,
+        "combines_conflicting_sources": false,
+        "conflict_note": "",
+        "supporting_ids": [],
+        "contradicting_ids": [
+          "D|EUROPE|Industry|Project pipelines & permitting"
+        ],
+        "rationale": "75% of projected growth lacks final investment decisions, making long-term utility commitments uncertain; source S1 is stale."
+      },
+      {
+        "id": "D|EUROPE|Utilities|Market & policy development",
+        "dataset": "Market & policy development",
+        "agent": "market_intelligence",
+        "region": "EUROPE",
+        "segment": "Utilities",
+        "pestle": "Legal",
+        "what_changed": "Fingrid draft specifications enforce disturbance recorders and mandatory equipment upgrades for grid connections over 30 MW.",
+        "level": 2,
+        "confidence": "high",
+        "indicator_type": "leading",
+        "lead_time_months": "6-12 months",
+        "nature": "structural",
+        "anomaly": false,
+        "turning_point": false,
+        "stale": false,
+        "is_illustrative": false,
+        "combines_conflicting_sources": false,
+        "conflict_note": "",
+        "supporting_ids": [
+          "D|EUROPE|Infrastructure|Market & policy development"
+        ],
+        "contradicting_ids": [],
+        "rationale": "Mandates directly require TSOs and utilities to procure compliant protection and control relays."
+      },
+      {
+        "id": "D|EUROPE|Industry|Grid plans & investments",
+        "dataset": "Grid plans & investments",
+        "agent": "market_intelligence",
+        "region": "EUROPE",
+        "segment": "Industry",
+        "pestle": "Technological",
+        "what_changed": "High volume of industrial electrification connection inquiries reported by TSO.",
+        "level": 2,
+        "confidence": "low",
+        "indicator_type": "leading",
+        "lead_time_months": "12-24 months",
+        "nature": "cyclical",
+        "anomaly": false,
+        "turning_point": false,
+        "stale": true,
+        "is_illustrative": false,
+        "combines_conflicting_sources": false,
+        "conflict_note": "",
+        "supporting_ids": [],
+        "contradicting_ids": [
+          "D|EUROPE|Industry|Project pipelines & permitting"
+        ],
+        "rationale": "High inquiry pipeline indicates intent, but source data is stale (>18 months)."
+      },
+      {
+        "id": "D|EUROPE|Industry|Market & policy development",
+        "dataset": "Market & policy development",
+        "agent": "market_intelligence",
+        "region": "EUROPE",
+        "segment": "Industry",
+        "pestle": "Legal",
+        "what_changed": "Large industrial site grid code updates requiring digital fault logging.",
+        "level": 2,
+        "confidence": "high",
+        "indicator_type": "leading",
+        "lead_time_months": "6-12 months",
+        "nature": "structural",
+        "anomaly": false,
+        "turning_point": false,
+        "stale": false,
+        "is_illustrative": false,
+        "combines_conflicting_sources": false,
+        "conflict_note": "",
+        "supporting_ids": [],
+        "contradicting_ids": [],
+        "rationale": "Favorable regulatory push for grid compliance hardware in industrial facilities."
+      },
+      {
+        "id": "D|EUROPE|Industry|Project pipelines & permitting",
+        "dataset": "Project pipelines & permitting",
+        "agent": "market_intelligence",
+        "region": "EUROPE",
+        "segment": "Industry",
+        "pestle": "Economic",
+        "what_changed": "Global 2030 hydrogen project pipeline contracted by ~25% YoY due to high costs and uncertain demand.",
+        "level": -2,
+        "confidence": "high",
+        "indicator_type": "leading",
+        "lead_time_months": "12-36 months",
+        "nature": "cyclical",
+        "anomaly": true,
+        "turning_point": true,
+        "stale": false,
+        "is_illustrative": false,
+        "combines_conflicting_sources": false,
+        "conflict_note": "",
+        "supporting_ids": [],
+        "contradicting_ids": [
+          "D|EUROPE|Industry|Grid plans & investments",
+          "D|EUROPE|Industry|Market & policy development"
+        ],
+        "rationale": "Hydrogen pipeline cancellation represents a clear reversal from earlier optimistic industrial growth expectations."
+      },
+      {
+        "id": "D|AMER|Infrastructure|Project pipelines & permitting",
+        "dataset": "Project pipelines & permitting",
+        "agent": "market_intelligence",
+        "region": "AMER",
+        "segment": "Infrastructure",
+        "pestle": "Economic",
+        "what_changed": "Illustrative baseline assumption of moderate infrastructure growth.",
+        "level": 1,
+        "confidence": "low",
+        "indicator_type": "coincident",
+        "lead_time_months": "3-6 months",
+        "nature": "cyclical",
+        "anomaly": false,
+        "turning_point": false,
+        "stale": false,
+        "is_illustrative": true,
+        "combines_conflicting_sources": false,
+        "conflict_note": "",
+        "supporting_ids": [],
+        "contradicting_ids": [],
+        "rationale": "Illustrative input used for pool pressure calculations; no counter-evidence found in provided data."
+      },
+      {
+        "id": "S|APAC|Lead times & allocations",
+        "dataset": "Lead times & allocations",
+        "agent": "supply_chain",
+        "region": "APAC",
+        "segment": null,
+        "pestle": "Technological",
+        "what_changed": "Illustrative input reflecting extended lead times for microcontrollers.",
+        "level": -2,
+        "confidence": "medium",
+        "indicator_type": "leading",
+        "lead_time_months": "3-6 months",
+        "nature": "cyclical",
+        "anomaly": false,
+        "turning_point": false,
+        "stale": false,
+        "is_illustrative": true,
+        "combines_conflicting_sources": false,
+        "conflict_note": "",
+        "supporting_ids": [
+          "S|GLOBAL|Lead times & allocations"
+        ],
+        "contradicting_ids": [],
+        "rationale": "APAC component allocations remain tight, stretching relay lead times."
+      },
+      {
+        "id": "S|APAC|Pricing & cost indices",
+        "dataset": "Pricing & cost indices",
+        "agent": "supply_chain",
+        "region": "APAC",
+        "segment": null,
+        "pestle": "Economic",
+        "what_changed": "Illustrative input reflecting semiconductor pricing escalation.",
+        "level": -2,
+        "confidence": "medium",
+        "indicator_type": "coincident",
+        "lead_time_months": "1-3 months",
+        "nature": "cyclical",
+        "anomaly": false,
+        "turning_point": false,
+        "stale": false,
+        "is_illustrative": true,
+        "combines_conflicting_sources": false,
+        "conflict_note": "",
+        "supporting_ids": [
+          "S|GLOBAL|Pricing & cost indices"
+        ],
+        "contradicting_ids": [],
+        "rationale": "Component cost pressures in APAC source markets constrain vendor margins."
+      },
+      {
+        "id": "S|APAC|Raw material & chemicals",
+        "dataset": "Raw material & chemicals",
+        "agent": "supply_chain",
+        "region": "APAC",
+        "segment": null,
+        "pestle": "Environmental",
+        "what_changed": "Illustrative input reflecting material scarcity and export restrictions.",
+        "level": -2,
+        "confidence": "medium",
+        "indicator_type": "leading",
+        "lead_time_months": "3-6 months",
+        "nature": "structural",
+        "anomaly": false,
+        "turning_point": false,
+        "stale": false,
+        "is_illustrative": true,
+        "combines_conflicting_sources": false,
+        "conflict_note": "",
+        "supporting_ids": [
+          "S|GLOBAL|Raw material & chemicals"
+        ],
+        "contradicting_ids": [],
+        "rationale": "Upstream raw material constraints impact component fabricators in Asia."
+      }
+    ],
+    "agent_log": [
+      {
+        "agent": "market_intelligence",
+        "findings": [
+          {
+            "text": "Hyperscaler investments (EUR 13bn Google, 165 MW Cerebras) are creating a strong demand surge for protection relays in European infrastructure.",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Project pipelines & permitting"
+            ]
+          },
+          {
+            "text": "Draft Fingrid grid code specifications (entry in 2027) act as a structural driver across EUROPE Infrastructure, Utilities, and Industry.",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Market & policy development",
+              "D|EUROPE|Utilities|Market & policy development",
+              "D|EUROPE|Industry|Market & policy development"
+            ]
+          },
+          {
+            "text": "European industrial project pipeline exhibits a sharp reversal due to a 25% drop in global hydrogen projects.",
+            "card_ids": [
+              "D|EUROPE|Industry|Project pipelines & permitting"
+            ]
+          }
+        ]
+      },
+      {
+        "agent": "supply_chain",
+        "findings": [
+          {
+            "text": "Semiconductor lead times stretch to 30 weeks and power-management IC prices are rising, causing tight global supply (-1.67 baseline).",
+            "card_ids": [
+              "S|GLOBAL|Lead times & allocations",
+              "S|GLOBAL|Pricing & cost indices",
+              "S|GLOBAL|Raw material & chemicals"
+            ]
+          },
+          {
+            "text": "APAC regional supply is tight (-2.00) across lead times, pricing, and raw materials.",
+            "card_ids": [
+              "S|APAC|Lead times & allocations",
+              "S|APAC|Pricing & cost indices",
+              "S|APAC|Raw material & chemicals"
+            ]
+          },
+          {
+            "text": "EUROPE, AMER, and MEA lack own supply cards and rely on the GLOBAL baseline supply fallback (-1.67).",
+            "card_ids": [
+              "S|GLOBAL|Lead times & allocations",
+              "S|GLOBAL|Pricing & cost indices",
+              "S|GLOBAL|Raw material & chemicals"
+            ]
+          }
+        ]
+      },
+      {
+        "agent": "signal_detection",
+        "findings": [
+          {
+            "text": "Identified turning point in hydrogen pipeline data showing a -2 reversal from earlier expansion expectations.",
+            "card_ids": [
+              "D|EUROPE|Industry|Project pipelines & permitting"
+            ]
+          },
+          {
+            "text": "Conflicting signals detected in EUROPE Infrastructure: Fingrid S1 inquiries point to growth while S6 connection restrictions to 2029 flag grid bottlenecks.",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Grid plans & investments"
+            ]
+          }
+        ]
+      },
+      {
+        "agent": "orchestration",
+        "findings": [
+          {
+            "text": "Correlated demand expansion in European data centers with shared component pool pressure from APAC sourcing dependencies.",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Project pipelines & permitting",
+              "S|APAC|Lead times & allocations"
+            ]
+          },
+          {
+            "text": "Traced cross-region spillover: AMER demand draws on the global component pool, worsening effective supply for EUROPE, APAC, and MEA.",
+            "card_ids": [
+              "D|AMER|Infrastructure|Project pipelines & permitting"
+            ]
+          }
+        ]
+      },
+      {
+        "agent": "scenario_builder",
+        "findings": [
+          {
+            "text": "Constructed surge, base, and reversal scenarios for critical shortage cells: EUROPE Infrastructure, EUROPE Utilities, and AMER Infrastructure.",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Project pipelines & permitting",
+              "D|EUROPE|Utilities|Market & policy development",
+              "D|AMER|Infrastructure|Project pipelines & permitting"
+            ]
+          }
+        ]
+      },
+      {
+        "agent": "impact_assessment",
+        "findings": [
+          {
+            "text": "Evaluated monitor, flexible commitment, and firm commitment actions; flexible commitment yields the best worst-case outcome across scenarios.",
+            "card_ids": [
+              "S|GLOBAL|Lead times & allocations",
+              "S|APAC|Lead times & allocations"
+            ]
+          }
+        ]
+      },
+      {
+        "agent": "recommendation",
+        "findings": [
+          {
+            "text": "Formulated prioritized flexible commitment recommendations for high gap cells (+2 gap) in EUROPE Infrastructure, EUROPE Utilities, and AMER Infrastructure.",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Project pipelines & permitting",
+              "D|EUROPE|Utilities|Market & policy development",
+              "D|AMER|Infrastructure|Project pipelines & permitting"
+            ]
+          }
+        ]
+      }
+    ],
+    "orchestration": {
+      "cross_ecosystem_correlations": [
+        {
+          "finding": "Infrastructure hyperscaler data center build-outs in Europe require protection relays that rely on microcontrollers currently experiencing 30-week lead times and APAC export constraints.",
+          "demand_ids": [
+            "D|EUROPE|Infrastructure|Project pipelines & permitting"
+          ],
+          "supply_ids": [
+            "S|GLOBAL|Lead times & allocations",
+            "S|APAC|Lead times & allocations"
+          ]
+        }
+      ],
+      "noise_vs_real_change": [
+        {
+          "card_id": "D|EUROPE|Industry|Project pipelines & permitting",
+          "verdict": "real_change",
+          "why": "Structural downturn backed by IEA 2026 report showing 25% drop in hydrogen project pipeline."
+        },
+        {
+          "card_id": "D|EUROPE|Utilities|Grid plans & investments",
+          "verdict": "unclear",
+          "why": "High inquiry volumes (400 GW) lack firm investment decisions (75% uncommitted) and source data is stale."
+        }
+      ],
+      "uncertainties_and_dependencies": [
+        "Analysis relies on example supply chain dependency percentages (50% APAC dependency for EUROPE).",
+        "Global supply levels rely on illustrative distributor and price index reports.",
+        "AMER infrastructure demand is driven by an illustrative card."
+      ],
+      "learning_from_feedback": [
+        "No historical planner feedback provided in this run (<feedback> is 'none yet'). Standard rules applied."
+      ]
+    },
+    "knowledge_graph": {
+      "nodes": [
+        {
+          "id": "Fingrid",
+          "type": "Supplier",
+          "label": "Fingrid (Finnish TSO)"
+        },
+        {
+          "id": "Google",
+          "type": "Customer segment",
+          "label": "Google AI Infrastructure"
+        },
+        {
+          "id": "Cerebras",
+          "type": "Customer segment",
+          "label": "Cerebras Compute Nordic"
+        },
+        {
+          "id": "GridCode2027",
+          "type": "Policy",
+          "label": "Fingrid Grid Code Specifications 2027"
+        },
+        {
+          "id": "Microcontrollers",
+          "type": "Component",
+          "label": "Microcontrollers & PMICs"
+        },
+        {
+          "id": "HydrogenProjects",
+          "type": "Project",
+          "label": "Global 2030 Hydrogen Pipeline"
+        }
+      ],
+      "edges": [
+        {
+          "from": "Google",
+          "to": "GridCode2027",
+          "relation": "subject_to",
+          "card_ids": [
+            "D|EUROPE|Infrastructure|Project pipelines & permitting",
+            "D|EUROPE|Infrastructure|Market & policy development"
+          ]
+        },
+        {
+          "from": "Cerebras",
+          "to": "GridCode2027",
+          "relation": "subject_to",
+          "card_ids": [
+            "D|EUROPE|Infrastructure|Project pipelines & permitting",
+            "D|EUROPE|Infrastructure|Market & policy development"
+          ]
+        },
+        {
+          "from": "GridCode2027",
+          "to": "Fingrid",
+          "relation": "issued_by",
+          "card_ids": [
+            "D|EUROPE|Infrastructure|Market & policy development"
+          ]
+        },
+        {
+          "from": "Microcontrollers",
+          "to": "Google",
+          "relation": "required_for",
+          "card_ids": [
+            "S|GLOBAL|Lead times & allocations",
+            "D|EUROPE|Infrastructure|Project pipelines & permitting"
+          ]
+        },
+        {
+          "from": "HydrogenProjects",
+          "to": "Fingrid",
+          "relation": "cancelled_inquiries",
+          "card_ids": [
+            "D|EUROPE|Industry|Project pipelines & permitting"
+          ]
+        }
+      ]
+    },
+    "supply_by_region": [
+      {
+        "region": "EUROPE",
+        "supply_source": "global_fallback",
+        "own_supply": -1.67,
+        "own_share": 0.4,
+        "origin_parts": [
+          {
+            "from": "APAC",
+            "share": 0.5,
+            "value": -2.0
+          },
+          {
+            "from": "AMER",
+            "share": 0.1,
+            "value": -1.67
+          }
+        ],
+        "blended_supply": -1.83,
+        "pool_pressure": 0.25,
+        "pool_parts": [
+          {
+            "from": "AMER",
+            "value": 0.25
+          }
+        ],
+        "effective_supply_unrounded": -2.08,
+        "effective_supply": -2,
+        "input_ids": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals"
+        ],
+        "illustrative_inputs": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals",
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ]
+      },
+      {
+        "region": "AMER",
+        "supply_source": "global_fallback",
+        "own_supply": -1.67,
+        "own_share": 0.5,
+        "origin_parts": [
+          {
+            "from": "APAC",
+            "share": 0.4,
+            "value": -2.0
+          },
+          {
+            "from": "EUROPE",
+            "share": 0.1,
+            "value": -1.67
+          }
+        ],
+        "blended_supply": -1.8,
+        "pool_pressure": 0.38,
+        "pool_parts": [
+          {
+            "from": "EUROPE",
+            "value": 0.38
+          }
+        ],
+        "effective_supply_unrounded": -2.18,
+        "effective_supply": -2,
+        "input_ids": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals"
+        ],
+        "illustrative_inputs": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals"
+        ]
+      },
+      {
+        "region": "APAC",
+        "supply_source": "own",
+        "own_supply": -2.0,
+        "own_share": 0.9,
+        "origin_parts": [
+          {
+            "from": "EUROPE",
+            "share": 0.1,
+            "value": -1.67
+          }
+        ],
+        "blended_supply": -1.97,
+        "pool_pressure": 0.63,
+        "pool_parts": [
+          {
+            "from": "EUROPE",
+            "value": 0.38
+          },
+          {
+            "from": "AMER",
+            "value": 0.25
+          }
+        ],
+        "effective_supply_unrounded": -2.6,
+        "effective_supply": -3,
+        "input_ids": [
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals",
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals"
+        ],
+        "illustrative_inputs": [
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals",
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ]
+      },
+      {
+        "region": "MEA",
+        "supply_source": "global_fallback",
+        "own_supply": -1.67,
+        "own_share": 0.2,
+        "origin_parts": [
+          {
+            "from": "EUROPE",
+            "share": 0.4,
+            "value": -1.67
+          },
+          {
+            "from": "APAC",
+            "share": 0.4,
+            "value": -2.0
+          }
+        ],
+        "blended_supply": -1.8,
+        "pool_pressure": 0.63,
+        "pool_parts": [
+          {
+            "from": "EUROPE",
+            "value": 0.38
+          },
+          {
+            "from": "AMER",
+            "value": 0.25
+          }
+        ],
+        "effective_supply_unrounded": -2.43,
+        "effective_supply": -2,
+        "input_ids": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals"
+        ],
+        "illustrative_inputs": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals",
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ]
+      }
+    ],
+    "balance_matrix": [
+      {
+        "region": "EUROPE",
+        "segment": "Infrastructure",
+        "demand_unrounded": 1.5,
+        "demand": 2,
+        "effective_supply": -2,
+        "supply_source": "global_fallback",
+        "gap_unrounded": 1.79,
+        "gap": 2,
+        "status": "shortage_risk",
+        "input_ids": [
+          "D|EUROPE|Infrastructure|Grid plans & investments",
+          "D|EUROPE|Infrastructure|Market & policy development",
+          "D|EUROPE|Infrastructure|Project pipelines & permitting",
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals"
+        ],
+        "illustrative_inputs": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals",
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ]
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Utilities",
+        "demand_unrounded": 2.0,
+        "demand": 2,
+        "effective_supply": -2,
+        "supply_source": "global_fallback",
+        "gap_unrounded": 2.04,
+        "gap": 2,
+        "status": "shortage_risk",
+        "input_ids": [
+          "D|EUROPE|Utilities|Grid plans & investments",
+          "D|EUROPE|Utilities|Market & policy development",
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals"
+        ],
+        "illustrative_inputs": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals",
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ]
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Industry",
+        "demand_unrounded": 0.29,
+        "demand": 0,
+        "effective_supply": -2,
+        "supply_source": "global_fallback",
+        "gap_unrounded": 1.18,
+        "gap": 1,
+        "status": "watch_shortage",
+        "input_ids": [
+          "D|EUROPE|Industry|Grid plans & investments",
+          "D|EUROPE|Industry|Market & policy development",
+          "D|EUROPE|Industry|Project pipelines & permitting",
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals"
+        ],
+        "illustrative_inputs": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals",
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ]
+      },
+      {
+        "region": "AMER",
+        "segment": "Infrastructure",
+        "demand_unrounded": 1.0,
+        "demand": 1,
+        "effective_supply": -2,
+        "supply_source": "global_fallback",
+        "gap_unrounded": 1.59,
+        "gap": 2,
+        "status": "shortage_risk",
+        "input_ids": [
+          "D|AMER|Infrastructure|Project pipelines & permitting",
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals"
+        ],
+        "illustrative_inputs": [
+          "D|AMER|Infrastructure|Project pipelines & permitting",
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals"
+        ]
+      },
+      {
+        "region": "AMER",
+        "segment": "Utilities",
+        "demand_unrounded": null,
+        "demand": null,
+        "effective_supply": -2,
+        "supply_source": "global_fallback",
+        "gap_unrounded": null,
+        "gap": null,
+        "status": "insufficient_data",
+        "input_ids": [],
+        "illustrative_inputs": []
+      },
+      {
+        "region": "AMER",
+        "segment": "Industry",
+        "demand_unrounded": null,
+        "demand": null,
+        "effective_supply": -2,
+        "supply_source": "global_fallback",
+        "gap_unrounded": null,
+        "gap": null,
+        "status": "insufficient_data",
+        "input_ids": [],
+        "illustrative_inputs": []
+      },
+      {
+        "region": "APAC",
+        "segment": "Infrastructure",
+        "demand_unrounded": null,
+        "demand": null,
+        "effective_supply": -3,
+        "supply_source": "own",
+        "gap_unrounded": null,
+        "gap": null,
+        "status": "insufficient_data",
+        "input_ids": [],
+        "illustrative_inputs": []
+      },
+      {
+        "region": "APAC",
+        "segment": "Utilities",
+        "demand_unrounded": null,
+        "demand": null,
+        "effective_supply": -3,
+        "supply_source": "own",
+        "gap_unrounded": null,
+        "gap": null,
+        "status": "insufficient_data",
+        "input_ids": [],
+        "illustrative_inputs": []
+      },
+      {
+        "region": "APAC",
+        "segment": "Industry",
+        "demand_unrounded": null,
+        "demand": null,
+        "effective_supply": -3,
+        "supply_source": "own",
+        "gap_unrounded": null,
+        "gap": null,
+        "status": "insufficient_data",
+        "input_ids": [],
+        "illustrative_inputs": []
+      },
+      {
+        "region": "MEA",
+        "segment": "Infrastructure",
+        "demand_unrounded": null,
+        "demand": null,
+        "effective_supply": -2,
+        "supply_source": "global_fallback",
+        "gap_unrounded": null,
+        "gap": null,
+        "status": "insufficient_data",
+        "input_ids": [],
+        "illustrative_inputs": []
+      },
+      {
+        "region": "MEA",
+        "segment": "Utilities",
+        "demand_unrounded": null,
+        "demand": null,
+        "effective_supply": -2,
+        "supply_source": "global_fallback",
+        "gap_unrounded": null,
+        "gap": null,
+        "status": "insufficient_data",
+        "input_ids": [],
+        "illustrative_inputs": []
+      },
+      {
+        "region": "MEA",
+        "segment": "Industry",
+        "demand_unrounded": null,
+        "demand": null,
+        "effective_supply": -2,
+        "supply_source": "global_fallback",
+        "gap_unrounded": null,
+        "gap": null,
+        "status": "insufficient_data",
+        "input_ids": [],
+        "illustrative_inputs": []
+      }
+    ],
+    "global_comparison": [
+      {
+        "region": "EUROPE",
+        "segment": "Infrastructure",
+        "side": "demand",
+        "region_level": 2,
+        "global_level": null,
+        "difference": null,
+        "label": "no_global_baseline",
+        "input_ids": [
+          "D|EUROPE|Infrastructure|Grid plans & investments",
+          "D|EUROPE|Infrastructure|Market & policy development",
+          "D|EUROPE|Infrastructure|Project pipelines & permitting"
+        ]
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Utilities",
+        "side": "demand",
+        "region_level": 2,
+        "global_level": null,
+        "difference": null,
+        "label": "no_global_baseline",
+        "input_ids": [
+          "D|EUROPE|Utilities|Grid plans & investments",
+          "D|EUROPE|Utilities|Market & policy development"
+        ]
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Industry",
+        "side": "demand",
+        "region_level": 0,
+        "global_level": null,
+        "difference": null,
+        "label": "no_global_baseline",
+        "input_ids": [
+          "D|EUROPE|Industry|Grid plans & investments",
+          "D|EUROPE|Industry|Market & policy development",
+          "D|EUROPE|Industry|Project pipelines & permitting"
+        ]
+      },
+      {
+        "region": "AMER",
+        "segment": "Infrastructure",
+        "side": "demand",
+        "region_level": 1,
+        "global_level": null,
+        "difference": null,
+        "label": "no_global_baseline",
+        "input_ids": [
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ]
+      },
+      {
+        "region": "EUROPE",
+        "segment": null,
+        "side": "supply",
+        "region_level": -2,
+        "global_level": -2,
+        "difference": 0,
+        "label": "no_own_data",
+        "input_ids": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals"
+        ]
+      },
+      {
+        "region": "AMER",
+        "segment": null,
+        "side": "supply",
+        "region_level": -2,
+        "global_level": -2,
+        "difference": 0,
+        "label": "no_own_data",
+        "input_ids": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals"
+        ]
+      },
+      {
+        "region": "APAC",
+        "segment": null,
+        "side": "supply",
+        "region_level": -2,
+        "global_level": -2,
+        "difference": 0,
+        "label": "in_line",
+        "input_ids": [
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals",
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals"
+        ]
+      },
+      {
+        "region": "MEA",
+        "segment": null,
+        "side": "supply",
+        "region_level": -2,
+        "global_level": -2,
+        "difference": 0,
+        "label": "no_own_data",
+        "input_ids": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals"
+        ]
+      }
+    ],
+    "global_comparison_commentary": [
+      {
+        "text": "Demand baseline for GLOBAL is uncollected, preventing direct regional demand comparison. On supply, APAC own supply (-2.00) is in line with the tight GLOBAL baseline (-1.67, rounded to -2). EUROPE, AMER, and MEA currently lack regional supply cards and rely on the global fallback.",
+        "regions": [
+          "EUROPE",
+          "AMER",
+          "APAC",
+          "MEA"
+        ],
+        "card_ids": [
+          "S|APAC|Lead times & allocations",
+          "S|GLOBAL|Lead times & allocations"
+        ]
+      }
+    ],
+    "cross_region_effects": [
+      {
+        "from_region": "APAC",
+        "to_region": "EUROPE",
+        "direction": "APAC → EUROPE",
+        "channel": "supply_dependency",
+        "share": 0.5,
+        "strength": "high",
+        "why": "EUROPE depends on APAC for 50% of its key electronics sourcing while APAC supply is tight (-2.00).",
+        "procurement_implication": "Component shortages or export restrictions in APAC directly throttle European protection relay manufacturing.",
+        "card_ids": [
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals"
+        ],
+        "involves_illustrative": true
+      },
+      {
+        "from_region": "AMER",
+        "to_region": "EUROPE",
+        "direction": "AMER → EUROPE",
+        "channel": "supply_dependency",
+        "share": 0.1,
+        "strength": "low",
+        "why": "EUROPE sources 10% of electronics from AMER under fallback global supply conditions (-1.67).",
+        "procurement_implication": "Minor exposure to AMER supply tightness.",
+        "card_ids": [
+          "S|GLOBAL|Lead times & allocations"
+        ],
+        "involves_illustrative": true
+      },
+      {
+        "from_region": "APAC",
+        "to_region": "AMER",
+        "direction": "APAC → AMER",
+        "channel": "supply_dependency",
+        "share": 0.4,
+        "strength": "medium",
+        "why": "AMER relies on APAC for 40% of its electronics components.",
+        "procurement_implication": "APAC component tightness transmits directly to AMER assembly facilities.",
+        "card_ids": [
+          "S|APAC|Lead times & allocations"
+        ],
+        "involves_illustrative": true
+      },
+      {
+        "from_region": "EUROPE",
+        "to_region": "AMER",
+        "direction": "EUROPE → AMER",
+        "channel": "supply_dependency",
+        "share": 0.1,
+        "strength": "low",
+        "why": "AMER sources 10% from EUROPE.",
+        "procurement_implication": "Minimal influence on AMER operations.",
+        "card_ids": [
+          "S|GLOBAL|Lead times & allocations"
+        ],
+        "involves_illustrative": true
+      },
+      {
+        "from_region": "EUROPE",
+        "to_region": "APAC",
+        "direction": "EUROPE → APAC",
+        "channel": "supply_dependency",
+        "share": 0.1,
+        "strength": "low",
+        "why": "APAC sources 10% from EUROPE.",
+        "procurement_implication": "Minimal influence on APAC operations.",
+        "card_ids": [
+          "S|GLOBAL|Lead times & allocations"
+        ],
+        "involves_illustrative": true
+      },
+      {
+        "from_region": "EUROPE",
+        "to_region": "MEA",
+        "direction": "EUROPE → MEA",
+        "channel": "supply_dependency",
+        "share": 0.4,
+        "strength": "medium",
+        "why": "MEA sources 40% from EUROPE.",
+        "procurement_implication": "European supply constraints pass through to MEA projects.",
+        "card_ids": [
+          "S|GLOBAL|Lead times & allocations"
+        ],
+        "involves_illustrative": true
+      },
+      {
+        "from_region": "APAC",
+        "to_region": "MEA",
+        "direction": "APAC → MEA",
+        "channel": "supply_dependency",
+        "share": 0.4,
+        "strength": "medium",
+        "why": "MEA sources 40% from APAC.",
+        "procurement_implication": "APAC component tightness directly impacts MEA relay delivery schedules.",
+        "card_ids": [
+          "S|APAC|Lead times & allocations"
+        ],
+        "involves_illustrative": true
+      },
+      {
+        "from_region": "EUROPE",
+        "to_region": "ALL_OTHER_REGIONS",
+        "direction": "EUROPE → ALL_OTHER_REGIONS",
+        "channel": "demand_pool",
+        "share": 0.6,
+        "strength": "high",
+        "why": "Strong European demand growth (D̄ = 1.26, competition factor 0.6) increases pool pressure (0.38) on AMER, APAC, and MEA.",
+        "procurement_implication": "High European relay demand locks up shared global electronic component allocations, restricting availability for other regions.",
+        "card_ids": [
+          "D|EUROPE|Infrastructure|Project pipelines & permitting",
+          "D|EUROPE|Utilities|Market & policy development"
+        ],
+        "involves_illustrative": false
+      },
+      {
+        "from_region": "AMER",
+        "to_region": "ALL_OTHER_REGIONS",
+        "direction": "AMER → ALL_OTHER_REGIONS",
+        "channel": "demand_pool",
+        "share": 0.5,
+        "strength": "low",
+        "why": "AMER demand (D̄ = 1.00, competition factor 0.5) adds pool pressure (0.25) onto EUROPE, APAC, and MEA.",
+        "procurement_implication": "AMER infrastructure expansion incrementally tightens component availability globally.",
+        "card_ids": [
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ],
+        "involves_illustrative": true
+      }
+    ],
+    "illustrative_influence": {
+      "any": true,
+      "items": [
+        {
+          "card_id": "D|AMER|Infrastructure|Project pipelines & permitting",
+          "influences": "Directly sets AMER Infrastructure demand (1.00) and gap (+2, shortage_risk), and generates pool pressure (0.25) on EUROPE, APAC, and MEA balance matrix outputs."
+        },
+        {
+          "card_id": "S|APAC|Lead times & allocations",
+          "influences": "Directly sets APAC own supply (-2.00) and feeds blended supply for EUROPE (-1.83), AMER (-1.80), APAC (-1.97), and MEA (-1.80)."
+        },
+        {
+          "card_id": "S|APAC|Pricing & cost indices",
+          "influences": "Directly sets APAC own supply (-2.00) and feeds blended supply for EUROPE (-1.83), AMER (-1.80), APAC (-1.97), and MEA (-1.80)."
+        },
+        {
+          "card_id": "S|APAC|Raw material & chemicals",
+          "influences": "Directly sets APAC own supply (-2.00) and feeds blended supply for EUROPE (-1.83), AMER (-1.80), APAC (-1.97), and MEA (-1.80)."
+        },
+        {
+          "card_id": "S|GLOBAL|Lead times & allocations",
+          "influences": "Sets GLOBAL baseline supply (-1.67) and global fallback supply for EUROPE, AMER, and MEA, driving effective supply and gaps across all regions."
+        },
+        {
+          "card_id": "S|GLOBAL|Pricing & cost indices",
+          "influences": "Sets GLOBAL baseline supply (-1.67) and global fallback supply for EUROPE, AMER, and MEA, driving effective supply and gaps across all regions."
+        },
+        {
+          "card_id": "S|GLOBAL|Raw material & chemicals",
+          "influences": "Sets GLOBAL baseline supply (-1.67) and global fallback supply for EUROPE, AMER, and MEA, driving effective supply and gaps across all regions."
+        }
+      ]
+    },
+    "pestle_coverage": {
+      "counts": {
+        "Political": 0,
+        "Economic": 4,
+        "Social": 0,
+        "Technological": 3,
+        "Legal": 4,
+        "Environmental": 1
+      },
+      "missing": [
+        "Political",
+        "Social"
+      ],
+      "strongest_driver": "Legal and Economic drivers (Fingrid mandatory grid code specifications and Google/Cerebras megaproject capital investments)."
+    },
+    "capabilities": {
+      "early_warnings": [
+        {
+          "level": "critical",
+          "message": "EUROPE Infrastructure faces imminent component shortage (gap +2) due to hyperscaler AI data center expansion combined with 30-week microcontroller lead times.",
+          "card_ids": [
+            "D|EUROPE|Infrastructure|Project pipelines & permitting",
+            "S|GLOBAL|Lead times & allocations"
+          ],
+          "illustrative_inputs": [
+            "S|GLOBAL|Lead times & allocations"
+          ]
+        },
+        {
+          "level": "warning",
+          "message": "EUROPE Utilities gap is +2 under mandatory 2027 Fingrid grid code specifications while regional supply relies on global fallback.",
+          "card_ids": [
+            "D|EUROPE|Utilities|Market & policy development",
+            "S|GLOBAL|Lead times & allocations"
+          ],
+          "illustrative_inputs": [
+            "S|GLOBAL|Lead times & allocations"
+          ]
+        },
+        {
+          "level": "watch",
+          "message": "EUROPE Industry hydrogen pipeline contracted by 25% YoY, signaling potential order delays for industrial protection equipment.",
+          "card_ids": [
+            "D|EUROPE|Industry|Project pipelines & permitting"
+          ],
+          "illustrative_inputs": []
+        }
+      ],
+      "risks_and_opportunities": [
+        {
+          "type": "risk",
+          "description": "Component lead time extension (30 weeks) causing missed delivery schedules for key European infrastructure projects.",
+          "rating": "high",
+          "horizon": "short",
+          "card_ids": [
+            "S|GLOBAL|Lead times & allocations",
+            "D|EUROPE|Infrastructure|Project pipelines & permitting"
+          ]
+        },
+        {
+          "type": "opportunity",
+          "description": "Fingrid draft grid code specifications compel utilities and large industrial sites to install digital fault recording protection relays by March 2027.",
+          "rating": "high",
+          "horizon": "medium",
+          "card_ids": [
+            "D|EUROPE|Infrastructure|Market & policy development",
+            "D|EUROPE|Utilities|Market & policy development"
+          ]
+        },
+        {
+          "type": "risk",
+          "description": "50% reliance on APAC suppliers exposes European production to Asian raw material export controls and allocation squeezes.",
+          "rating": "high",
+          "horizon": "medium",
+          "card_ids": [
+            "S|APAC|Raw material & chemicals"
+          ]
+        }
+      ],
+      "time_horizon_view": {
+        "short": [
+          "Secure microcontroller and PMIC buffer allocations for European protection relay assembly lines to cover 30-week lead times.",
+          "Review pricing and cost pass-through mechanisms given persistent semiconductor price index rises."
+        ],
+        "medium": [
+          "Align product engineering and sales pipeline with March 2027 Fingrid grid code mandates (real-time disturbance recorders).",
+          "Dual-source critical microcontrollers to reduce 50% APAC supply chain dependency."
+        ],
+        "long": [
+          "Re-evaluate industrial segment strategy as green hydrogen capital investments decline globally."
+        ]
+      }
+    },
+    "scenarios": [
+      {
+        "region": "EUROPE",
+        "segment": "Infrastructure",
+        "name": "surge",
+        "triggers": [
+          "Accelerated construction on Google EUR 13bn and Cerebras 165 MW sites",
+          "Further export restrictions on semiconductor raw materials in APAC"
+        ],
+        "likelihood": "medium",
+        "component_implication": "Microcontroller lead times blow out beyond 40 weeks; severe production line stoppage risks.",
+        "card_ids": [
+          "D|EUROPE|Infrastructure|Project pipelines & permitting",
+          "S|GLOBAL|Lead times & allocations"
+        ]
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Infrastructure",
+        "name": "base",
+        "triggers": [
+          "Data center projects progress on announced multi-year phased schedule",
+          "Semiconductor lead times remain flat at ~30 weeks"
+        ],
+        "likelihood": "high",
+        "component_implication": "Tight supply requires proactive buffer stock management and rolling order commitments.",
+        "card_ids": [
+          "D|EUROPE|Infrastructure|Project pipelines & permitting",
+          "S|GLOBAL|Lead times & allocations"
+        ]
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Infrastructure",
+        "name": "reversal",
+        "triggers": [
+          "Data center permitting delayed due to energy storage restrictions",
+          "New semiconductor fabrication capacity comes online, easing lead times"
+        ],
+        "likelihood": "low",
+        "component_implication": "Component supply normalizes to <15 weeks; excess buffer inventory risk.",
+        "card_ids": [
+          "D|EUROPE|Infrastructure|Grid plans & investments",
+          "S|GLOBAL|Lead times & allocations"
+        ]
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Utilities",
+        "name": "surge",
+        "triggers": [
+          "Early enforcement of Fingrid grid code specifications across Nordic utilities",
+          "Global power IC prices surge over 15%"
+        ],
+        "likelihood": "medium",
+        "component_implication": "Utility protection relay order backlog spikes, creating severe delivery bottlenecks.",
+        "card_ids": [
+          "D|EUROPE|Utilities|Market & policy development",
+          "S|GLOBAL|Pricing & cost indices"
+        ]
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Utilities",
+        "name": "base",
+        "triggers": [
+          "Utilities prepare for March 2027 compliance on standard procurement cycles",
+          "Current component allocations maintained by distributors"
+        ],
+        "likelihood": "high",
+        "component_implication": "Steady demand growth offset by tight lead times; requires advance scheduling.",
+        "card_ids": [
+          "D|EUROPE|Utilities|Market & policy development",
+          "S|GLOBAL|Lead times & allocations"
+        ]
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Utilities",
+        "name": "reversal",
+        "triggers": [
+          "Regulatory delay of March 2027 grid code implementation date",
+          "Utility capex freezes due to high financing costs"
+        ],
+        "likelihood": "low",
+        "component_implication": "Demand softens, leaving advance component commitments temporarily unallocated.",
+        "card_ids": [
+          "D|EUROPE|Utilities|Market & policy development"
+        ]
+      },
+      {
+        "region": "AMER",
+        "segment": "Infrastructure",
+        "name": "surge",
+        "triggers": [
+          "US infrastructure stimulus accelerates grid modernization contracts",
+          "Cross-region supply competition from Europe intensifies"
+        ],
+        "likelihood": "low",
+        "component_implication": "Severe component starvation for AMER assembly plants.",
+        "card_ids": [
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ]
+      },
+      {
+        "region": "AMER",
+        "segment": "Infrastructure",
+        "name": "base",
+        "triggers": [
+          "Moderate infrastructure demand growth continues as assumed in baseline"
+        ],
+        "likelihood": "medium",
+        "component_implication": "Balanced growth matched by standard extended component lead times.",
+        "card_ids": [
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ]
+      },
+      {
+        "region": "AMER",
+        "segment": "Infrastructure",
+        "name": "reversal",
+        "triggers": [
+          "Macro slowdown halts regional infrastructure project starts"
+        ],
+        "likelihood": "low",
+        "component_implication": "Excess inventory accumulation for specialized protection hardware.",
+        "card_ids": [
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ]
+      }
+    ],
+    "action_evaluation": [
+      {
+        "region": "EUROPE",
+        "segment": "Infrastructure",
+        "action": "flexible_commitment",
+        "description": "Secure 6-month rolling capacity reserves with suppliers with flexible ramp/cancel options.",
+        "score_surge": 2,
+        "score_base": 2,
+        "score_reversal": 1,
+        "worst_case": 1,
+        "likelihood_weighted_unrounded": 1.83,
+        "selected": true,
+        "trade_off": "Balances protection against extended 30-week lead times against minor option fees if demand softens."
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Infrastructure",
+        "action": "firm_commitment",
+        "description": "Place non-cancellable 12-month POs for microcontrollers and power management ICs.",
+        "score_surge": 3,
+        "score_base": 1,
+        "score_reversal": -2,
+        "worst_case": -2,
+        "likelihood_weighted_unrounded": 0.83,
+        "selected": false,
+        "trade_off": "Maximizes availability during a surge but risks high component obsolescence if projects delay."
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Infrastructure",
+        "action": "monitor",
+        "description": "Maintain baseline ordering patterns without forward commitments.",
+        "score_surge": -3,
+        "score_base": 0,
+        "score_reversal": 2,
+        "worst_case": -3,
+        "likelihood_weighted_unrounded": -0.17,
+        "selected": false,
+        "trade_off": "Saves capital during downturns but guarantees stockouts and lost market share during surges."
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Utilities",
+        "action": "flexible_commitment",
+        "description": "Establish long-term frame agreements with component suppliers containing volume flexibility clauses.",
+        "score_surge": 2,
+        "score_base": 2,
+        "score_reversal": 1,
+        "worst_case": 1,
+        "likelihood_weighted_unrounded": 1.83,
+        "selected": true,
+        "trade_off": "Ensures delivery readiness for March 2027 mandates while mitigating downside grid delay risks."
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Utilities",
+        "action": "firm_commitment",
+        "description": "Execute fixed volume multi-year component purchases.",
+        "score_surge": 3,
+        "score_base": 1,
+        "score_reversal": -2,
+        "worst_case": -2,
+        "likelihood_weighted_unrounded": 0.83,
+        "selected": false,
+        "trade_off": "Locks in prices but creates balance sheet risk if utility uncommitted inquiries (75%) do not convert."
+      },
+      {
+        "region": "EUROPE",
+        "segment": "Utilities",
+        "action": "monitor",
+        "description": "Defer buffer purchasing until utility RFQs materialize.",
+        "score_surge": -3,
+        "score_base": 0,
+        "score_reversal": 2,
+        "worst_case": -3,
+        "likelihood_weighted_unrounded": -0.17,
+        "selected": false,
+        "trade_off": "Avoids holding costs but risks missing mandatory grid code delivery deadlines."
+      },
+      {
+        "region": "AMER",
+        "segment": "Infrastructure",
+        "action": "flexible_commitment",
+        "description": "Negotiate flexible allocation options with key semiconductor distributors.",
+        "score_surge": 2,
+        "score_base": 2,
+        "score_reversal": 0,
+        "worst_case": 0,
+        "likelihood_weighted_unrounded": 1.67,
+        "selected": true,
+        "trade_off": "Protects against supply pool drain from Europe while avoiding hard commitments based on illustrative demand."
+      },
+      {
+        "region": "AMER",
+        "segment": "Infrastructure",
+        "action": "firm_commitment",
+        "description": "Firmly commit component inventory for North American assembly lines.",
+        "score_surge": 3,
+        "score_base": 0,
+        "score_reversal": -2,
+        "worst_case": -2,
+        "likelihood_weighted_unrounded": 0.17,
+        "selected": false,
+        "trade_off": "Protects supply completely but exposes ABB to inventory write-downs since demand input is illustrative."
+      },
+      {
+        "region": "AMER",
+        "segment": "Infrastructure",
+        "action": "monitor",
+        "description": "Monitor regional pipeline progress without modifying purchasing schedules.",
+        "score_surge": -2,
+        "score_base": 1,
+        "score_reversal": 2,
+        "worst_case": -2,
+        "likelihood_weighted_unrounded": 0.67,
+        "selected": false,
+        "trade_off": "Zero financial commitment risk but high likelihood of lead time extension impacts."
+      }
+    ],
+    "recommendations": [
+      {
+        "priority": 1,
+        "decision_area": "Procurement",
+        "region": "EUROPE",
+        "segment": "Infrastructure",
+        "action": "flexible_commitment",
+        "components": [
+          "Microcontrollers",
+          "Power Management ICs"
+        ],
+        "horizon": "short",
+        "act_by": "2026-11-15",
+        "why_robust": "Highest gap score (+1.79 unrounded) supported by high-confidence demand signals (Google EUR 13bn investment). Flexible commitment delivers the highest worst-case score (+1) under supply disruption policy weights.",
+        "cost_if_wrong": "Minor reservation option fees (~1-2% of component cost) if infrastructure projects delay.",
+        "would_change_if": [
+          "Google or Cerebras delay project execution schedules by more than 12 months.",
+          "Microcontroller lead times drop below 15 weeks."
+        ],
+        "next_review": "2026-12-01",
+        "requires_human_approval": true,
+        "human_should_validate": [
+          "Verify if global baseline lead times (30 weeks) reflect ABB's direct contract terms.",
+          "Confirm if Fingrid energy storage connection limits delay hyperscaler substation build-outs."
+        ],
+        "card_ids": [
+          "D|EUROPE|Infrastructure|Project pipelines & permitting",
+          "D|EUROPE|Infrastructure|Market & policy development",
+          "S|GLOBAL|Lead times & allocations"
+        ],
+        "illustrative_inputs": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals",
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ],
+        "weights_used": "disruption",
+        "objective_scores": {
+          "profitability": 1,
+          "customer_value": 2,
+          "growth": 2,
+          "resilience": 2
+        },
+        "weighted_score": 2,
+        "balance_explanation": "Prioritizes customer delivery reliability and supply resilience during a critical component shortage."
+      },
+      {
+        "priority": 2,
+        "decision_area": "Procurement",
+        "region": "EUROPE",
+        "segment": "Utilities",
+        "action": "flexible_commitment",
+        "components": [
+          "Digital Disturbance Recorders",
+          "Protection Relay Microcontrollers"
+        ],
+        "horizon": "medium",
+        "act_by": "2026-12-01",
+        "why_robust": "High demand (+2) driven by mandatory Fingrid March 2027 regulatory specifications. Flexible commitment protects delivery timelines while avoiding inventory locking given that 75% of inquiries currently lack final investment decisions. Formulated as a distinct recommendation but can share supplier frame contracts with EUROPE Infrastructure.",
+        "cost_if_wrong": "Holding costs for reserved component allocations if utility final investment decisions stall.",
+        "would_change_if": [
+          "Fingrid postpones mandatory grid code entry in force past March 2027.",
+          "Utility connection inquiries cancel at rates higher than 50%."
+        ],
+        "next_review": "2026-12-15",
+        "requires_human_approval": true,
+        "human_should_validate": [
+          "Validate stale Fingrid source S1 with updated Finnish TSO inquiry data.",
+          "Confirm utility compliance capex schedules with European sales leads."
+        ],
+        "card_ids": [
+          "D|EUROPE|Utilities|Market & policy development",
+          "D|EUROPE|Utilities|Grid plans & investments",
+          "S|GLOBAL|Lead times & allocations"
+        ],
+        "illustrative_inputs": [
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals",
+          "D|AMER|Infrastructure|Project pipelines & permitting"
+        ],
+        "weights_used": "disruption",
+        "objective_scores": {
+          "profitability": 1,
+          "customer_value": 2,
+          "growth": 2,
+          "resilience": 2
+        },
+        "weighted_score": 2,
+        "balance_explanation": "Balances regulatory compliance readiness against inventory holding risk."
+      },
+      {
+        "priority": 3,
+        "decision_area": "Procurement",
+        "region": "AMER",
+        "segment": "Infrastructure",
+        "action": "flexible_commitment",
+        "components": [
+          "Protection Hardware Sub-assemblies"
+        ],
+        "horizon": "short",
+        "act_by": "2026-11-30",
+        "why_robust": "Gap score is +2 (+1.59 unrounded), but demand input is illustrative. Flexible commitment secures allocation priority against European pool pressure without locking hard capital.",
+        "cost_if_wrong": "Option commitment fees on unverified demand estimates.",
+        "would_change_if": [
+          "Real AMER demand data is collected and shows neutral growth.",
+          "APAC component lead times improve significantly."
+        ],
+        "next_review": "2026-12-15",
+        "requires_human_approval": true,
+        "human_should_validate": [
+          "Replace illustrative AMER demand card with actual market pipeline intelligence before signing contracts.",
+          "Validate example supply dependency ratios (40% APAC dependency) with AMER procurement leaders."
+        ],
+        "card_ids": [
+          "D|AMER|Infrastructure|Project pipelines & permitting",
+          "S|GLOBAL|Lead times & allocations"
+        ],
+        "illustrative_inputs": [
+          "D|AMER|Infrastructure|Project pipelines & permitting",
+          "S|GLOBAL|Lead times & allocations",
+          "S|GLOBAL|Pricing & cost indices",
+          "S|GLOBAL|Raw material & chemicals",
+          "S|APAC|Lead times & allocations",
+          "S|APAC|Pricing & cost indices",
+          "S|APAC|Raw material & chemicals"
+        ],
+        "weights_used": "disruption",
+        "objective_scores": {
+          "profitability": 1,
+          "customer_value": 2,
+          "growth": 1,
+          "resilience": 2
+        },
+        "weighted_score": 2,
+        "balance_explanation": "Maintains global operational resilience while limiting exposure to unverified regional demand signals."
+      }
+    ],
+    "decision_areas": [
+      {
+        "area": "Demand & Sales",
+        "questions": [
+          {
+            "question": "Where is demand accelerating?",
+            "answer": "Demand is strongly accelerating in EUROPE Infrastructure (hyperscaler data center builds like Google EUR 13bn and Cerebras 165 MW) and EUROPE Utilities (Fingrid grid code updates requiring digital fault recording).",
+            "data_sufficiency": "sufficient",
+            "missing_data": [],
+            "confidence": "high",
+            "horizon": "short",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Project pipelines & permitting",
+              "D|EUROPE|Utilities|Market & policy development"
+            ],
+            "illustrative_inputs": []
+          },
+          {
+            "question": "Which segments & customers to focus?",
+            "answer": "Focus commercial effort on the Infrastructure segment (specifically data center operators and energy storage developers) and the Utilities segment preparing for 2027 mandatory grid code compliance.",
+            "data_sufficiency": "sufficient",
+            "missing_data": [],
+            "confidence": "high",
+            "horizon": "medium",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Project pipelines & permitting",
+              "D|EUROPE|Utilities|Market & policy development"
+            ],
+            "illustrative_inputs": []
+          },
+          {
+            "question": "How to price & position?",
+            "answer": "Position protection products around compliance readiness for the March 2027 Fingrid grid code. Commercial structures should incorporate flexible lead-time guarantees and raw material index adjustments rather than fixed spot prices.",
+            "data_sufficiency": "partial",
+            "missing_data": [
+              "Commodity & energy prices",
+              "Customer forecasts & RFQs"
+            ],
+            "confidence": "medium",
+            "horizon": "medium",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Market & policy development",
+              "S|GLOBAL|Pricing & cost indices"
+            ],
+            "illustrative_inputs": [
+              "S|GLOBAL|Pricing & cost indices"
+            ]
+          }
+        ]
+      },
+      {
+        "area": "Procurement",
+        "questions": [
+          {
+            "question": "What & when to buy or commit?",
+            "answer": "Execute flexible commitment agreements immediately (by Nov 2026) for microcontrollers and power management ICs to cover 30-week lead times for European assembly lines.",
+            "data_sufficiency": "partial",
+            "missing_data": [
+              "Supplier & capacity announcements"
+            ],
+            "confidence": "medium",
+            "horizon": "short",
+            "card_ids": [
+              "S|GLOBAL|Lead times & allocations",
+              "S|APAC|Lead times & allocations"
+            ],
+            "illustrative_inputs": [
+              "S|GLOBAL|Lead times & allocations",
+              "S|APAC|Lead times & allocations"
+            ]
+          },
+          {
+            "question": "Which components to secure?",
+            "answer": "Prioritize microcontrollers, power management ICs, and digital disturbance recording sub-assemblies required for high-density infrastructure protection relays.",
+            "data_sufficiency": "partial",
+            "missing_data": [
+              "Component demand & market data"
+            ],
+            "confidence": "medium",
+            "horizon": "short",
+            "card_ids": [
+              "S|GLOBAL|Lead times & allocations",
+              "D|EUROPE|Infrastructure|Market & policy development"
+            ],
+            "illustrative_inputs": [
+              "S|GLOBAL|Lead times & allocations"
+            ]
+          },
+          {
+            "question": "How to manage suppliers & risk?",
+            "answer": "Qualify secondary semiconductor suppliers outside APAC to mitigate the 50% regional dependency and buffer against raw material export controls.",
+            "data_sufficiency": "partial",
+            "missing_data": [
+              "Logistics & risk indicators"
+            ],
+            "confidence": "medium",
+            "horizon": "medium",
+            "card_ids": [
+              "S|APAC|Raw material & chemicals"
+            ],
+            "illustrative_inputs": [
+              "S|APAC|Raw material & chemicals"
+            ]
+          }
+        ]
+      },
+      {
+        "area": "Manufacturing",
+        "questions": [
+          {
+            "question": "How to plan capacity & production?",
+            "answer": "Ramp up protection relay line capacity in Europe by Q1 2027 to align with hyperscaler project milestones and utility compliance deadlines.",
+            "data_sufficiency": "partial",
+            "missing_data": [
+              "Order intake & backlog"
+            ],
+            "confidence": "medium",
+            "horizon": "medium",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Project pipelines & permitting"
+            ],
+            "illustrative_inputs": []
+          },
+          {
+            "question": "What is the optimal product mix?",
+            "answer": "Shift production mix toward advanced digital relays with integrated disturbance recording and real-time telemetry over standard industrial units.",
+            "data_sufficiency": "sufficient",
+            "missing_data": [],
+            "confidence": "high",
+            "horizon": "medium",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Market & policy development",
+              "D|EUROPE|Industry|Project pipelines & permitting"
+            ],
+            "illustrative_inputs": []
+          },
+          {
+            "question": "Where are bottlenecks?",
+            "answer": "Primary manufacturing bottlenecks stem from microcontroller allocations and 30-week supplier lead times on key electronic sub-assemblies.",
+            "data_sufficiency": "partial",
+            "missing_data": [
+              "Inventory & distributor data"
+            ],
+            "confidence": "medium",
+            "horizon": "short",
+            "card_ids": [
+              "S|GLOBAL|Lead times & allocations"
+            ],
+            "illustrative_inputs": [
+              "S|GLOBAL|Lead times & allocations"
+            ]
+          }
+        ]
+      },
+      {
+        "area": "Inventory & Working Capital",
+        "questions": [
+          {
+            "question": "How much inventory to hold?",
+            "answer": "Maintain 7 to 8 months of component forward coverage (assumption based on 30-week lead times) for critical microcontrollers, while keeping finished relay stock lean.",
+            "data_sufficiency": "partial",
+            "missing_data": [
+              "Inventory & distributor data",
+              "ABB Internal Inventory"
+            ],
+            "confidence": "medium",
+            "horizon": "short",
+            "card_ids": [
+              "S|GLOBAL|Lead times & allocations"
+            ],
+            "illustrative_inputs": [
+              "S|GLOBAL|Lead times & allocations"
+            ]
+          },
+          {
+            "question": "Where is excess or shortage risk?",
+            "answer": "Shortage risk is acute in EUROPE Infrastructure and Utilities (+2 gap). Excess risk is building in EUROPE Industry (-2 demand trend in hydrogen).",
+            "data_sufficiency": "sufficient",
+            "missing_data": [],
+            "confidence": "high",
+            "horizon": "short",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Project pipelines & permitting",
+              "D|EUROPE|Industry|Project pipelines & permitting"
+            ],
+            "illustrative_inputs": []
+          },
+          {
+            "question": "How to balance cost & availability?",
+            "answer": "Utilize flexible commitments with supplier option fees rather than outright buffer inventory purchases to minimize working capital impact while securing queue priority.",
+            "data_sufficiency": "partial",
+            "missing_data": [
+              "Pricing & cost indices"
+            ],
+            "confidence": "medium",
+            "horizon": "medium",
+            "card_ids": [
+              "S|GLOBAL|Pricing & cost indices"
+            ],
+            "illustrative_inputs": [
+              "S|GLOBAL|Pricing & cost indices"
+            ]
+          }
+        ]
+      },
+      {
+        "area": "Customer & Order Allocation",
+        "questions": [
+          {
+            "question": "Which orders to prioritise?",
+            "answer": "Data required to rank individual customer orders is missing. Commercial focus should prioritize Infrastructure and Utility project deliveries subject to strict 2027 regulatory compliance deadlines.",
+            "data_sufficiency": "insufficient",
+            "missing_data": [
+              "Order intake & backlog",
+              "Customer forecasts & RFQs"
+            ],
+            "confidence": "low",
+            "horizon": "short",
+            "card_ids": [],
+            "illustrative_inputs": []
+          },
+          {
+            "question": "How to balance price vs. relationships?",
+            "answer": "Protect strategic utility and hyperscaler relationships by absorbing minor cost surges through flexible contracts, while adding lead-time flexibility clauses for spot orders.",
+            "data_sufficiency": "insufficient",
+            "missing_data": [
+              "Order intake & backlog",
+              "Customer forecasts & RFQs"
+            ],
+            "confidence": "low",
+            "horizon": "short",
+            "card_ids": [],
+            "illustrative_inputs": []
+          },
+          {
+            "question": "How to protect strategic customers?",
+            "answer": "Establish ring-fenced component allocations for key utility framework accounts to prevent stockouts during peak hyperscaler demand surges.",
+            "data_sufficiency": "insufficient",
+            "missing_data": [
+              "Order intake & backlog"
+            ],
+            "confidence": "low",
+            "horizon": "short",
+            "card_ids": [],
+            "illustrative_inputs": []
+          }
+        ]
+      },
+      {
+        "area": "Product & Engineering",
+        "questions": [
+          {
+            "question": "Which components to qualify?",
+            "answer": "Accelerate engineering qualification of alternative microcontroller and PMIC vendors to reduce single-source reliance on tight APAC fabricators.",
+            "data_sufficiency": "partial",
+            "missing_data": [
+              "Product lifecycle & EOL notices"
+            ],
+            "confidence": "medium",
+            "horizon": "medium",
+            "card_ids": [
+              "S|APAC|Lead times & allocations"
+            ],
+            "illustrative_inputs": [
+              "S|APAC|Lead times & allocations"
+            ]
+          },
+          {
+            "question": "Where to increase flexibility?",
+            "answer": "Design protection relay firmware to support dual-chip architectures, allowing dynamic swapping between microcontroller families based on availability.",
+            "data_sufficiency": "partial",
+            "missing_data": [
+              "Component demand & market data"
+            ],
+            "confidence": "medium",
+            "horizon": "long",
+            "card_ids": [
+              "S|GLOBAL|Lead times & allocations"
+            ],
+            "illustrative_inputs": [
+              "S|GLOBAL|Lead times & allocations"
+            ]
+          },
+          {
+            "question": "Which products to develop?",
+            "answer": "Expand digital protection software features that fulfill Fingrid 2027 real-time disturbance recording specifications out-of-the-box.",
+            "data_sufficiency": "sufficient",
+            "missing_data": [],
+            "confidence": "high",
+            "horizon": "long",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Market & policy development"
+            ],
+            "illustrative_inputs": []
+          }
+        ]
+      },
+      {
+        "area": "Investment & Strategy",
+        "questions": [
+          {
+            "question": "Where to invest in capacity?",
+            "answer": "Invest in European assembly testing and automation capacity to handle high-density data center relay demand.",
+            "data_sufficiency": "partial",
+            "missing_data": [
+              "Industry & macro economics"
+            ],
+            "confidence": "medium",
+            "horizon": "long",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Project pipelines & permitting"
+            ],
+            "illustrative_inputs": []
+          },
+          {
+            "question": "How to strengthen resilience?",
+            "answer": "Rebalance supply chain dependencies by increasing European local sourcing share above the current 40% benchmark.",
+            "data_sufficiency": "partial",
+            "missing_data": [
+              "Logistics & risk indicators"
+            ],
+            "confidence": "medium",
+            "horizon": "long",
+            "card_ids": [
+              "S|APAC|Lead times & allocations"
+            ],
+            "illustrative_inputs": [
+              "S|APAC|Lead times & allocations"
+            ]
+          },
+          {
+            "question": "Which technologies & regions?",
+            "answer": "Focus strategic capital on digital grid protection technology in Europe and North America while scaling back green hydrogen specific product lines.",
+            "data_sufficiency": "sufficient",
+            "missing_data": [],
+            "confidence": "high",
+            "horizon": "long",
+            "card_ids": [
+              "D|EUROPE|Infrastructure|Project pipelines & permitting",
+              "D|EUROPE|Industry|Project pipelines & permitting"
+            ],
+            "illustrative_inputs": []
+          }
+        ]
+      }
+    ],
+    "optimisation_objectives": {
+      "weights_used": "disruption",
+      "weights": {
+        "profitability": 20,
+        "customer_value": 35,
+        "growth": 15,
+        "resilience": 30
+      },
+      "why": "Triggered automatically because effective supply in EUROPE (-2.08) and AMER (-2.18) is ≤ -2, representing significant component market disruption.",
+      "main_tension": "Tension exists between securing supply resilience/customer delivery and preserving short-term margins under inflating semiconductor prices."
+    },
+    "expected_outcomes": [
+      {
+        "outcome": "Better timing of actions",
+        "direction": "Positive impact by aligning component commitments 30 weeks ahead of major 2027 grid code and data center milestones.",
+        "assumption": "Assumes vendor lead times stay within the 30-week range."
+      },
+      {
+        "outcome": "Lower cost & less waste",
+        "direction": "Positive impact by avoiding over-commitment in industrial hydrogen projects and using flexible options instead of spot buffer stock.",
+        "assumption": "Assumes supplier option fees remain below 2% of total component costs."
+      },
+      {
+        "outcome": "Higher availability & reliability",
+        "direction": "Positive impact by securing dedicated microcontroller allocations for European assembly lines.",
+        "assumption": "Assumes semiconductor fabricators honor flexible capacity reservation agreements."
+      },
+      {
+        "outcome": "Stronger customer retention",
+        "direction": "Positive impact by protecting delivery dates for strategic utility and hyperscaler infrastructure accounts.",
+        "assumption": "Assumes customers prioritize on-time delivery over minor price surcharges."
+      },
+      {
+        "outcome": "Higher margins & cash flow",
+        "direction": "Positive impact by reducing uncommitted inventory cash lock-up in fluctuating markets.",
+        "assumption": "Assumes price escalation clauses cover semiconductor price index increases."
+      },
+      {
+        "outcome": "Sustainable long-term value",
+        "direction": "Positive impact by positioning ABB as the premier compliant supplier for 2027 digital grid standards.",
+        "assumption": "Assumes TSOs systematically enforce draft grid code mandates."
+      }
+    ],
+    "data_gaps": [
+      "ABB internal order intake & backlog data is missing, preventing customer-level order prioritization.",
+      "ABB internal inventory levels are missing, requiring lead-time assumptions for coverage calculations.",
+      "AMER demand data is illustrative, creating uncertainty in AMER shortage gap outputs.",
+      "GLOBAL baseline supply relies on illustrative distributor and price index reports.",
+      "Fingrid utility inquiry data (S1) is stale (>18 months old) and requires refreshed TSO inputs."
+    ],
+    "human_review_summary": "Human experts should review and validate three primary items before executing decisions: 1) Verify if actual contract lead times match the 30-week baseline from illustrative distributor reports. 2) Re-validate the stale Fingrid utility inquiry source (S1) with local sales teams. 3) Replace illustrative AMER demand cards with verified regional project pipeline data.",
+    "_meta": {
+      "model": "gemini-3.6-flash",
+      "attempts": [
+        {
+          "model": "gemini-flash-latest",
+          "outcome": "busy",
+          "detail": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+          "seconds": 2.1
+        },
+        {
+          "model": "gemini-flash-latest",
+          "outcome": "busy",
+          "detail": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+          "seconds": 4.1
+        },
+        {
+          "model": "gemini-3.8-flash",
+          "outcome": "busy",
+          "detail": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+          "seconds": 1.0
+        },
+        {
+          "model": "gemini-3.8-flash",
+          "outcome": "busy",
+          "detail": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+          "seconds": 1.1
+        },
+        {
+          "model": "gemini-3.7-flash",
+          "outcome": "busy",
+          "detail": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+          "seconds": 7.6
+        },
+        {
+          "model": "gemini-3.7-flash",
+          "outcome": "busy",
+          "detail": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+          "seconds": 10.2
+        },
+        {
+          "model": "gemini-3.6-flash",
+          "outcome": "busy",
+          "detail": "ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+          "seconds": 28.8
+        },
+        {
+          "model": "gemini-3.6-flash",
+          "outcome": "ok",
+          "detail": "",
+          "seconds": 131.0
+        }
+      ],
+      "generated_at": "2026-10-04T02:49:36"
+    }
+  }
+}

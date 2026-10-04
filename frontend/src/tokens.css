@@ -1,0 +1,183 @@
+/* ABB brand palette and design tokens: the ONLY place colours are defined.
+   Light mode is the default; dark mode is applied by App.tsx via data-theme="dark" (also for "System" on a dark OS).
+   Pure ABB Red (#FF000F) is for accents only (lines, underlines, blocks); never small text on white (3.99:1).
+   Text and buttons use --abb-red-strong (#E0000E, 5.03:1 with white). Contrast of every text pair is tested in
+   src/__tests__/tokens.test.ts (WCAG AA, 4.5:1). */
+:root {
+  /* Brand primitives */
+  --abb-red: #FF000F;
+  --abb-red-strong: #E0000E;
+  --abb-red-dark: #B8000B;
+  --black: #000000;
+  --white: #FFFFFF;
+  --grey-50: #F5F5F5;
+  --grey-100: #EBEBEB;
+  --grey-200: #DCDCDC;
+  --grey-400: #A3A3A3;
+  --grey-500: #858585;
+  --grey-600: #6E6E6E;
+  --grey-700: #5C5C5C;
+  --grey-800: #333333;
+
+  /* Base */
+  --bg: #F5F5F5;
+  --surface: #FFFFFF;
+  --line: #DCDCDC;
+  --control-border: #858585;
+  --ink: #000000;
+  --ink2: #5C5C5C;
+  --muted: #EBEBEB;
+  --link: #000000;
+  --focus: #000000;
+  --accent: #FF000F;
+  --control-accent: #000000;
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  --backdrop: rgba(0, 0, 0, 0.5);
+
+  /* Header and tabs */
+  --header-bg: #FFFFFF;
+  --header-ink: #000000;
+  --header-sub: #5C5C5C;
+  --header-accent: #FF000F;
+  --tab-ink: #5C5C5C;
+  --tab-active-ink: #000000;
+  --tab-active-line: #FF000F;
+
+  /* Buttons */
+  --primary-bg: #E0000E;
+  --primary-bg-hover: #B8000B;
+  --primary-fg: #FFFFFF;
+  --secondary-bg: #FFFFFF;
+  --secondary-fg: #000000;
+  --secondary-border: #858585;
+  --danger: #E0000E;
+
+  /* Feedback */
+  --danger-bg: #FDECEC;
+  --danger-ink: #B8000B;
+  --success: #0F6B2E;
+  --success-bg: #E3F4E8;
+  --notice-bg: #FFF4BF;
+  --notice-ink: #5C4A00;
+  --notice-border: #C9A400;
+  --info-bg: #F0F0F0;
+  --info-ink: #000000;
+  --info-border: #000000;
+
+  /* Demand / supply (neutral, no red) and illustrative */
+  --side-demand: #333333;
+  --side-supply: #6E6E6E;
+  --illus: #6E6E6E;
+  --illus-bg: #EBEBEB;
+  --illus-ink: #333333;
+
+  /* Slider and level */
+  --level-pos: #0F6B2E;
+  --level-neg: #E0000E;
+  --level-neutral: #000000;
+
+  /* Status triplets (bg / fg / border) */
+  --st-shortage_critical-bg: #E0000E; --st-shortage_critical-fg: #FFFFFF; --st-shortage_critical-border: #FF000F;
+  --st-shortage_risk-bg: #C2410C;     --st-shortage_risk-fg: #FFFFFF;     --st-shortage_risk-border: #C2410C;
+  --st-watch_shortage-bg: #FFD100;    --st-watch_shortage-fg: #000000;    --st-watch_shortage-border: #C9A400;
+  --st-balanced-bg: #E3F4E8;          --st-balanced-fg: #0F6B2E;          --st-balanced-border: #0F6B2E;
+  --st-watch_excess-bg: #FFD100;      --st-watch_excess-fg: #000000;      --st-watch_excess-border: #5C4A00;
+  --st-excess_risk-bg: #E6F0FA;       --st-excess_risk-fg: #0B5394;       --st-excess_risk-border: #0B5394;
+  --st-excess_critical-bg: #0B4F8C;   --st-excess_critical-fg: #FFFFFF;   --st-excess_critical-border: #0B4F8C;
+  --st-insufficient_data-bg: #EBEBEB; --st-insufficient_data-fg: #4D4D4D; --st-insufficient_data-border: #DCDCDC;
+
+  /* Early-warning tags and strength */
+  --ew-critical-bg: #E0000E; --ew-critical-fg: #FFFFFF;
+  --ew-warning-bg: #C2410C;  --ew-warning-fg: #FFFFFF;
+  --ew-watch-bg: #FFD100;    --ew-watch-fg: #000000;
+  --strength-low-bg: #EBEBEB; --strength-low-fg: #333333;
+
+  /* Stat numbers */
+  --stat-shortage: #E0000E;
+  --stat-excess: #0B5394;
+  --stat-watch: #5C4A00;
+
+  /* Typography */
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-base: 15px;
+  --fs-md: 17px;
+  --fs-lg: 20px;
+  --fs-xl: 24px;
+  --fs-2xl: 30px;
+  --radius: 8px;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #121212;
+  --surface: #1A1A1A;
+  --line: #2E2E2E;
+  --control-border: #6E6E6E;
+  --ink: #EDEDED;
+  --ink2: #A3A3A3;
+  --muted: #262626;
+  --link: #EDEDED;
+  --focus: #FFFFFF;
+  --accent: #FF000F;
+  --control-accent: #EDEDED;
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  --backdrop: rgba(0, 0, 0, 0.65);
+
+  --header-bg: #1A1A1A;
+  --header-ink: #FFFFFF;
+  --header-sub: #A3A3A3;
+  --header-accent: #FF000F;
+  --tab-ink: #A3A3A3;
+  --tab-active-ink: #FFFFFF;
+  --tab-active-line: #FF000F;
+
+  --primary-bg: #E0000E;
+  --primary-bg-hover: #B8000B;
+  --primary-fg: #FFFFFF;
+  --secondary-bg: #1A1A1A;
+  --secondary-fg: #EDEDED;
+  --secondary-border: #6E6E6E;
+  --danger: #FF4D57;
+
+  --danger-bg: #3A1214;
+  --danger-ink: #FF7A82;
+  --success: #6FD08C;
+  --success-bg: #12301C;
+  --notice-bg: #3A3210;
+  --notice-ink: #FFE066;
+  --notice-border: #8F7400;
+  --info-bg: #262626;
+  --info-ink: #EDEDED;
+  --info-border: #EDEDED;
+
+  --side-demand: #D4D4D4;
+  --side-supply: #A3A3A3;
+  --illus: #A3A3A3;
+  --illus-bg: #262626;
+  --illus-ink: #D4D4D4;
+
+  --level-pos: #6FD08C;
+  --level-neg: #FF4D57;
+  --level-neutral: #EDEDED;
+
+  --st-shortage_critical-bg: #E0000E; --st-shortage_critical-fg: #FFFFFF; --st-shortage_critical-border: #FF000F;
+  --st-shortage_risk-bg: #C2410C;     --st-shortage_risk-fg: #FFFFFF;     --st-shortage_risk-border: #C2410C;
+  --st-watch_shortage-bg: #FFD100;    --st-watch_shortage-fg: #000000;    --st-watch_shortage-border: #FFD100;
+  --st-balanced-bg: #12301C;          --st-balanced-fg: #6FD08C;          --st-balanced-border: #3F8F5A;
+  --st-watch_excess-bg: #FFD100;      --st-watch_excess-fg: #000000;      --st-watch_excess-border: #FFF4BF;
+  --st-excess_risk-bg: #10263D;       --st-excess_risk-fg: #7DB8F0;       --st-excess_risk-border: #3B78B5;
+  --st-excess_critical-bg: #1E5FA8;   --st-excess_critical-fg: #FFFFFF;   --st-excess_critical-border: #1E5FA8;
+  --st-insufficient_data-bg: #262626; --st-insufficient_data-fg: #B3B3B3; --st-insufficient_data-border: #3A3A3A;
+
+  --ew-critical-bg: #E0000E; --ew-critical-fg: #FFFFFF;
+  --ew-warning-bg: #C2410C;  --ew-warning-fg: #FFFFFF;
+  --ew-watch-bg: #FFD100;    --ew-watch-fg: #000000;
+  --strength-low-bg: #262626; --strength-low-fg: #D4D4D4;
+
+  --stat-shortage: #FF4D57;
+  --stat-excess: #7DB8F0;
+  --stat-watch: #FFE066;
+  color-scheme: dark;
+}

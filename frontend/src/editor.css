@@ -1,0 +1,53 @@
+/* Inputs and Setup tabs. Colours come only from tokens.css. */
+
+/* Inputs: sticky selection bar, heading */
+.inputs-bar select{font-weight:500}
+.inputs-bar #inp-region{min-width:190px}
+.inputs-bar #inp-segment{min-width:150px}
+.sel-h{font-size:var(--fs-xl);font-weight:700;margin:8px 0 8px}
+.sel-h:focus{outline:none}
+.sel-h:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+
+/* Demand and supply sections: neutral accent bars (no red) */
+section.panel[aria-labelledby="inputs-demand-h"]{border-left:4px solid var(--side-demand)}
+section.panel[aria-labelledby="inputs-supply-h"]{border-left:4px solid var(--side-supply)}
+
+/* Cards */
+.card .title{font-size:var(--fs-base);font-weight:700;margin:0;line-height:1.3}
+.card.illustrative{border:2px dashed var(--illus)}
+.lvl-big{font-size:var(--fs-xl);font-weight:700;line-height:1.15;color:var(--level-neutral)}
+.lvl-big.pos{color:var(--level-pos)}
+.lvl-big.neg{color:var(--level-neg)}
+.lvl-big.none{font-size:var(--fs-lg);font-style:italic;font-weight:500;color:var(--ink2)}
+.lvl .lvl-value{font-size:var(--fs-base);font-weight:600;margin-top:2px}
+.lvl .lvl-value.none{font-weight:400;font-style:normal}
+
+/* Category picker (inline, per side) */
+.picker{border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;margin:12px 0 0}
+.picker-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 16px}
+@media (max-width:760px){.picker-grid{grid-template-columns:minmax(0,1fr)}}
+.picker label{display:flex;gap:8px;align-items:flex-start;padding:3px 0}
+.picker label.off{color:var(--ink2)}
+
+/* Setup: section headings with a "?" toggletip */
+.sect-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.sect-h h2{margin:0}
+.tip-wrap{position:relative;display:inline-flex}
+.tip-btn{width:24px;height:24px;padding:0;border-radius:50%;font-size:var(--fs-sm);font-weight:700;line-height:1;color:var(--ink2)}
+.tip{position:absolute;left:0;top:30px;z-index:20;width:min(340px,80vw);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:var(--radius);padding:10px 12px;font-size:var(--fs-sm);font-weight:400;box-shadow:var(--shadow)}
+
+/* Setup: region/segment chips with popover */
+.chiprow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip-wrap{position:relative}
+.chip-btn{border-radius:20px;padding:5px 14px;font-weight:600;border-color:var(--line)}
+.chip-btn.open{border-color:var(--ink);background:var(--muted)}
+.chip-btn.plus{width:34px;padding:5px 0;font-size:18px;line-height:1;color:var(--ink2)}
+.chip-add{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip-add input{padding:4px 10px;border-radius:20px;width:160px}
+.popover{position:absolute;left:0;top:calc(100% + 6px);z-index:20;min-width:220px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;box-shadow:var(--shadow)}
+.popover input{width:100%;margin-top:2px}
+
+/* Setup: supply chain structure summary */
+.structure{list-style:none;margin:0;padding:0}
+.structure li{padding:3px 0;font-variant-numeric:tabular-nums}
+.structure li.bad{color:var(--danger)}

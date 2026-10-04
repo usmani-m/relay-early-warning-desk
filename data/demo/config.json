@@ -1,0 +1,52 @@
+{
+  "regions": [
+    "EUROPE",
+    "AMER",
+    "APAC",
+    "MEA"
+  ],
+  "segments": [
+    "Infrastructure",
+    "Utilities",
+    "Industry"
+  ],
+  "active_datasets": [
+    "Project pipelines & permitting",
+    "Grid plans & investments",
+    "Market & policy development",
+    "Lead times & allocations",
+    "Pricing & cost indices",
+    "Raw material & chemicals"
+  ],
+  "supply_dependency": {
+    "EUROPE": {
+      "APAC": 0.5,
+      "AMER": 0.1
+    },
+    "AMER": {
+      "APAC": 0.4,
+      "EUROPE": 0.1
+    },
+    "APAC": {
+      "EUROPE": 0.1
+    },
+    "MEA": {
+      "EUROPE": 0.4,
+      "APAC": 0.4
+    }
+  },
+  "demand_competition": {
+    "EUROPE": 0.6,
+    "AMER": 0.5,
+    "APAC": 0.6,
+    "MEA": 0.3
+  },
+  "pool_pressure_factor": 0.5,
+  "policy_weights": {
+    "profitability": 30,
+    "customer_value": 25,
+    "growth": 25,
+    "resilience": 20
+  },
+  "dependencies_are_examples": true
+}
